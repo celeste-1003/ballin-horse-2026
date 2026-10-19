@@ -30,6 +30,15 @@
     <ClCompile Include="..\ball.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gameover.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\level.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\collision.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game.h">
@@ -39,6 +48,18 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ball.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gameover.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\level.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\collision.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

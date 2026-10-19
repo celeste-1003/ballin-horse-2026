@@ -12,13 +12,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ball.c" />
+    <ClCompile Include="..\collision.c" />
     <ClCompile Include="..\game.c" />
+    <ClCompile Include="..\gameover.c" />
+    <ClCompile Include="..\level.c" />
     <ClCompile Include="..\main.c" />
     <ClCompile Include="..\mainmenu.c" />
     <ClCompile Include="..\utils.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ball.h" />
+    <ClInclude Include="..\collision.h" />
     <ClInclude Include="..\game.h" />
+    <ClInclude Include="..\gameover.h" />
+    <ClInclude Include="..\level.h" />
     <ClInclude Include="..\mainmenu.h" />
     <ClInclude Include="..\utils.h" />
   </ItemGroup>
@@ -28,7 +35,7 @@
     <ProjectGuid>{5dcaebcc-6757-4358-ace1-7578cdda961c}</ProjectGuid>
     <RootNamespace>yaho</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>softeng 1</ProjectName>
+    <ProjectName>ballin' horse</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
