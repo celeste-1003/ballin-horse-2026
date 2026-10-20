@@ -72,9 +72,7 @@ void Main_Menu_Update(void)
 	draw_rect(button_x, title_y, title_width, title_height, Red);
 	draw_text(titleFont, Black, horizontal, vertical, "Ballin' Horse", text_x, title_y);
 
-	/*!
-	DRAW PLAY BUTTON
-	//---------------*/
+	/* DRAW PLAY BUTTON */
 	draw_rect(button_x, play_y, area_width, area_height, Red);
 	draw_text(myFont, Black, horizontal, vertical, "Play", text_x, play_y);
 	
@@ -84,9 +82,7 @@ void Main_Menu_Update(void)
 		CP_Engine_SetNextGameState(Game_Init, Game_Update, Game_Exit);			
 	}
 
-	/*!
-	DRAW EXIT BUTTON
-	//---------------*/
+	/* DRAW EXIT BUTTON */
 	draw_rect(button_x, exit_y, area_width, area_height, Red);
 	draw_text(myFont, Black, horizontal, vertical, "Exit", text_x, exit_y);
 	
