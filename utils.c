@@ -35,3 +35,8 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	else {return 0;}
 }
 
+void draw_rect(float x, float y, float width, float height, CP_Color col) {}
+
+void draw_text(CP_Font font, CP_Color col, CP_TEXT_ALIGN_HORIZONTAL h, CP_TEXT_ALIGN_VERTICAL v,
+	const char* text, float txt_x, float txt_y) {
+}
