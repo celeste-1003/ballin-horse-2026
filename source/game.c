@@ -1,9 +1,9 @@
 // Libraries
 #include "cprocessing.h"
-#include "mainmenu.h"
-#include "game.h"
+#include "header/mainmenu.h"
+#include "header/game.h"
 #include <math.h>
-#include "utils.h"
+#include "header/utils.h"
 #include <stdio.h>
 
 

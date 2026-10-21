@@ -11,9 +11,9 @@
 
 // libraries
 #include "cprocessing.h"
-#include "mainmenu.h"
-#include "game.h"
-#include "utils.h"
+#include "header/mainmenu.h"
+#include "header/game.h"
+#include "header/utils.h"
 
 
 // main() the starting point for the program

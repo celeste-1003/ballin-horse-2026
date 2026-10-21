@@ -15,58 +15,58 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\game.c">
+    <ClInclude Include="..\header\ball.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\main.c">
+    </ClInclude>
+    <ClInclude Include="..\header\collision.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\mainmenu.c">
+    </ClInclude>
+    <ClInclude Include="..\header\game.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\utils.c">
+    </ClInclude>
+    <ClInclude Include="..\header\gameover.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ball.c">
+    </ClInclude>
+    <ClInclude Include="..\header\level.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\gameover.c">
+    </ClInclude>
+    <ClInclude Include="..\header\lvlselect.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\level.c">
+    </ClInclude>
+    <ClInclude Include="..\header\mainmenu.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\collision.c">
+    </ClInclude>
+    <ClInclude Include="..\header\utils.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lvlselect.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\game.h">
+    <ClCompile Include="..\source\ball.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\mainmenu.h">
+    </ClCompile>
+    <ClCompile Include="..\source\collision.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\utils.h">
+    </ClCompile>
+    <ClCompile Include="..\source\game.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ball.h">
+    </ClCompile>
+    <ClCompile Include="..\source\gameover.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\gameover.h">
+    </ClCompile>
+    <ClCompile Include="..\source\level.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\level.h">
+    </ClCompile>
+    <ClCompile Include="..\source\lvlselect.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\collision.h">
+    </ClCompile>
+    <ClCompile Include="..\source\main.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lvlselect.h">
+    </ClCompile>
+    <ClCompile Include="..\source\mainmenu.c">
       <Filter>Source Files</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="..\source\utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

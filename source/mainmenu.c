@@ -1,10 +1,10 @@
 /* MAIN MENU */
 // Libraries
-#include "mainmenu.h"
+#include "header/mainmenu.h"
 #include "cprocessing.h"
-#include "game.h"
+#include "header/game.h"
 #include <stdio.h>
-#include "utils.h"
+#include "header/utils.h"
 
 /* VARIABLES */
 CP_Color BG_Grey, Red, Green, Black, Blue, White;
