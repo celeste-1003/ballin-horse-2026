@@ -56,8 +56,8 @@ void Main_Menu_Init(void)
 	Black = CP_Color_Create(0, 0, 0, 255);
 	Blue = CP_Color_Create(100, 149, 237, 255);
 	White = CP_Color_Create(255, 255, 255, 255);
-	myFont = CP_Font_Load("./Assets/fonts/ComicSans.ttf");
-	titleFont = CP_Font_Load("./Assets/fonts/Kbpaythelady-WAyV.ttf");
+	myFont = CP_Font_Load("Assets/fonts/ComicSans.ttf");
+	titleFont = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");
 
 	textsize = 70.0f;
 	CP_Settings_TextSize(textsize);
