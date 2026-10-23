@@ -1,6 +1,5 @@
 #pragma once
 
-
 // LEVEL SELECT MACROS
 #define AMT_LVL_BOXES (3)
 #define LVL_WIDTH (100.0f)
