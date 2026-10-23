@@ -10,6 +10,8 @@ CP_Vector ClampVector(CP_Vector genVector, float maxLength, float minLength);
 *//*______________________________________________________________*/
 CP_Vector DirectionVector(CP_Vector pullVector);
 
+CP_Vector MovementVector(CP_Vector DirectionVector, CP_Vector PowerScale);
+
 CP_Vector ReflectedVector(CP_Vector movementVector, CP_Vector normalVector);
 
 CP_Vector SlideVector(CP_Vector movementVector, CP_Vector normalVector);
