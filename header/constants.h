@@ -1,6 +1,5 @@
 #pragma once
 
-CP_Color BG_Grey, Red, Green, Black, Blue, White;
 
 // LEVEL SELECT MACROS
 #define AMT_LVL_BOXES (3)
