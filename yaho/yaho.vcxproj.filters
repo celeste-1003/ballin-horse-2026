@@ -42,6 +42,9 @@
     <ClInclude Include="..\header\draw.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\assets.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\ball.c">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\draw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\assets.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,7 +7,7 @@ CP_Color BG_Grey, Red, Green, Black, Blue, White;
 #define LVL_WIDTH (100.0f)
 #define LVL_HEIGHT (100.0f)
 #define GAP_SPACE (100.0f)
-#define LVL_X (155.0f)
+#define LVL_X (650.0f)
 #define LVL_Y (100.0f)
 
 // GRID DRAWING MACROS

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\header\assets.h" />
     <ClInclude Include="..\header\ball.h" />
     <ClInclude Include="..\header\collision.h" />
     <ClInclude Include="..\header\draw.h" />
@@ -22,6 +23,7 @@
     <ClInclude Include="..\header\utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\assets.c" />
     <ClCompile Include="..\source\ball.c" />
     <ClCompile Include="..\source\collision.c" />
     <ClCompile Include="..\source\draw.c" />

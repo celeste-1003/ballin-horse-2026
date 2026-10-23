@@ -16,8 +16,10 @@ void lvlselect_update(void) {
 
     // draw the level boxes
     for (int i = 0; i < AMT_LVL_BOXES; i++) {
-		double current_x = LVL_X + (i * (LVL_WIDTH + GAP_SPACE));
-		draw_rect(current_x, LVL_Y + 100.0f, LVL_WIDTH, LVL_HEIGHT, Red);
+        float total_grp_width = (AMT_LVL_BOXES * LVL_WIDTH) + ((AMT_LVL_BOXES - 1) * GAP_SPACE);
+        float start_x = (1600.0f / 2.0f) - (total_grp_width / 2.0f) + (LVL_WIDTH / 2.0f);
+        double current_x = start_x + (i * (LVL_WIDTH + GAP_SPACE));
+        draw_rect(current_x, 450.0f, LVL_WIDTH, LVL_HEIGHT, Red);
 	}
 
     //// check if any of the levels have been clicked (prevent player from clicking 2 if they havent cleared 1 and 3 if they havent cleared 2)
