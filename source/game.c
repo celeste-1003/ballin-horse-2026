@@ -1,10 +1,11 @@
 // Libraries
 #include "cprocessing.h"
-#include "header/mainmenu.h"
-#include "header/game.h"
 #include <math.h>
-#include "header/utils.h"
 #include <stdio.h>
+
+#include "header/mainmenu.h"
+#include "header/utils.h"
+#include "header/aim.h"
 
 
 /* GAME STATES */

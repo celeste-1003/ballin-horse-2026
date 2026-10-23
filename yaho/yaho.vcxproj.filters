@@ -45,6 +45,15 @@
     <ClInclude Include="..\header\assets.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\vecmath.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\aim.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\constants.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\ball.c">
@@ -78,6 +87,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\assets.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\aim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\vecmath.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

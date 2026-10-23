@@ -1,10 +1,9 @@
 #include <math.h>
 #include "cprocessing.h"
+#include "header/vecmath.h"
+#include "header/constants.h"
 
 //#define DELTA_TIME 
-
-#define MAX_DRAG_DISTANCE 150.0f
-#define MIN_DRAG_DISTANCE 2.0f
 
 // this function checks if a point is within a rectangular area 
 // used for buttons and other rectangular objects
@@ -59,44 +58,6 @@ CP_Vector GetMousePos(void) {
 	return CP_Vector_Set(mx, my);
 }
 
-/*!
-@brief clamps least and max value -- cant be too fast or too slow so if it is out of bounds, either max or least value, uses length to compare, can always change in macros
-*//*______________________________________________________________*/
-CP_Vector ClampVector(CP_Vector genVector, float maxLength, float minLength) {
-
-	float length = CP_Vector_Length(genVector);
-	float CP_Math_ClampFloat(length, minLength, maxLength);
-
-	return CP_Vector_Scale(CP_Vector_Normalize(genVector), length);
-}
-
-/*!
-@brief
-*//*______________________________________________________________*/
-CP_Vector PullVector(CP_Vector startPoint, CP_Vector endPoint) {
-
-	CP_Vector pull = CP_Vector_Subtract(endPoint, startPoint);
-	return ClampVector(pull, MAX_DRAG_DISTANCE, MIN_DRAG_DISTANCE);
-}
-
-float PowerScale(CP_Vector pullVector) {
-	
-	//find distance, distance/max_distance * 100
-	return 0;
-}
-
-CP_Vector DirectionVector(CP_Vector pullVector) {
-
-	if (CP_Vector_Length(pullVector) < MIN_DRAG_DISTANCE) {
-
-		return CP_Vector_Zero();
-
-	} else return CP_Vector_Normalize(CP_Vector_Negate(pullVector));
-
-	//must opposite direction of pullVector > normalise > return
-	//CP_Vector CP_Vector_Negate(CP_Vector v);
-	//return 0;
-}
 
 CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime) {
 	//return 0;

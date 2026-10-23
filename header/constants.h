@@ -28,3 +28,6 @@ CP_Color BG_Grey, Red, Green, Black, Blue, White;
 #define TITLE_Y (275.0f)
 #define BUTTON_TEXT_SIZE (70.0f)
 
+// DRAGGING/GAMEPLAY MACROS
+#define MAX_DRAG_DISTANCE (150.0f)
+#define MIN_DRAG_DISTANCE (2.0f)

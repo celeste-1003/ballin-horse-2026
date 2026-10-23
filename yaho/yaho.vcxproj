@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\header\aim.h" />
     <ClInclude Include="..\header\assets.h" />
     <ClInclude Include="..\header\ball.h" />
     <ClInclude Include="..\header\collision.h" />
+    <ClInclude Include="..\header\constants.h" />
     <ClInclude Include="..\header\draw.h" />
     <ClInclude Include="..\header\game.h" />
     <ClInclude Include="..\header\gameover.h" />
@@ -21,8 +23,10 @@
     <ClInclude Include="..\header\lvlselect.h" />
     <ClInclude Include="..\header\mainmenu.h" />
     <ClInclude Include="..\header\utils.h" />
+    <ClInclude Include="..\header\vecmath.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\aim.c" />
     <ClCompile Include="..\source\assets.c" />
     <ClCompile Include="..\source\ball.c" />
     <ClCompile Include="..\source\collision.c" />
@@ -34,6 +38,7 @@
     <ClCompile Include="..\source\main.c" />
     <ClCompile Include="..\source\mainmenu.c" />
     <ClCompile Include="..\source\utils.c" />
+    <ClCompile Include="..\source\vecmath.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
