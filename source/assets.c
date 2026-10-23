@@ -1,7 +1,14 @@
 #include "cprocessing.h"
 #include "header/assets.h"
 
+CP_Color BG_Grey, Red, Green, Black, Blue, White;
+CP_Font body_font, title_font;
 
+
+/**
+ @brief this initialises colors and fonts used in other systems
+ @remarks no images, images will be loaded in 
+ */
 void set_assets(void) {
 	BG_Grey = CP_Color_Create(128, 128, 128, 255);
 	Red = CP_Color_Create(220, 20, 60, 255);
