@@ -14,15 +14,15 @@
 #include "header/mainmenu.h"
 #include "header/game.h"
 #include "header/utils.h"
+#include "header/constants.h"
 
 
 // main() the starting point for the program
 // CP_Engine_SetNextGameState() tells CProcessing which functions to use for init, update and exit
 // CP_Engine_Run() is the core function that starts the simulation
-int main(void)
-{
-	CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
-	CP_System_SetWindowSize(1600, 900);
+int main(void){
+	CP_Engine_SetNextGameState(main_menu_init, main_menu_update, main_menu_exit);
+	CP_System_SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	CP_Engine_Run(0);
 	return 0;
 }

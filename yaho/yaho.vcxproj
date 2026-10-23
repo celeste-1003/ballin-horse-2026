@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="..\header\ball.h" />
     <ClInclude Include="..\header\collision.h" />
+    <ClInclude Include="..\header\draw.h" />
     <ClInclude Include="..\header\game.h" />
     <ClInclude Include="..\header\gameover.h" />
     <ClInclude Include="..\header\level.h" />
@@ -23,6 +24,7 @@
   <ItemGroup>
     <ClCompile Include="..\source\ball.c" />
     <ClCompile Include="..\source\collision.c" />
+    <ClCompile Include="..\source\draw.c" />
     <ClCompile Include="..\source\game.c" />
     <ClCompile Include="..\source\gameover.c" />
     <ClCompile Include="..\source\level.c" />

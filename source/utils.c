@@ -1,8 +1,6 @@
 #include <math.h>
 #include "cprocessing.h"
 
-#define SCREEN_HEIGHT 
-#define SCREEN_WIDTH 
 //#define DELTA_TIME 
 
 #define MAX_DRAG_DISTANCE 150.0f
@@ -47,23 +45,6 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	if (d_squared <= (radius * radius)) {return 1;}
 	else {return 0;}
 }
-
-// Functions to draw rectangles
-void draw_rect(float x, float y, float width, float height, CP_Color col) {
-	CP_Settings_Fill(col);
-	CP_Graphics_DrawRect(x, y, width, height);
-}
-
-// Functions to draw text
-void draw_text(CP_Font font, CP_Color col, CP_TEXT_ALIGN_HORIZONTAL h, CP_TEXT_ALIGN_VERTICAL v,
-	const char* text, float txt_x, float txt_y) {
-	CP_Font_Set(font);
-	CP_Settings_Fill(col);
-	CP_Settings_TextAlignment(h, v);
-	CP_Font_DrawText(text, txt_x, txt_y);
-
-}
-
 
 /*!
 @brief get mouse position, used in vectors so that u dont have to keep getting x and y value seperately, result is a vector point so can feed into other cprocessing vector functions

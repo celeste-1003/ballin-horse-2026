@@ -1,5 +1,5 @@
 #pragma once
 
-void Main_Menu_Init(void);
-void Main_Menu_Update(void);
-void Main_Menu_Exit(void);
+void main_menu_init(void);
+void main_menu_update(void);
+void main_menu_exit(void);
