@@ -49,7 +49,7 @@ CP_Vector ClosestPoint(CP_Vector point, CP_Vector lineStart, CP_Vector lineEnd)
 	CP_Vector startToPoint = CP_Vector_Subtract(point, lineStart);
 
 	float lineLength = CP_Vector_DotProduct(lineVector, lineVector);
-	if (lineLength < 0.0001f) {
+	if (lineLength < 0.001f) {
 		return lineStart;
 	}
 

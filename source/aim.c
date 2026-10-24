@@ -13,7 +13,7 @@ CP_Vector PullVector(CP_Vector startPoint, CP_Vector endPoint) {
 }
 
 float PowerScale(CP_Vector pullVector) {
-
 	//find distance, distance/max_distance * 100
-	return 0;
+	float distance = CP_Vector_Length(pullVector);
+	return distance / MAX_DRAG_DISTANCE * 100.0f;
 }

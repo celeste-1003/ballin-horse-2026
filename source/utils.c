@@ -18,14 +18,9 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	// calculate if click point is within the boundary
 	if (click_x >= left_edge && click_x <= right_edge &&
 		click_y >= top_edge && click_y <= bottom_edge) {
-		
 		return 1;
 	}
-	else {
-
-		return 0;
-	}
-
+	else return 0;
 }
 
 // this function checks if a point is within a circle
@@ -41,8 +36,11 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	float d_squared = (dx * dx) + (dy * dy);
 
 	// compare squared distance to squared radius
-	if (d_squared <= (radius * radius)) {return 1;}
-	else {return 0;}
+	if (d_squared <= (radius * radius)) {
+		return 1;
+	}
+
+	else return 0;
 }
 
 /*!
@@ -61,4 +59,18 @@ CP_Vector GetMousePos(void) {
 
 CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime) {
 	//return 0;
+
+	float speed = CP_Vector_Length(movementVector);
+
+	if (speed < 0.001f) {
+		return CP_Vector_Zero();
+	}
+
+	else speed -= FRICTION_DECELERATION * deltaTime;
+
+	if (speed < MIN_SPEED) {
+		return CP_Vector_Zero();
+		}
+
+	return CP_Vector_Scale(CP_Vector_Normalize(movementVector), speed);
 }
