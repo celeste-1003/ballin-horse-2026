@@ -57,6 +57,9 @@
     <ClInclude Include="..\splash.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\ball.c">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\splash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ui.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

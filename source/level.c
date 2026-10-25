@@ -38,14 +38,14 @@ void Level_Draw(const Level* lvl) {
     for (int row = 0; row < GRID_ROW; row++) {
         for (int col = 0; col < GRID_ROW; col++) {
             switch (lvl->tiles[row][col]) {
-                case tileWall: CP_Settings_Fill(CP_Color_Create(110, 70, 40, 255)); break;
-                case tileSand: CP_Settings_Fill(CP_Color_Create(220, 200, 130, 255)); break;
-                case tileWater: CP_Settings_Fill(CP_Color_Create(60, 120, 200, 255)); break;
+            case tileWall: CP_Settings_Fill(CP_Color_Create(110, 70, 40, 255)); break;
+            case tileSand: CP_Settings_Fill(CP_Color_Create(220, 200, 130, 255)); break;
+            case tileWater: CP_Settings_Fill(CP_Color_Create(60, 120, 200, 255)); break;
             default: CP_Settings_Fill(CP_Color_Create(60, 160, 70, 255)); break;
             }
 
-        CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE),TILE_SIZE, TILE_SIZE);
-        
-        }
+            CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE);
 
+        }
+    }
 }
