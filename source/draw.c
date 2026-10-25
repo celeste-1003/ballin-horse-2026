@@ -49,3 +49,24 @@ void draw_line(float line_x1, float line_y1, float line_x2, float line_y2, float
 void draw_image(CP_Image img, float img_x, float img_y, float img_width, float img_height, int alpha){
 	CP_Image_Draw(img, img_x, img_y, img_width, img_height, alpha);
 }
+
+/**
+ @brief this draws a dotted line
+ @remarks 
+ */
+void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, float dot_diameter, CP_Color col) {
+	CP_Settings_Save();
+	CP_Settings_NoStroke();
+	CP_Settings_Fill(col);
+	float dx = x2 - x1, dy = y2 - y1;
+	float length = CP_Math_Distance(x1, y1, x2, y2);
+	if (length <= 0.0f) {
+		CP_Settings_Restore();
+		return;
+	}
+	float ux = dx / length, uy = dy / length;
+	for (float t = 0.0f; t <= length; t += spacing) {
+		CP_Graphics_DrawCircle(x1 + ux * t, y1 + uy * t, dot_diameter);
+	}
+	CP_Settings_Restore();
+}
