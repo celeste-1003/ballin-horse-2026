@@ -24,6 +24,7 @@
     <ClInclude Include="..\header\mainmenu.h" />
     <ClInclude Include="..\header\utils.h" />
     <ClInclude Include="..\header\vecmath.h" />
+    <ClInclude Include="..\splash.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\aim.c" />
@@ -37,6 +38,7 @@
     <ClCompile Include="..\source\lvlselect.c" />
     <ClCompile Include="..\source\main.c" />
     <ClCompile Include="..\source\mainmenu.c" />
+    <ClCompile Include="..\source\splash.c" />
     <ClCompile Include="..\source\utils.c" />
     <ClCompile Include="..\source\vecmath.c" />
   </ItemGroup>

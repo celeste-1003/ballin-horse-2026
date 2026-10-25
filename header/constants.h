@@ -1,5 +1,12 @@
 #pragma once
 
+// SPLASH SCREEN MACROS
+#define SPLASH_COUNT (2)
+#define SPLASH_HOLD_TIME (2.0f)
+#define SPLASH_FADE_TIME (0.4f)
+#define SPLASH_MAX_W (800.0f)
+#define SPLASH_MAX_H (450.0f)
+
 // LEVEL SELECT MACROS
 #define AMT_LVL_BOXES (3)
 #define LVL_WIDTH (100.0f)

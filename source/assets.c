@@ -3,6 +3,7 @@
 
 CP_Color BG_Grey, Red, Green, Black, Blue, White;
 CP_Font body_font, title_font;
+CP_Image sch_logo = NULL, team_logo = NULL;
 
 
 /**
@@ -18,4 +19,9 @@ void set_assets(void) {
 
 	body_font = CP_Font_Load("Assets/fonts/ComicSans.ttf");
 	title_font = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");
+}
+
+void set_splash_assets(void) {
+	sch_logo = CP_Image_Load("Assets/logos/DigiPen_BLACK.png");
+	team_logo = CP_Image_Load("Assets/logos/DigiPen_Singapore_WEB_RED.png");
 }
