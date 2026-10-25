@@ -14,9 +14,8 @@
 const char* level1[GRID_ROW] = {
     "################################",
     "#..............................#",
+    "#..............................#",
     "#...B..........................#",
-    "#..............................#",
-    "#..............................#",
     "#..............................#",
     "#..............................#",
     "#..............................#",
@@ -29,18 +28,23 @@ const char* level1[GRID_ROW] = {
     "#..............................#",
     "#...........................H..#",
     "#..............................#",
+    "#..............................#",
     "################################"
 };
+
+static Level currentLevel;
 
 /* GAME STATES */
 // this runs once when entering the state
 void game_init(void){
-
+    Level_Load(&currentLevel, level1, 3);
 }
 
 // this runs every frame
 void game_update(void) {
-	Level_Draw(level1[GRID_ROW]);
+
+    CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	Level_Draw(&currentLevel);
 	//CP_Graphics_ClearBackground(BG_Grey);
 }
 

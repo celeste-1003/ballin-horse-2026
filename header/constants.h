@@ -1,4 +1,5 @@
 #pragma once
+#include "cprocessing.h"
 
 // SPLASH SCREEN MACROS
 #define SPLASH_COUNT (2)
@@ -15,10 +16,11 @@
 #define LVL_X (650.0f)
 #define LVL_Y (100.0f)
 
-// GRID DRAWING MACROS
+// GRID DRAWING MACROS-KEEP IT TO INT BC CONSTANT DOESNT TAKE FLOAT
 #define SCREEN_WIDTH (1600)
 #define SCREEN_HEIGHT (900)
 #define TILE_SIZE (50)
+#define HOLE_DIAMETER (40)
 #define GRID_COL (SCREEN_WIDTH / TILE_SIZE) //32
 #define GRID_ROW (SCREEN_HEIGHT / TILE_SIZE) //18
 

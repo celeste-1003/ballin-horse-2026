@@ -3,6 +3,8 @@
 #include "header/constants.h"
 #include "header/level.h"
 
+
+
 void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
 
     lvl->par = par;
@@ -35,17 +37,38 @@ TileType Level_GetTile(const Level* lvl, int col, int row) {
 }
 
 void Level_Draw(const Level* lvl) {
+
+    CP_Settings_RectMode(CP_POSITION_CORNER);
+    CP_Settings_NoStroke();
+
     for (int row = 0; row < GRID_ROW; row++) {
-        for (int col = 0; col < GRID_ROW; col++) {
+        for (int col = 0; col < GRID_COL; col++) {
+            int isDark = ((row + col) % 2 == 0);
+
             switch (lvl->tiles[row][col]) {
-            case tileWall: CP_Settings_Fill(CP_Color_Create(110, 70, 40, 255)); break;
-            case tileSand: CP_Settings_Fill(CP_Color_Create(220, 200, 130, 255)); break;
-            case tileWater: CP_Settings_Fill(CP_Color_Create(60, 120, 200, 255)); break;
-            default: CP_Settings_Fill(CP_Color_Create(60, 160, 70, 255)); break;
+            case tileWall:
+                CP_Settings_Fill(CP_Color_Create(110, 110, 115, 255));
+                break;
+            case tileSand:
+                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(220, 200, 130, 255));
+                else                      CP_Settings_Fill(CP_Color_Create(232, 213, 145, 255));
+                break;
+            case tileWater:
+                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(60, 120, 200, 255));
+                else                      CP_Settings_Fill(CP_Color_Create(75, 135, 215, 255));
+                break;
+            default:
+                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(60, 160, 70, 255));
+                else                      CP_Settings_Fill(CP_Color_Create(72, 175, 82, 255));
+                break;
             }
 
-            CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE);
-
+            CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE),
+                TILE_SIZE, TILE_SIZE);
         }
     }
+
+    /* Hole on top of the tiles (DrawCircle takes a diameter) */
+    CP_Settings_Fill(CP_Color_Create(20, 20, 20, 255));
+    CP_Graphics_DrawCircle(lvl->hole.pos.x, lvl->hole.pos.y, (float)HOLE_DIAMETER);
 }
