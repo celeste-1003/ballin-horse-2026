@@ -5,6 +5,13 @@
 
 //#define DELTA_TIME 
 
+int GetCol(float x) {
+	return (int)floorf(x / TILE_SIZE);
+}
+
+int GetRow(float y) {
+	return (int)floorf(y / TILE_SIZE);
+}
 // this function checks if a point is within a rectangular area 
 // used for buttons and other rectangular objects
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)

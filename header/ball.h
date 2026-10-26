@@ -28,7 +28,10 @@ typedef struct {
 // Lifecycle & Control
 void Ball_Init(Ball* ball, CP_Vector position, float radius);
 void Ball_Update(Ball* ball, float delta_time);
+
+// Drawing the ball + aim line
 void Draw_Player(CP_Image img, CP_Vector position, float img_width, float img_height);
+void Ball_DrawAim(const Ball* ball);
 
 // Input Handling (Pull-back slingshot mechanic)
 void Ball_OnPointerDown(Ball* ball, CP_Vector position);
@@ -39,6 +42,7 @@ void Ball_OnPointerUp(Ball* ball);
 bool Ball_IsMoving(const Ball* ball);
 bool Ball_IsAiming(const Ball* ball);
 
+CP_Vector Ball_GetPull(const Ball* ball);
 
 
 #endif // BALL_H

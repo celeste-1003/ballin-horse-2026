@@ -17,7 +17,7 @@ void Ball_Init(Ball* ball, CP_Vector position, float radius) {
     ball->friction = 0.92f;   // Lower for rough grass, higher for slick greens
     ball->min_stop_speed = 1.5f;    // Below this speed, the ball stops completely
     ball->power_multiplier = 6.0f;    // Shot power scaling factor
-    ball->max_pull_distance = 120.0f;  // Max drag reach
+    ball->max_pull_distance = 240.0f;  // Max drag reach
 }
 
 void Ball_OnPointerDown(Ball* ball, CP_Vector position) {
@@ -60,6 +60,31 @@ void Ball_OnPointerUp(Ball* ball) {
     }
 
     ball->is_aiming = false;
+}
+
+// Clamped pull vector(points in the launch direction). (0, 0) when not aiming.
+// Used by both the shot and the aim line so they always agree.
+CP_Vector Ball_GetPull(const Ball * ball) {
+    if (!ball->is_aiming) return CP_Vector_Set(0.0f, 0.0f);
+
+    CP_Vector pull = CP_Vector_Subtract(ball->drag_start, ball->drag_current);
+    float len = CP_Vector_Length(pull);
+
+    if (len > ball->max_pull_distance) {
+        pull = CP_Vector_Scale(pull, ball->max_pull_distance / len);
+    }
+    return pull;
+}
+
+// Dotted aim line, drawn while dragging
+void Ball_DrawAim(const Ball* ball) {
+    CP_Vector pull = Ball_GetPull(ball);
+    if (CP_Vector_Length(pull) <= 0.001f) return;
+
+    CP_Vector end = CP_Vector_Add(ball->position, pull);
+    draw_dotted_line(ball->position.x, ball->position.y,
+        end.x, end.y,
+        14.0f, 6.0f, CP_Color_Create(255, 255, 255, 200));
 }
 
 // Draw the horse sprite as the player

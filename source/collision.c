@@ -4,6 +4,7 @@
 #include "header/vecmath.h"
 #include "header/constants.h"
 #include "header/utils.h"
+#include "header/ball.h"
 
 // WALL COLLISION CHECK | Uses closest point on line segment to ball center to determine if collision has occurred
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -221,4 +222,39 @@ float get_friction_multiplier(CP_Vector ball_pos,
 
     // Use normal friction for grass and other tiles
     return GRASS_FRICTION_MULTIPLIER;
+}
+
+void ball_vs_walls(Ball* ball, const Level* lvl)
+{
+    int ballCol = GetCol(ball->position.x);
+    int ballRow = GetRow(ball->position.y);
+
+    for (int row = ballRow - 1; row <= ballRow + 1; row++) {
+        for (int col = ballCol - 1; col <= ballCol + 1; col++) {
+            if (Level_GetTile(lvl, col, row) != tileWall) continue;
+
+            CP_Vector normal = get_wall_normal(ball->position,
+               ballCol, ballRow);
+
+            if (!check_wall_collision(ball->position, ball->radius, col, row))
+                continue;
+
+            /* Push out so the ball no longer overlaps. Recompute the distance
+               from the clamp, since check_wall_collision only returns the normal. */
+            float left = (float)(col * TILE_SIZE), top = (float)(row * TILE_SIZE);
+            CP_Vector closest = CP_Vector_Set(
+                CP_Math_ClampFloat(ball->position.x, left, left + TILE_SIZE),
+                CP_Math_ClampFloat(ball->position.y, top, top + TILE_SIZE));
+            float dist = CP_Vector_Distance(ball->position, closest);
+
+            ball->position = CP_Vector_Add(ball->position,
+                CP_Vector_Scale(normal, ball->radius - dist));
+
+            /* Bounce only if moving into the wall */
+            if (CP_Vector_DotProduct(ball->velocity, normal) < 0.0f) {
+                ball->velocity = ReflectedVector(ball->velocity, normal);
+                ball->velocity = CP_Vector_Scale(ball->velocity, 0.8f);
+            }
+        }
+    }
 }

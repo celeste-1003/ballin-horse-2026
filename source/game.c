@@ -14,6 +14,7 @@
 #include "header/lvlselect.h"
 #include "header/game.h"
 #include "header/ball.h"
+#include "header/collision.h"
 
 const char* level1[GRID_ROW] = {
     "################################",
@@ -56,7 +57,8 @@ void game_update(void) {
 
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
     Level_Draw(&currentLevel);
-    Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f); // placeholder dimensions
+    Ball_DrawAim(&ball);
+    Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f); // placeholder dimensions + assets lol variable weirdly not working gunna spank it ok
     // later: Ball_Draw(&ball), HUD draw
 
     float dt = CP_System_GetDt();
@@ -76,6 +78,13 @@ void game_update(void) {
         }
 
         Ball_Update(&ball, dt);
+        ball_vs_walls(&ball, &currentLevel);
+
+        //if (check_wall_collision(ball.position, 100.0f, GetCol(ball.position.x), GetRow(ball.position.y))) {
+        //    CP_Vector direction = Ball_GetPull(&ball);
+        //    CP_Vector normal = get_wall_normal(ball.position, GetCol(ball.position.x), GetRow(ball.position.y));
+
+        //}
         //ball_vs_walls(&ball, &currentLevel);
 
         //if (ball_in_hole(&ball, &currentLevel.hole)) {
