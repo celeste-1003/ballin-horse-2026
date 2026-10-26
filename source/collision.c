@@ -214,10 +214,10 @@ float get_friction_multiplier(CP_Vector ball_pos,
         return SAND_FRICTION_MULTIPLIER;
     }
 
-    // Ice has less friction
-    else if (current_tile == tileIce) {
-        return ICE_FRICTION_MULTIPLIER;
-    }
+    //// Ice has less friction
+    //else if (current_tile == tileIce) {
+    //    return ICE_FRICTION_MULTIPLIER;
+    //}
 
     // Use normal friction for grass and other tiles
     return GRASS_FRICTION_MULTIPLIER;
