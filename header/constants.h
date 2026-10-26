@@ -41,3 +41,6 @@
 #define MIN_SPEED (1.0f)
 #define MAX_SPEED (1500.0f)
 #define FRICTION_DECELERATION (250.0f)
+#define GRASS_FRICTION_MULTIPLIER (1.0f) // normal friction
+#define SAND_FRICTION_MULTIPLIER (2.0f) // double friction
+#define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
