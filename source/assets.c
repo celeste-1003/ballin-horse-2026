@@ -4,7 +4,7 @@
 CP_Color BG_Grey, Red, Green, Black, Blue, White;
 CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
-
+//CP_Image horse_mc = NULL;
 
 /**
  @brief this initialises colors and fonts used in other systems
@@ -23,6 +23,8 @@ void set_assets(void) {
 
 	body_font = CP_Font_Load("Assets/fonts/ComicSans.ttf");
 	title_font = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");
+
+	//horse_mc = CP_Image_Load("Assets/sprites/horse_golf_ball.png");
 }
 
 void set_splash_assets(void) {

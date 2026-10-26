@@ -13,12 +13,13 @@
 #include "header/pause.h"
 #include "header/lvlselect.h"
 #include "header/game.h"
+#include "header/ball.h"
 
 const char* level1[GRID_ROW] = {
     "################################",
     "#..............................#",
     "#..............................#",
-    "#...B..........................#",
+    "#..B...........................#",
     "#..............................#",
     "#..............................#",
     "#..............................#",
@@ -36,12 +37,15 @@ const char* level1[GRID_ROW] = {
 };
 
 static Level currentLevel;
+static Ball  ball;
+static int   strokes = 0;
 
 /* GAME STATES */
 // this runs once when entering the state
 void game_init(void){
     set_assets();
-    Level_Load(&currentLevel, level1, 3);
+    Level_Load(&currentLevel, level1, 3); //placeholder par
+	Ball_Init(&ball, currentLevel.ballStart, 100.0f); //placeholder radius
     pause_init();
 }
 
@@ -52,7 +56,33 @@ void game_update(void) {
 
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
     Level_Draw(&currentLevel);
+    Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f); // placeholder dimensions
     // later: Ball_Draw(&ball), HUD draw
+
+    float dt = CP_System_GetDt();
+	CP_Vector mouseOG = GetMousePos();
+
+	    if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
+		    Ball_OnPointerDown(&ball, mouseOG);
+	    }
+	    else if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT)) {
+		    Ball_OnPointerMove(&ball, mouseOG);
+	    }
+
+        if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT)) {
+            int wasAiming = Ball_IsAiming(&ball);
+            Ball_OnPointerUp(&ball);
+            if (wasAiming && Ball_IsMoving(&ball)) strokes++;  
+        }
+
+        Ball_Update(&ball, dt);
+        //ball_vs_walls(&ball, &currentLevel);
+
+        //if (ball_in_hole(&ball, &currentLevel.hole)) {
+        //    ball.velocity = CP_Vector_Set(0.0f, 0.0f);
+        //    ball.position = currentLevel.hole.pos;
+        //    /* later: save strokes and par, go to the results screen */
+        //}
 
     if (pause_is_open()) {
         pause_action action = pause_update();
