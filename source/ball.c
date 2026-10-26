@@ -1,6 +1,7 @@
 #include "header/ball.h"
 #include <math.h>
 
+//test
 static float GetDistance(float x1, float y1, float x2, float y2) {
     float dx = x2 - x1;
     float dy = y2 - y1;
