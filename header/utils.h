@@ -18,4 +18,4 @@ CP_Vector GetMousePos(void);
 /*!
 @brief applies friction to movement vector that slows horse fella down depending on how long it moves
 *//*______________________________________________________________*/
-CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime);
+CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime, float friction_multiplier);

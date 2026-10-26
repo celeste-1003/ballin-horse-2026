@@ -57,7 +57,7 @@ CP_Vector GetMousePos(void) {
 }
 
 
-CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime) {
+CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime, float friction_multiplier) {
 	//return 0;
 
 	float speed = CP_Vector_Length(movementVector);
@@ -66,7 +66,7 @@ CP_Vector ApplyFriction(CP_Vector movementVector, float deltaTime) {
 		return CP_Vector_Zero();
 	}
 
-	else speed -= FRICTION_DECELERATION * deltaTime;
+	else speed -= FRICTION_DECELERATION * friction_multiplier * deltaTime;
 
 	if (speed < MIN_SPEED) {
 		return CP_Vector_Zero();

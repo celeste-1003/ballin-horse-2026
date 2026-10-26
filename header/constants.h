@@ -44,6 +44,7 @@
 #define GRASS_FRICTION_MULTIPLIER (1.0f) // normal friction
 #define SAND_FRICTION_MULTIPLIER (2.0f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
+#define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
 
 // PAUSE MENU MACROS
 #define PAUSE_OVERLAY (150)
