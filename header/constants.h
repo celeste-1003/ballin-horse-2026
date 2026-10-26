@@ -44,3 +44,13 @@
 #define GRASS_FRICTION_MULTIPLIER (1.0f) // normal friction
 #define SAND_FRICTION_MULTIPLIER (2.0f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
+
+// PAUSE MENU MACROS
+#define PAUSE_OVERLAY (150)
+#define PAUSE_TITLE_Y (130.0f)
+#define PAUSE_TITLE_SIZE (80.0f)
+#define PAUSE_BUTTON_W (250.0f)     
+#define PAUSE_BUTTON_H (125.0f)     
+#define PAUSE_BUTTON_GAP (20.0f)
+#define PAUSE_FIRST_Y (260.0f)     
+#define PAUSE_TEXT_SIZE (50.0f)  
