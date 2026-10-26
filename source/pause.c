@@ -24,7 +24,7 @@ static void make_button(Button* b, const char* label, float center_y){
     b->font = body_font;
     b->text_size = PAUSE_TEXT_SIZE;
 
-    b->enabled = TRUE;
+    b->enabled = (body_font != NULL);
 }
 
 void pause_init(void) {

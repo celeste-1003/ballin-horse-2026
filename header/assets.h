@@ -7,3 +7,4 @@ extern CP_Image sch_logo, team_logo;
 
 void set_assets(void);
 void set_splash_assets(void);
+void FreeAsset();

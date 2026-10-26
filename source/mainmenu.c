@@ -60,8 +60,10 @@ void main_menu_init(void){
 void main_menu_update(void){
 	CP_Graphics_ClearBackground(BG_Grey);
 
+	CP_Settings_RectMode(CP_POSITION_CENTER);
 	/* TITLE PLACEHOLDER */
 	draw_rect(BUTTON_X, TITLE_Y, TITLE_WIDTH, TITLE_HEIGHT, Red);
+
 	draw_text(title_font, Black, horizontal, vertical, "Ballin' Horse", text_x, TITLE_Y);
 
 	UI_drawbutton(&btn_play);

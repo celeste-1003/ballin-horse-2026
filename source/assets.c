@@ -31,3 +31,8 @@ void set_splash_assets(void) {
 	sch_logo = CP_Image_Load("Assets/logos/DigiPen_BLACK.png");
 	team_logo = CP_Image_Load("Assets/logos/DigiPen_Singapore_WEB_RED.png");
 }
+
+void FreeAsset() {
+	CP_Font_Free(body_font);
+	CP_Font_Free(title_font);
+}

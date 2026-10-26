@@ -65,4 +65,7 @@ void splash_exit(void) {
 	for (int i = 0; i < SPLASH_COUNT; i++) {
 		CP_Image_Free(logos[i]);
 	}
+
+	sch_logo = NULL;
+	team_logo = NULL;
 }
