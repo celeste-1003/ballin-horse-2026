@@ -58,7 +58,10 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header\ui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\pause.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\ui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\pause.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

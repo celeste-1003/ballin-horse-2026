@@ -41,3 +41,13 @@
 #define MIN_SPEED (1.0f)
 #define MAX_SPEED (1500.0f)
 #define FRICTION_DECELERATION (250.0f)
+
+// PAUSE MENU MACROS
+#define PAUSE_OVERLAY (150)
+#define PAUSE_TITLE_Y (130.0f)
+#define PAUSE_TITLE_SIZE (80.0f)
+#define PAUSE_BUTTON_W (250.0f)     
+#define PAUSE_BUTTON_H (125.0f)     
+#define PAUSE_BUTTON_GAP (20.0f)
+#define PAUSE_FIRST_Y (260.0f)     
+#define PAUSE_TEXT_SIZE (50.0f)  

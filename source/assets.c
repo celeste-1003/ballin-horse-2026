@@ -11,6 +11,10 @@ CP_Image sch_logo = NULL, team_logo = NULL;
  @remarks no images, images will be loaded in 
  */
 void set_assets(void) {
+	static int loaded = 0;
+	if (loaded) return;
+	loaded = 1;
+	
 	BG_Grey = CP_Color_Create(128, 128, 128, 255);
 	Red = CP_Color_Create(220, 20, 60, 255);
 	Black = CP_Color_Create(0, 0, 0, 255);
