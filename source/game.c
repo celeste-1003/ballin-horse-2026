@@ -46,7 +46,7 @@ static int   strokes = 0;
 void game_init(void){
     set_assets();
     Level_Load(&currentLevel, level1, 3); //placeholder par
-	Ball_Init(&ball, currentLevel.ballStart, 100.0f); //placeholder radius
+	Ball_Init(&ball, currentLevel.ballStart, 50.0f); //placeholder radius
     pause_init();
 }
 
@@ -78,7 +78,9 @@ void game_update(void) {
         }
 
         Ball_Update(&ball, dt);
-        ball_vs_walls(&ball, &currentLevel);
+        ballCollision(&ball, &currentLevel);
+        ballFriction(&ball, &currentLevel);
+        //ball_vs_walls(&ball, &currentLevel);
 
         //if (check_wall_collision(ball.position, 100.0f, GetCol(ball.position.x), GetRow(ball.position.y))) {
         //    CP_Vector direction = Ball_GetPull(&ball);

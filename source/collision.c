@@ -5,6 +5,8 @@
 #include "header/constants.h"
 #include "header/utils.h"
 #include "header/ball.h"
+#include "header/level.h"
+#include "header/mainmenu.h"
 
 // WALL COLLISION CHECK | Uses closest point on line segment to ball center to determine if collision has occurred
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -224,37 +226,92 @@ float get_friction_multiplier(CP_Vector ball_pos,
     return GRASS_FRICTION_MULTIPLIER;
 }
 
-void ball_vs_walls(Ball* ball, const Level* lvl)
-{
-    int ballCol = GetCol(ball->position.x);
-    int ballRow = GetRow(ball->position.y);
+static int is_wall_tile(const Level* lvl, int col, int row) {
+    if (col < 0 || row < 0 || col >= GRID_COL || row >= GRID_ROW) {
+        return 1;
+    }
+    return Level_GetTile(lvl, col, row) == tileWall;
+}
 
-    for (int row = ballRow - 1; row <= ballRow + 1; row++) {
-        for (int col = ballCol - 1; col <= ballCol + 1; col++) {
-            if (Level_GetTile(lvl, col, row) != tileWall) continue;
 
-            CP_Vector normal = get_wall_normal(ball->position,
-               ballCol, ballRow);
+////keep ball frm glitching out of bounds by checking
+//static is_walltype(const Level* lvl, int col, int row) {
+// baby doesnt work :<
+//}
 
-            if (!check_wall_collision(ball->position, ball->radius, col, row))
-                continue;
+void ballCollision(Ball* ball, const Level* lvl) {
 
-            /* Push out so the ball no longer overlaps. Recompute the distance
-               from the clamp, since check_wall_collision only returns the normal. */
-            float left = (float)(col * TILE_SIZE), top = (float)(row * TILE_SIZE);
-            CP_Vector closest = CP_Vector_Set(
-                CP_Math_ClampFloat(ball->position.x, left, left + TILE_SIZE),
-                CP_Math_ClampFloat(ball->position.y, top, top + TILE_SIZE));
-            float dist = CP_Vector_Distance(ball->position, closest);
+    // get dt first 
+    float dt = CP_System_GetDt();
+    if (dt > MAX_DT) {
+        dt = MAX_DT;
+    }
 
-            ball->position = CP_Vector_Add(ball->position,
-                CP_Vector_Scale(normal, ball->radius - dist));
 
-            /* Bounce only if moving into the wall */
-            if (CP_Vector_DotProduct(ball->velocity, normal) < 0.0f) {
-                ball->velocity = ReflectedVector(ball->velocity, normal);
-                ball->velocity = CP_Vector_Scale(ball->velocity, 0.8f);
+    float speed = CP_Vector_Length(ball->velocity);
+
+    if (speed < MIN_SPEED) {
+        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+        if (check_hole_collision(ball->position, ball->radius, lvl->hole.position, (float)HOLE_DIAMETER/2.0))
+            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee 
+        return;
+    }
+
+    //check surface, based on surface, give me multiplier, times by multiplier
+
+    float travel = speed * dt;
+    float max_step = ball->radius * 0.5f;
+
+    //rounds up instead of down get it ceiling instead of floor hahrharharhr
+    int steps = (int)ceilf(travel / max_step);
+    if (steps < 1) {
+        steps = 1;
+    }
+    if (steps > MAX_STEPS) {
+        steps = MAX_STEPS;
+    }
+
+    float sub_dt = dt / (float)steps;
+
+    //loops and checks everytime it moves per step. so it doesnt glitch out of bounds okok
+    for (int i = 0; i < steps; ++i) {
+        ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
+        if (check_surface_collision(ball->position, lvl) == tileWater)
+            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee !
+    }
+
+    for (int check = 0; check < CHECK_TIMES; ++check) {
+        //bounding box of ball !! kim u can make these lines visible when u do debugger ok.
+        int min_col = (int)floorf((ball->position.x - ball->radius) / TILE_SIZE);
+        int max_col = (int)floorf((ball->position.x + ball->radius) / TILE_SIZE);
+        int min_row = (int)floorf((ball->position.y - ball->radius) / TILE_SIZE);
+        int max_row = (int)floorf((ball->position.y + ball->radius) / TILE_SIZE);
+
+        for (int row = min_row; row <= max_row; row++) {
+            for (int col = min_col; col <= max_col; col++) {
+
+                if (!is_wall_tile(lvl, col, row)) {
+                    continue;
+                }
+
+                if (!check_wall_collision(ball->position, ball->radius, col, row)) {
+                    continue;
+                }
+
+                CP_Vector normal = get_wall_normal(ball->position, col, row);
+                ball->position = correct_wall_position(ball->position, ball->radius, col, row);
+                ball->velocity = bounce_wall(ball->velocity, normal);
             }
         }
+    }
+}
+
+void ballFriction(Ball* ball, const Level* lvl) {
+
+    float friction = get_friction_multiplier(ball->position, lvl);
+    ball->velocity = CP_Vector_Scale(ball->velocity, friction);
+
+    if (CP_Vector_Length(ball->velocity) < MIN_SPEED) {
+        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
     }
 }

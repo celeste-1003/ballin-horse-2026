@@ -16,7 +16,7 @@ void Ball_Init(Ball* ball, CP_Vector position, float radius) {
     // Ground resistance & mechanics tuning
     ball->friction = 0.92f;   // Lower for rough grass, higher for slick greens
     ball->min_stop_speed = 1.5f;    // Below this speed, the ball stops completely
-    ball->power_multiplier = 6.0f;    // Shot power scaling factor
+    ball->power_multiplier = 5.0f;    // Shot power scaling factor
     ball->max_pull_distance = 240.0f;  // Max drag reach
 }
 

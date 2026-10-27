@@ -5,7 +5,7 @@
 #include "level.h"
 #include "header/ball.h"
 
-// WALL COLLISION
+// CHECK WALL COLLISION
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
     int col, int row);
 
@@ -30,4 +30,8 @@ TileType check_surface_collision(CP_Vector ball_pos,
 float get_friction_multiplier(CP_Vector ball_pos,
     const Level* lvl);
 
-void ball_vs_walls(Ball* ball, const Level* lvl);
+static int is_wall_tile(const Level* lvl, int col, int row);
+
+void ballCollision(Ball* ball, const Level* lvl);
+
+void ballFriction(Ball* ball, const Level* lvl);

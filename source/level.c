@@ -20,7 +20,7 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case 'w': type = tileWater; break;
             case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
                 break;
-            case 'H': lvl->hole.pos = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+            case 'H': lvl->hole.position = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
                 break;
             }
 
@@ -70,5 +70,5 @@ void Level_Draw(const Level* lvl) {
 
     /* Hole on top of the tiles (DrawCircle takes a diameter) */
     CP_Settings_Fill(CP_Color_Create(20, 20, 20, 255));
-    CP_Graphics_DrawCircle(lvl->hole.pos.x, lvl->hole.pos.y, (float)HOLE_DIAMETER);
+    CP_Graphics_DrawCircle(lvl->hole.position.x, lvl->hole.position.y, (float)HOLE_DIAMETER);
 }

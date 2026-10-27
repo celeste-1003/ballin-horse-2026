@@ -20,7 +20,7 @@
 #define SCREEN_WIDTH (1600)
 #define SCREEN_HEIGHT (900)
 #define TILE_SIZE (50)
-#define HOLE_DIAMETER (40)
+#define HOLE_DIAMETER (60)
 #define GRID_COL (SCREEN_WIDTH / TILE_SIZE) //32
 #define GRID_ROW (SCREEN_HEIGHT / TILE_SIZE) //18
 
@@ -36,13 +36,16 @@
 #define BUTTON_TEXT_SIZE (70.0f)
 
 // DRAGGING/GAMEPLAY MACROS
+#define MAX_DT (1.0f / 30.0f)
+#define CHECK_TIMES (2)
+#define MAX_STEPS (16)
 #define MAX_DRAG_DISTANCE (150.0f)
 #define MIN_DRAG_DISTANCE (2.0f)
 #define MIN_SPEED (1.0f)
 #define MAX_SPEED (1500.0f)
 #define FRICTION_DECELERATION (250.0f)
 #define GRASS_FRICTION_MULTIPLIER (1.0f) // normal friction
-#define SAND_FRICTION_MULTIPLIER (2.0f) // double friction
+#define SAND_FRICTION_MULTIPLIER (0.5f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
 #define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
 

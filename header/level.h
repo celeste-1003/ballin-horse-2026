@@ -1,7 +1,8 @@
 #pragma once
 
 typedef struct Hole {
-	CP_Vector pos;
+	CP_Vector position;
+	//float radius;
 } Hole;
 
 /*!
