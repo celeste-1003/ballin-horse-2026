@@ -131,10 +131,63 @@ float debug_dt(float raw_dt) {
 		frozen != frozen;
 		debug_log("frozen %s", frozen ? "yes" : "no");
 	}
-	//if (frozen) {
-	//	return(CP)
-	//}
+	if (frozen) {
+		return CP_Input_KeyTriggered(KEY_F5) ? DEBUG_STEP_DT : 0.0f;
+	}
+	return dt * time_scale;
 }
+
+CP_BOOL Debug_IsOn(void) {
+	return debug_on;
+}
+
+/* LOGGING */
+// @brief this logs 
+void debug_log(const char* fmt, ...) {
+	if (!debug_on || fmt == NULL)return;
+
+	char line[512];
+	int n = sprintf(line, sizeof line, "[%7.2fs f%5u]", CP_System_GetSeconds(), CP_System_GetFrameRate());
+	if (n < 0 || n >= (int)sizeof line) return;
+
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(line + n, sizeof line - (size_t)n, _TRUNCATE, fmt, ap);
+	va_end(ap);
+
+	printf("%s\n", line);
+#ifdef _WIN32
+	OutputDebugStringA(line);
+	OutputDebugStringA("\n");
+#endif
+}
+
+/* SHOW HITBOXES */
+static int debug_scan_contacts(const Ball* ball, const Level* level, int bc, int br, unsigned* out_sig) {
+	int hits = 0;
+	unsigned sig = 0u;
+
+	for (int r = br - 1; r <= br + 1; r++) {
+		for (int c = bc - 1; c <= bc + 1;c++) {
+			if (Level_GetTile(level, c, r) != tileWall) continue;
+			if (!check_wall_collision(ball->position, ball->radius, c, r)) continue;
+
+			hits++;
+			sig |= 1u << ((r - br + 1) * 3 + (c - bc + 1));
+		}
+	}
+	*out_sig = sig;
+	return hits;
+}
+
+static void debug_draw_hitboxes(const Ball* ball, const Level* level, int bc, int br) {
+	CP_Settings_Save();
+
+	dbg_outline_circle(ball->position.x, ball->position.y, ball->radius * 2.0f, dbg_col(0, 255, 255, 210), 2.0f);
+}
+
+
+
 
 // this doesnt work, too bad!
 //static int draw_hitboxes(const Ball* b, const Level* lvl, int strokes) {
