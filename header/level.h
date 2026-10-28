@@ -1,4 +1,5 @@
 #pragma once
+#include "header/constants.h"
 
 typedef struct Hole {
 	CP_Vector position;

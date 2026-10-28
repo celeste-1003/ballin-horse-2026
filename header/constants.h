@@ -58,3 +58,11 @@
 #define PAUSE_BUTTON_GAP (20.0f)
 #define PAUSE_FIRST_Y (260.0f)     
 #define PAUSE_TEXT_SIZE (50.0f)  
+
+// DEBUG MACROS
+#define DEBUG_MAX_DT (1.0f / 3.0f)
+#define DEBUG_STEP_DT (1.0f / 60.0f)
+#define HUD_TXT_SIZE (18.0f)
+#define HUD_X (12.0f)
+#define HUD_Y (SCREEN_HEIGHT / 100.0f)
+#define HUD_LINE_H (21.0f)
