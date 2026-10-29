@@ -2,6 +2,7 @@
 #include "header/assets.h"
 
 CP_Color BG_Grey, Red, Green, Black, Blue, White;
+CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass;
 CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
 //CP_Image horse_mc = NULL;
@@ -20,6 +21,14 @@ void set_assets(void) {
 	Black = CP_Color_Create(0, 0, 0, 255);
 	Blue = CP_Color_Create(100, 149, 237, 255);
 	White = CP_Color_Create(255, 255, 255, 255);
+
+	// Colour
+	Light_Sand = CP_Color_Create(232, 213, 145, 255);
+	Dark_Sand = CP_Color_Create(220, 200, 130, 255);
+	Water = CP_Color_Create(60, 120, 200, 255);
+	Dark_Water = CP_Color_Create(75, 135, 215, 255);
+	Grass = CP_Color_Create(60, 160, 70, 255);
+	Dark_Grass = CP_Color_Create(72, 175, 82, 255);
 
 	body_font = CP_Font_Load("Assets/fonts/ComicSans.ttf");
 	title_font = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");

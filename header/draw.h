@@ -14,3 +14,7 @@ void draw_image(CP_Image img, float img_x, float img_y, float img_width, float i
 void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, float dot_diameter, CP_Color col); // can this even be done tbh
 
 void draw_circ(float cx, float cy, float cd, CP_Color col);
+
+void draw_stickywall(float x, float y, float width, float height, CP_Color col);
+
+void draw_spikes(float x, float y, float width, float height, CP_Color col);

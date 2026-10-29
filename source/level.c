@@ -2,6 +2,8 @@
 #include "cprocessing.h"
 #include "header/constants.h"
 #include "header/level.h"
+#include "header/assets.h"
+#include "header/draw.h"
 
 
 
@@ -18,6 +20,8 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case '#': type = tileWall;	break;
             case 's': type = tileSand;  break;
             case 'w': type = tileWater; break;
+			case 'x': type = tileSpike; break;
+			case 'S': type = tileStickyWall; break;
             case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
                 break;
             case 'H': lvl->hole.position = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
@@ -47,24 +51,30 @@ void Level_Draw(const Level* lvl) {
 
             switch (lvl->tiles[row][col]) {
             case tileWall:
-                CP_Settings_Fill(CP_Color_Create(110, 110, 115, 255));
+				draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, BG_Grey);
                 break;
             case tileSand:
-                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(220, 200, 130, 255));
-                else                      CP_Settings_Fill(CP_Color_Create(232, 213, 145, 255));
+                if ((row + col) % 2 == 0) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Light_Sand);
+                else                      draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Sand);
                 break;
             case tileWater:
-                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(60, 120, 200, 255));
-                else                      CP_Settings_Fill(CP_Color_Create(75, 135, 215, 255));
+                if ((row + col) % 2 == 0) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Water);
+                else                      draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Water);
+                break;
+            case tileSpike:
+                draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, CP_Color_Create(100, 100, 100, 255));
+                break;
+            case tileStickyWall:
+                draw_stickywall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, CP_Color_Create(150, 150, 150, 255));
                 break;
             default:
-                if ((row + col) % 2 == 0) CP_Settings_Fill(CP_Color_Create(60, 160, 70, 255));
-                else                      CP_Settings_Fill(CP_Color_Create(72, 175, 82, 255));
+                if ((row + col) % 2 == 0) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
+                else                      draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);
                 break;
             }
 
-            CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE),
-                TILE_SIZE, TILE_SIZE);
+           // CP_Graphics_DrawRect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE),
+               // TILE_SIZE, TILE_SIZE);
         }
     }
 

@@ -16,7 +16,9 @@ typedef enum TileType {
 	tileWall,
 	tileWater,
 	tileHole,
-	tileSand
+	tileSand,
+	tileSpike,
+	tileStickyWall,
 } TileType;
 
 typedef struct Level {

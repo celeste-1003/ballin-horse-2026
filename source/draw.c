@@ -70,3 +70,17 @@ void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, flo
 	}
 	CP_Settings_Restore();
 }
+
+void draw_stickywall(float x, float y, float width, float height, CP_Color col) {
+	CP_Settings_Fill(col);
+	CP_Graphics_DrawRect(x, y, width, height);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Graphics_DrawLineAdvanced(x + width / 2.0f, y, x + width / 2.0f, y + height, 0.0f);
+}
+
+void draw_spikes(float x, float y, float width, float height, CP_Color col) {
+	CP_Settings_Fill(col);
+	CP_Graphics_DrawRect(x, y, width, height);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Graphics_DrawLineAdvanced(x + width / 2.0f, y, x + width / 2.0f, y + height, 0.0f);
+}
