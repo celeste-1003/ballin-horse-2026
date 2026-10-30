@@ -230,7 +230,9 @@ static int is_wall_tile(const Level* lvl, int col, int row) {
     if (col < 0 || row < 0 || col >= GRID_COL || row >= GRID_ROW) {
         return 1;
     }
-    return Level_GetTile(lvl, col, row) == tileWall;
+
+    TileType t = Level_GetTile(lvl, col, row);
+    return t == tileWall || t == tileStickyWall;
 }
 
 
@@ -276,7 +278,7 @@ void ballCollision(Ball* ball, const Level* lvl) {
     //loops and checks everytime it moves per step. so it doesnt glitch out of bounds okok
     for (int i = 0; i < steps; ++i) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
-        if (check_surface_collision(ball->position, lvl) == tileWater)
+        if (check_surface_collision(ball->position, lvl) == tileWater || check_surface_collision(ball->position, lvl) == tileSpike)
             CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee !
     }
 
@@ -296,10 +298,18 @@ void ballCollision(Ball* ball, const Level* lvl) {
 
                 if (!check_wall_collision(ball->position, ball->radius, col, row)) {
                     continue;
-                }
+                }   
 
                 CP_Vector normal = get_wall_normal(ball->position, col, row);
                 ball->position = correct_wall_position(ball->position, ball->radius, col, row);
+
+                if (Level_GetTile(lvl, col, row) == tileStickyWall) {
+                    ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+                    ball->position = correct_wall_position(ball->position, ball->radius, col, row);
+                    continue;
+                }
+
+                
                 ball->velocity = bounce_wall(ball->velocity, normal);
             }
         }

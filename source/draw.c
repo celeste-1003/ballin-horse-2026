@@ -1,6 +1,7 @@
 //Libraries
 #include "CProcessing.h"
 #include "header/draw.h"
+#include "header/assets.h"
 
 /**
  @brief this draws a rectangle
@@ -71,16 +72,39 @@ void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, flo
 	CP_Settings_Restore();
 }
 
-void draw_stickywall(float x, float y, float width, float height, CP_Color col) {
-	CP_Settings_Fill(col);
+void draw_stickywall(float x, float y, float width, float height) {
+
+	CP_Settings_Fill(Slime_Wall);
 	CP_Graphics_DrawRect(x, y, width, height);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Graphics_DrawLineAdvanced(x + width / 2.0f, y, x + width / 2.0f, y + height, 0.0f);
+
+	CP_Settings_Stroke(Slime_Wall_Outline);
+	CP_Settings_NoFill();
+	CP_Graphics_DrawRect(x+5, y+5, width-10, height-10);
+
+	CP_Settings_NoStroke();
+
+
 }
 
-void draw_spikes(float x, float y, float width, float height, CP_Color col) {
-	CP_Settings_Fill(col);
-	CP_Graphics_DrawRect(x, y, width, height);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Graphics_DrawLineAdvanced(x + width / 2.0f, y, x + width / 2.0f, y + height, 0.0f);
+void draw_spikes(float x, float y, float width, float height, CP_Color col)
+{
+	draw_rect(x, y, width, height, col);
+	
+	int   count = 3;                          
+	float w = width / count;
+	float base = y + height;         
+	float tip = y + height * 0.15f; 
+
+	CP_Settings_Save();
+	CP_Settings_NoStroke();
+	CP_Settings_Fill(CP_Color_Create(200, 205, 215, 255));
+
+	for (int i = 0; i < count; i++) {
+		float left = x + i * w;
+		CP_Graphics_DrawTriangle(left, base,
+			left + w, base,
+			left + w / 2, tip);
+	}
+
+	CP_Settings_Restore();
 }

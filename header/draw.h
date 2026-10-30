@@ -15,6 +15,6 @@ void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, flo
 
 void draw_circ(float cx, float cy, float cd, CP_Color col);
 
-void draw_stickywall(float x, float y, float width, float height, CP_Color col);
+void draw_stickywall(float x, float y, float width, float height);
 
 void draw_spikes(float x, float y, float width, float height, CP_Color col);

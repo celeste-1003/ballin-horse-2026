@@ -62,10 +62,11 @@ void Level_Draw(const Level* lvl) {
                 else                      draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Water);
                 break;
             case tileSpike:
-                draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, CP_Color_Create(100, 100, 100, 255));
+                if ((row + col) % 2 == 0) draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
+                else                      draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);
                 break;
             case tileStickyWall:
-                draw_stickywall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, CP_Color_Create(150, 150, 150, 255));
+                draw_stickywall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE);
                 break;
             default:
                 if ((row + col) % 2 == 0) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
