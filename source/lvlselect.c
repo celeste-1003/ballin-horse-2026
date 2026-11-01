@@ -51,9 +51,7 @@ void lvlselect_update(void) {
         UI_drawbutton(&lvl_buttons[i]);
 
         if (UI_updatebutton(&lvl_buttons[i])) {
-            // for future use
-            // g_selectedLevel = i + 1; 
-
+            g_selectedLevel = i;
             CP_Engine_SetNextGameState(game_init, game_update, game_exit);
         }
     }

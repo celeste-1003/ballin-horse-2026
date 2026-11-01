@@ -79,6 +79,10 @@ const char* level3[GRID_ROW] = {
     "################################"
 };
 
+int g_selectedLevel = 0;
+
+static const char** layouts[] = { level1, level2, level3 };
+static const int    pars[] = { 3, 4, 5 };
 static Level currentLevel;
 static Ball  ball;
 static int   strokes = 0;
@@ -87,7 +91,7 @@ static int   strokes = 0;
 // this runs once when entering the state
 void game_init(void){
     set_assets();
-    Level_Load(&currentLevel, level1, 3); //placeholder par
+    Level_Load(&currentLevel, layouts[g_selectedLevel], pars[g_selectedLevel]); //placeholder par
 	Ball_Init(&ball, currentLevel.ballStart, 50.0f); //placeholder radius
     pause_init();
 }
