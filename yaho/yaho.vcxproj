@@ -19,6 +19,7 @@
     <ClInclude Include="..\header\debug.h" />
     <ClInclude Include="..\header\draw.h" />
     <ClInclude Include="..\header\game.h" />
+    <ClInclude Include="..\header\gamedata.h" />
     <ClInclude Include="..\header\gameover.h" />
     <ClInclude Include="..\header\level.h" />
     <ClInclude Include="..\header\lvlselect.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="..\source\debug.c" />
     <ClCompile Include="..\source\draw.c" />
     <ClCompile Include="..\source\game.c" />
+    <ClCompile Include="..\source\gamedata.c" />
     <ClCompile Include="..\source\gameover.c" />
     <ClCompile Include="..\source\level.c" />
     <ClCompile Include="..\source\lvlselect.c" />
