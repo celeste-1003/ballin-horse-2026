@@ -30,8 +30,8 @@ TileType check_surface_collision(CP_Vector ball_pos,
 float get_friction_multiplier(CP_Vector ball_pos,
     const Level* lvl);
 
-static int is_wall_tile(const Level* lvl, int col, int row);
+int is_wall_tile(const Level* lvl, int col, int row);
 
-void ballCollision(Ball* ball, const Level* lvl);
+void ballCollision(Ball* ball, const Level* lvl, float dt);
 
-void ballFriction(Ball* ball, const Level* lvl);
+void ballFriction(Ball* ball, const Level* lvl, float dt);

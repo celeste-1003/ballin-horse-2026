@@ -7,6 +7,7 @@
 #include "header/ball.h"
 #include "header/level.h"
 #include "header/mainmenu.h"
+#include "header/debug.h"
 
 // WALL COLLISION CHECK | Uses closest point on line segment to ball center to determine if collision has occurred
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -226,7 +227,7 @@ float get_friction_multiplier(CP_Vector ball_pos,
     return GRASS_FRICTION_MULTIPLIER;
 }
 
-static int is_wall_tile(const Level* lvl, int col, int row) {
+int is_wall_tile(const Level* lvl, int col, int row) {
     if (col < 0 || row < 0 || col >= GRID_COL || row >= GRID_ROW) {
         return 1;
     }
@@ -241,21 +242,26 @@ static int is_wall_tile(const Level* lvl, int col, int row) {
 // baby doesnt work :<
 //}
 
-void ballCollision(Ball* ball, const Level* lvl) {
+void ballCollision(Ball* ball, const Level* lvl, float dt) {
 
-    // get dt first 
-    float dt = CP_System_GetDt();
-    if (dt > MAX_DT) {
-        dt = MAX_DT;
-    }
-
+    //// get dt first 
+    //float dt = CP_System_GetDt();
+    //if (dt > MAX_DT) {
+    //    dt = MAX_DT;
+    //}
 
     float speed = CP_Vector_Length(ball->velocity);
 
+    //if (speed < MIN_SPEED) {
+    //    ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+    //    if (check_hole_collision(ball->position, ball->radius, lvl->hole.position, (float)HOLE_DIAMETER / 2.0)) {
+    //        debug_log("hole reached");
+    //        CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee 
+    //    }
+    //    return;
+    //}
     if (speed < MIN_SPEED) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-        if (check_hole_collision(ball->position, ball->radius, lvl->hole.position, (float)HOLE_DIAMETER/2.0))
-            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee 
         return;
     }
 
@@ -276,10 +282,19 @@ void ballCollision(Ball* ball, const Level* lvl) {
     float sub_dt = dt / (float)steps;
 
     //loops and checks everytime it moves per step. so it doesnt glitch out of bounds okok
-    for (int i = 0; i < steps; ++i) {
+    //for (int i = 0; i < steps; ++i) {
+    //    ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
+    //    if (check_surface_collision(ball->position, lvl) == tileWater || check_surface_collision(ball->position, lvl) == tileSpike)
+    //        CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee !
+    //}
+
+    for (int i = 0; i < steps; i++) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
-        if (check_surface_collision(ball->position, lvl) == tileWater || check_surface_collision(ball->position, lvl) == tileSpike)
-            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee !
+        TileType under = check_surface_collision(ball->position, lvl);
+        if (under == tileWater || under == tileSpike) {
+            debug_log("died on %s", under == tileWater ? "water" : "spike");
+            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); 
+        }
     }
 
     for (int check = 0; check < CHECK_TIMES; ++check) {
@@ -302,8 +317,10 @@ void ballCollision(Ball* ball, const Level* lvl) {
 
                 CP_Vector normal = get_wall_normal(ball->position, col, row);
                 ball->position = correct_wall_position(ball->position, ball->radius, col, row);
+                debug_log("wall hit (%d,%d) normal (%.2f,%2f)", col, row, normal.x, normal.y);
 
                 if (Level_GetTile(lvl, col, row) == tileStickyWall) {
+                    debug_log("stuck to sticky wall");
                     ball->velocity = CP_Vector_Set(0.0f, 0.0f);
                     ball->position = correct_wall_position(ball->position, ball->radius, col, row);
                     continue;
@@ -316,9 +333,9 @@ void ballCollision(Ball* ball, const Level* lvl) {
     }
 }
 
-void ballFriction(Ball* ball, const Level* lvl) {
+void ballFriction(Ball* ball, const Level* lvl, float dt) {
 
-    float friction = get_friction_multiplier(ball->position, lvl);
+    float friction = powf(get_friction_multiplier(ball->position, lvl), dt * 60.0f);
     ball->velocity = CP_Vector_Scale(ball->velocity, friction);
 
     if (CP_Vector_Length(ball->velocity) < MIN_SPEED) {

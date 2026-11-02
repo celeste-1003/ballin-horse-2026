@@ -17,6 +17,7 @@
 #include "header/collision.h"
 #include "header/gamedata.h"
 #include "header/ui.h"
+#include "header/debug.h"
 
 const char* level1[GRID_ROW] = {
     "################################",
@@ -132,6 +133,7 @@ void game_init(void) {
 }
 
 void game_update(void) {
+    debug_update();
     if (CP_Input_KeyTriggered(KEY_ESCAPE) && !isLevelWon) {
         pause_toggle();
     }
@@ -164,6 +166,7 @@ void game_update(void) {
     Level_Draw(&currentLevel);
     Ball_DrawAim(&ball);
     Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);
+    debug_draw(&ball, &currentLevel);
 
     // --- STAGE CLEARED OVERLAY ---
     if (isLevelWon) {
@@ -199,7 +202,8 @@ void game_update(void) {
     }
 
     // Normal ball control & simulation
-    float dt = CP_System_GetDt();
+    float dt = debug_dt();
+    if (dt > MAX_DT) dt = MAX_DT;
     CP_Vector mouseOG = GetMousePos();
 
     if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
@@ -214,12 +218,13 @@ void game_update(void) {
         Ball_OnPointerUp(&ball);
         if (wasAiming && Ball_IsMoving(&ball)) {
             strokes++;
+            debug_log("shot %d, speed %.1f", strokes, CP_Vector_Length(ball.velocity));
         }
     }
 
     Ball_Update(&ball, dt);
-    ballCollision(&ball, &currentLevel);
-    ballFriction(&ball, &currentLevel);
+    ballCollision(&ball, &currentLevel, dt);
+    ballFriction(&ball, &currentLevel, dt);
 
     // Win condition check: Ball inside hole radius
     float dx = ball.position.x - currentLevel.hole.position.x;
