@@ -66,6 +66,12 @@
     <ClInclude Include="..\header\debug.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\gamedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\credits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\ball.c">
@@ -117,6 +123,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\debug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\gamedata.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\credits.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

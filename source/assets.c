@@ -1,10 +1,12 @@
 #include "cprocessing.h"
 #include "header/assets.h"
 
-CP_Color BG_Grey, Red, Green, Black, Blue, White;
+CP_Color BG_Grey, Red, Green, Black, Blue, White, Brown;
 CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Slime_Wall, Slime_Wall_Outline;
 CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
+CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
+
 //CP_Image horse_mc = NULL;
 
 /**
@@ -21,6 +23,7 @@ void set_assets(void) {
 	Black = CP_Color_Create(0, 0, 0, 255);
 	Blue = CP_Color_Create(100, 149, 237, 255);
 	White = CP_Color_Create(255, 255, 255, 255);
+	Brown = CP_Color_Create(181, 96, 2, 225);
 
 	// colour of blocks n stuff
 	Light_Sand = CP_Color_Create(232, 213, 145, 255);
@@ -38,6 +41,10 @@ void set_assets(void) {
 	title_font = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");
 
 	//horse_mc = CP_Image_Load("Assets/sprites/horse_golf_ball.png");
+	MM_grass = CP_Image_Load("./Assets/sprites/homepage_bg.png");
+	MM_horse1 = CP_Image_Load("./Assets/sprites/homepage_horse1.png");
+	MM_horse2 = CP_Image_Load("./Assets/sprites/homepage_horse2.png");
+
 }
 
 void set_splash_assets(void) {

@@ -16,6 +16,7 @@
     <ClInclude Include="..\header\ball.h" />
     <ClInclude Include="..\header\collision.h" />
     <ClInclude Include="..\header\constants.h" />
+    <ClInclude Include="..\header\credits.h" />
     <ClInclude Include="..\header\debug.h" />
     <ClInclude Include="..\header\draw.h" />
     <ClInclude Include="..\header\game.h" />
@@ -35,6 +36,7 @@
     <ClCompile Include="..\source\assets.c" />
     <ClCompile Include="..\source\ball.c" />
     <ClCompile Include="..\source\collision.c" />
+    <ClCompile Include="..\source\credits.c" />
     <ClCompile Include="..\source\debug.c" />
     <ClCompile Include="..\source\draw.c" />
     <ClCompile Include="..\source\game.c" />

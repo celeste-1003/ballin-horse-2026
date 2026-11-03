@@ -55,7 +55,13 @@ void lvlselect_init(void) {
 }
 
 void lvlselect_update(void) {
+
     CP_Graphics_ClearBackground(BG_Grey);
+    CP_Image_Draw(MM_grass, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 255);
+
+    //draw_rect(BUTTON_X, TITLE_Y, TITLE_WIDTH, TITLE_HEIGHT, Red);
+    CP_Settings_TextSize(100.0f);
+    draw_text(title_font, White, CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE, "Level Select", 800.0f, TITLE_Y);
 
     if (CP_Input_KeyTriggered(KEY_ESCAPE)) {
         CP_Engine_SetNextGameState(main_menu_init, main_menu_update, main_menu_exit);
@@ -75,5 +81,5 @@ void lvlselect_update(void) {
 }
 
 void lvlselect_exit(void) {
-
+    
 }
