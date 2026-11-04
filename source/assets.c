@@ -6,6 +6,7 @@ CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Slime_Wall
 CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
 CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
+CP_Image MM_title = NULL;
 
 //CP_Image horse_mc = NULL;
 
@@ -44,6 +45,9 @@ void set_assets(void) {
 	MM_grass = CP_Image_Load("./Assets/sprites/homepage_bg.png");
 	MM_horse1 = CP_Image_Load("./Assets/sprites/homepage_horse1.png");
 	MM_horse2 = CP_Image_Load("./Assets/sprites/homepage_horse2.png");
+
+	//title
+	MM_title = CP_Image_Load("Assets/sprites/TITLE.png");
 
 }
 

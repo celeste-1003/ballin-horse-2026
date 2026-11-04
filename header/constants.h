@@ -28,9 +28,9 @@
 // MAIN MENU MACROS
 #define TITLE_TEXTSIZE (175.0f)
 #define BUTTON_X (800.0f)
-#define PLAY_Y (500.0f)
-#define EXIT_Y (600.0f)
-#define CREDITS_Y (700.0f)
+#define PLAY_Y (575.0f)
+#define EXIT_Y (675.0f)
+#define CREDITS_Y (775.0f)
 #define MMBUTTON_WIDTH (250.0f)
 #define MMBUTTON_HEIGHT (75.0f)
 #define TITLE_WIDTH (750.0f) // placeholder(?) for image

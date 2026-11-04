@@ -5,6 +5,7 @@ extern CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Sli
 extern CP_Font body_font, title_font;
 extern CP_Image sch_logo, team_logo;
 extern CP_Image MM_grass, MM_horse1, MM_horse2;
+extern CP_Image MM_title;
 //extern CP_Image horse_mc;
 
 void set_assets(void);
