@@ -28,8 +28,6 @@ Button btn_credits;
 // Initialize stuff
 void main_menu_init(void){
 	set_assets();
-	//textsize = 70.0f;
-	//CP_Settings_TextSize(textsize);
 
 	// Setup PLAY button
 	btn_play.button_x = BUTTON_X - (MMBUTTON_WIDTH / 2); 
@@ -57,7 +55,7 @@ void main_menu_init(void){
 	btn_exit.enabled = TRUE;
 	btn_exit.press_anim = 0.0f;
 
-	// Setup EXIT button
+	// Setup CREDIT button
 	btn_credits.button_x = BUTTON_X - (MMBUTTON_WIDTH / 2);
 	btn_credits.button_y = CREDITS_Y - (MMBUTTON_HEIGHT / 2);
 	btn_credits.width = MMBUTTON_WIDTH;
@@ -81,8 +79,12 @@ void main_menu_update(void){
 	
 	/* TITLE PLACEHOLDER */
 	//draw_rect(BUTTON_X, TITLE_Y, TITLE_WIDTH, TITLE_HEIGHT, Red);
-	CP_Settings_TextSize(TITLE_TEXTSIZE);
-	draw_text(title_font, White, horizontal, vertical, "Ballin' Horse!!", text_x, TITLE_Y);
+	//CP_Settings_TextSize(TITLE_TEXTSIZE);
+	//draw_text(title_font, White, horizontal, vertical, "Ballin' Horse!!", text_x, TITLE_Y);
+	
+	/* ACTUAL TITLE PNG */
+	CP_Image_Draw(MM_title, BUTTON_X, TITLE_Y, SCREEN_WIDTH, SCREEN_HEIGHT, 255);
+
 
 	CP_Image_Draw(MM_horse1, 1300.0f, 625.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 255);
 
