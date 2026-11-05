@@ -32,6 +32,6 @@ float get_friction_multiplier(CP_Vector ball_pos,
 
 int is_wall_tile(const Level* lvl, int col, int row);
 
-void ballCollision(Ball* ball, const Level* lvl, float dt);
+int ballCollision(Ball* ball, const Level* lvl, float dt);
 
 void ballFriction(Ball* ball, const Level* lvl, float dt);

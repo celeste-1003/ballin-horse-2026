@@ -242,7 +242,7 @@ int is_wall_tile(const Level* lvl, int col, int row) {
 // baby doesnt work :<
 //}
 
-void ballCollision(Ball* ball, const Level* lvl, float dt) {
+int ballCollision(Ball* ball, const Level* lvl, float dt) {
 
     //// get dt first 
     //float dt = CP_System_GetDt();
@@ -262,7 +262,7 @@ void ballCollision(Ball* ball, const Level* lvl, float dt) {
     //}
     if (speed < MIN_SPEED) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-        return;
+        return 0; // No hazard
     }
 
     //check surface, based on surface, give me multiplier, times by multiplier
@@ -291,9 +291,15 @@ void ballCollision(Ball* ball, const Level* lvl, float dt) {
     for (int i = 0; i < steps; i++) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
         TileType under = check_surface_collision(ball->position, lvl);
-        if (under == tileWater || under == tileSpike) {
-            debug_log("died on %s", under == tileWater ? "water" : "spike");
-            CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); 
+        if (under == tileWater) {
+            debug_log("died on water");
+            ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+            return 1; // Water lose screen
+        }
+        if (under == tileSpike) {
+            debug_log("died on spike");
+            ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+            return 2; // Spike lose screen
         }
     }
 
@@ -331,6 +337,7 @@ void ballCollision(Ball* ball, const Level* lvl, float dt) {
             }
         }
     }
+    return 0; // No hazard collision occurred
 }
 
 void ballFriction(Ball* ball, const Level* lvl, float dt) {

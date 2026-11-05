@@ -18,6 +18,7 @@
 #include "header/gamedata.h"
 #include "header/ui.h"
 #include "header/debug.h"
+#include "header/gameover.h"
 
 const char* level1[GRID_ROW] = {
     "################################",
@@ -90,26 +91,49 @@ static Ball  ball;
 static int   strokes = 0;
 
 // Victory overlay state and buttons
-static bool isLevelWon = false;
-static Button btn_next_level;
-static Button btn_lvl_select;
+bool isLevelWon = false;
+bool isLevelLost = false;
+
+Button btn_next_level;
+Button btn_lvl_select;
+
+Button btn_retry;
+Button btn_main_menu;
 
 /* GAME STATES */
 
 void game_init(void) {
     set_assets();
+    gameover_init(); // Load result images
     strokes = 0;
-    isLevelWon = false;
+    isLevelWon = false; // Reset win state
+    isLevelLost = false; // Reset lose state
 
     Level_Load(&currentLevel, layouts[g_selectedLevel], pars[g_selectedLevel]);
     Ball_Init(&ball, currentLevel.ballStart, 50.0f);
     pause_init();
 
+    float overlay_x = (SCREEN_WIDTH - 1100.0f) / 2.0f;
+    float overlay_y = (SCREEN_HEIGHT - 650.0f) / 2.0f;
+
+    // Option B: "Level Select" Button
+    btn_lvl_select.width = 240.0f;
+    btn_lvl_select.height = 60.0f;
+    btn_lvl_select.button_x = overlay_x + 270.0f - btn_lvl_select.width / 2.0f;
+    btn_lvl_select.button_y = overlay_y + 650.0f - 70.0f - btn_lvl_select.height;
+    btn_lvl_select.radius = 12.0f;
+    btn_lvl_select.label = "Level Select";
+    btn_lvl_select.base = CP_Color_Create(70, 70, 70, 255);
+    btn_lvl_select.font = body_font;
+    btn_lvl_select.text_size = 28.0f;
+    btn_lvl_select.enabled = TRUE;
+    btn_lvl_select.press_anim = 0.0f;
+
     // Option A: "Next Level" Button
     btn_next_level.width = 240.0f;
     btn_next_level.height = 60.0f;
-    btn_next_level.button_x = (SCREEN_WIDTH / 2.0f) - (btn_next_level.width / 2.0f);
-    btn_next_level.button_y = (SCREEN_HEIGHT / 2.0f) - 15.0f;
+    btn_next_level.button_x = btn_lvl_select.button_x;
+    btn_next_level.button_y = btn_lvl_select.button_y - btn_next_level.height - 15.0f;
     btn_next_level.radius = 12.0f;
     btn_next_level.label = "Next Level";
     btn_next_level.base = Red;
@@ -118,23 +142,39 @@ void game_init(void) {
     btn_next_level.enabled = TRUE;
     btn_next_level.press_anim = 0.0f;
 
-    // Option B: "Level Select" Button
-    btn_lvl_select.width = 240.0f;
-    btn_lvl_select.height = 60.0f;
-    btn_lvl_select.button_x = (SCREEN_WIDTH / 2.0f) - (btn_lvl_select.width / 2.0f);
-    btn_lvl_select.button_y = (SCREEN_HEIGHT / 2.0f) + 65.0f;
-    btn_lvl_select.radius = 12.0f;
-    btn_lvl_select.label = "Level Select";
-    btn_lvl_select.base = CP_Color_Create(70, 70, 70, 255);
-    btn_lvl_select.font = body_font;
-    btn_lvl_select.text_size = 28.0f;
-    btn_lvl_select.enabled = TRUE;
-    btn_lvl_select.press_anim = 0.0f;
+    // Retry button for the lose screen
+    btn_retry.width = 520.0f;
+    btn_retry.height = 115.0f;
+    btn_retry.button_x = 880.0f;
+    btn_retry.button_y = 500.0f;
+    btn_retry.radius = 5.0f;
+    btn_retry.label = "Retry";
+    btn_retry.base = CP_Color_Create(255, 232, 153, 255);
+    btn_retry.font = title_font;
+    btn_retry.text_size = 48.0f;
+    btn_retry.enabled = TRUE;
+    btn_retry.press_anim = 0.0f;
+
+    // Main Menu button for the lose screen
+    btn_main_menu.width = 300.0f;
+    btn_main_menu.height = 60.0f;
+    btn_main_menu.button_x = 990.0f;
+    btn_main_menu.button_y = 640.0f;
+    btn_main_menu.radius = 5.0f;
+    btn_main_menu.label = "Main Menu";
+    btn_main_menu.base = CP_Color_Create(85, 165, 195, 255);
+    btn_main_menu.font = body_font;
+    btn_main_menu.text_size = 30.0f;
+    btn_main_menu.enabled = TRUE;
+    btn_main_menu.press_anim = 0.0f;
 }
 
 void game_update(void) {
     debug_update();
-    if (CP_Input_KeyTriggered(KEY_ESCAPE) && !isLevelWon) {
+    if (CP_Input_KeyTriggered(KEY_ESCAPE)
+        && !isLevelWon
+        && !isLevelLost) {
+
         pause_toggle();
     }
 
@@ -170,16 +210,8 @@ void game_update(void) {
 
     // --- STAGE CLEARED OVERLAY ---
     if (isLevelWon) {
-        // Darken background
-        CP_Settings_RectMode(CP_POSITION_CORNER);
-        CP_Settings_Fill(CP_Color_Create(0, 0, 0, 180));
-        CP_Graphics_DrawRect(0.0f, 0.0f, (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT);
-
-        // Header text
-        CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-        CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-        CP_Settings_TextSize(52.0f);
-        CP_Font_DrawText("STAGE CLEARED!", SCREEN_WIDTH / 2.0f, (SCREEN_HEIGHT / 2.0f) - 100.0f);
+        // Draw the new custom win overlay
+        draw_win_screen();
 
         // Option A: "Next Level" button button to go next stage (TO BE CHANGED)
         if (g_selectedLevel + 1 < AMT_LVL_BOXES) {
@@ -199,6 +231,31 @@ void game_update(void) {
         }
 
         return; // Halt physics updates while on victory screen
+    }
+
+    if (isLevelLost) {
+        // Draw the selected lose screen from gameover.c
+        draw_lose_screen();
+        // Retry button
+        UI_drawbutton(&btn_retry);
+        if (UI_updatebutton(&btn_retry)) {
+            // Restart the current level
+            CP_Engine_SetNextGameStateForced(
+                game_init, game_update, game_exit
+            );
+            return;
+        }
+        // Main Menu button
+        UI_drawbutton(&btn_main_menu);
+        if (UI_updatebutton(&btn_main_menu)) {
+            // Return to main menu
+            CP_Engine_SetNextGameState(
+                main_menu_init, main_menu_update, main_menu_exit
+            );
+            return;
+        }
+        // Stop physics while lose screen is open
+        return;
     }
 
     // Normal ball control & simulation
@@ -223,8 +280,20 @@ void game_update(void) {
     }
 
     Ball_Update(&ball, dt);
-    ballCollision(&ball, &currentLevel, dt);
+    // ballCollision now returns the hazard type
+    int hazard = ballCollision(&ball, &currentLevel, dt);
+    // Show the corresponding lose screen if a hazard was hit
+    if (hazard != 0) {
+        // Water = 1 - 1 = 0
+        // Spikes = 2 - 1 = 1
+        gameover_set_lose(hazard - 1);
+        isLevelLost = true;
+        return;
+    }
+
+    // Apply surface friction if the player is still alive
     ballFriction(&ball, &currentLevel, dt);
+
 
     // Win condition check: Ball inside hole radius
     float dx = ball.position.x - currentLevel.hole.position.x;
@@ -239,8 +308,13 @@ void game_update(void) {
         // Persist stage unlock progress
         GameData_OnStageCleared(g_selectedLevel + 1);
 
+        // Pass the player's score to gameover.c
+        gameover_set_results(currentLevel.par, strokes);
+
         // Activate victory overlay
         isLevelWon = true;
+
+        return;
     }
 }
 
