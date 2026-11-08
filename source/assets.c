@@ -7,6 +7,7 @@ CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
 CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
 CP_Image MM_title = NULL;
+CP_Image LVL_hint[AMT_HINTS] = { NULL };
 
 //CP_Image horse_mc = NULL;
 
@@ -49,6 +50,10 @@ void set_assets(void) {
 	//title
 	MM_title = CP_Image_Load("Assets/sprites/TITLE.png");
 
+	//hints
+	LVL_hint[0] = CP_Image_Load("Assets/sprites/LVL1HINT.png");
+	LVL_hint[1] = CP_Image_Load("Assets/sprites/LVL2HINT.png");
+	//LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
 }
 
 void set_splash_assets(void) {

@@ -204,6 +204,12 @@ void game_update(void) {
     // Draw game world
     CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
     Level_Draw(&currentLevel);
+
+    // for tutorial png images thingy okay okay
+    if (g_selectedLevel < AMT_HINTS && LVL_hint[g_selectedLevel]) {
+        CP_Image_Draw(LVL_hint[g_selectedLevel], SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 255);
+    }
+
     Ball_DrawAim(&ball);
     Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);
     debug_draw(&ball, &currentLevel);

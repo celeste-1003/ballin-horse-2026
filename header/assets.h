@@ -1,11 +1,14 @@
 #pragma once
 
+#define AMT_HINTS (3)
+
 extern CP_Color BG_Grey, Red, Green, Black, Blue, White, Brown;
 extern CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Slime_Wall, Slime_Wall_Outline;
 extern CP_Font body_font, title_font;
 extern CP_Image sch_logo, team_logo;
 extern CP_Image MM_grass, MM_horse1, MM_horse2;
 extern CP_Image MM_title;
+extern CP_Image LVL_hint[AMT_HINTS];
 //extern CP_Image horse_mc;
 
 void set_assets(void);
