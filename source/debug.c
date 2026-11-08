@@ -7,6 +7,7 @@
 #include "header/constants.h"
 #include "header/collision.h"
 #include "header/utils.h"
+#include "header/assets.h"
 
 #define SCALE_COUNT (3)
 
@@ -16,6 +17,69 @@ static CP_BOOL frozen = FALSE;
 static CP_BOOL step_once = FALSE;
 static int scale_index = 0;
 static const float scales[SCALE_COUNT] = { 1.0f, 0.5f, 0.25f };
+
+static void status_line_draw(const char* text, int slot, CP_Color col) {
+	float y_pos = DEBUG_STATUS_TOP + (float)slot * DEBUG_STATUS_LINE_SPACE;
+
+	CP_Settings_TextSize(DEBUG_STATUS_SIZE);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_RIGHT, CP_TEXT_ALIGN_V_TOP);
+
+	// shadow shadow
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 190));
+	CP_Font_DrawText(text, DEBUG_STATUS_RIGHT + 1.0f, y_pos + 1.0f);
+
+	CP_Settings_Fill(col);
+	CP_Font_DrawText(text, DEBUG_STATUS_RIGHT, y_pos);
+}
+
+/* STATUS BAR (RIGHT JUSTIFIED) */
+void debug_status(void) {
+	typedef struct {
+		char text[48];
+		CP_Color col;
+	} DebugLine;
+
+	DebugLine strip[DEBUG_STATUS_MAX];
+	int n = 0;
+
+	if (body_font == NULL) return;
+
+	if (!show_hitboxes && !log_on && !frozen && scale_index == 0) return; // if nothings on, dont draw
+	sprintf_s(strip[n].text, sizeof(strip[n].text), "DEBUG MODE");
+	strip[n].col = CP_Color_Create(120, 255, 140, 235);
+	n++;
+
+	if (show_hitboxes) {
+		sprintf_s(strip[n].text, sizeof(strip[n].text), "F1  hitboxes");
+		strip[n].col = CP_Color_Create(0, 255, 255, 235);
+		n++;
+	}
+
+	if (frozen) {
+		sprintf_s(strip[n].text, sizeof(strip[n].text), "F3  frozen (F4 = step)");
+		strip[n].col = CP_Color_Create(255, 190, 60, 235);
+		n++;
+	}
+
+	else if (scale_index != 0) {
+		sprintf_s(strip[n].text, sizeof(strip[n].text), "F2 time x%.2f", scales[scale_index]);
+		strip[n].col = CP_Color_Create(255, 190, 60, 235);
+		n++;
+	}
+
+	if (log_on) {
+		sprintf_s(strip[n].text, sizeof(strip[n].text), "F5 Logging");
+		strip[n].col = CP_Color_Create(190, 190, 190, 235);
+		n++;
+	}
+
+	CP_Settings_Save();
+	CP_Font_Set(body_font);
+	for (int i = 0; i < n; i++) {
+		status_line_draw(strip[i].text, i, strip[i].col);
+	}
+	CP_Settings_Restore();
+}
 
 /* INPUT */
 void debug_update(void) {
@@ -59,6 +123,8 @@ static void outline_rect(float x, float y, float w, float h, CP_Color col) {
 }
 
 void debug_draw(const Ball* ball, const Level* lvl) {
+	debug_status();
+
 	if (!show_hitboxes) return;
 
 	CP_Vector p = ball->position;

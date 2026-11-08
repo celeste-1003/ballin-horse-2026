@@ -69,3 +69,9 @@
 #define HUD_X (12.0f)
 #define HUD_Y (SCREEN_HEIGHT / 100.0f)
 #define HUD_LINE_H (21.0f)
+
+#define DEBUG_STATUS_MAX (6)
+#define DEBUG_STATUS_RIGHT ((float)SCREEN_WIDTH - 16.0f)
+#define DEBUG_STATUS_TOP (14.0f)
+#define DEBUG_STATUS_SIZE (22.0f)
+#define DEBUG_STATUS_LINE_SPACE (26.0f)
