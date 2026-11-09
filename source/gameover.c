@@ -11,7 +11,7 @@
 #define RANK_COUNT 7
 #define LOSE_COUNT 2
 
-// Result information received from game.c
+// Initialising variables
 int course_par = 3;
 int stroke_count = 0;
 int lose_type = 0;
@@ -27,6 +27,7 @@ const char* rank_top[RANK_COUNT] = {
     "Absolute Horsepoop"
 };
 
+// Bottom text for each win rank 
 const char* rank_bottom[RANK_COUNT] = {
     "The horse gods applaud you",
     "The horse gods are appeased",
@@ -64,8 +65,8 @@ const char* lose_subtitles[LOSE_COUNT] = {
 
 // Background image for each lose screen
 const char* lose_image_paths[LOSE_COUNT] = {
-    "Assets/sprites/lose_water.jpg",
-    "Assets/sprites/lose_spike.jpg"
+    "Assets/sprites/lose_water.png",
+    "Assets/sprites/lose_spike.png"
 };
 
 // Stores the loaded lose images
@@ -363,6 +364,7 @@ void draw_win_screen(void) {
 
 void draw_lose_screen(void) {
 
+
     // Colours used for the lose-screen text
     CP_Color title_col = CP_Color_Create(102, 186, 225, 255);
     CP_Color white_col = CP_Color_Create(245, 245, 245, 255);
@@ -390,27 +392,81 @@ void draw_lose_screen(void) {
         255
     );
 
-    CP_Settings_TextSize(88.0f);
-
+    //=== Start of Title ===
     // Display the title matching the lose condition
+    CP_Settings_TextSize(126.0f);
+
+    // Outer shadow (faintest)
+    draw_text(
+        title_font, CP_Color_Create(255, 255, 255, 25),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_titles[lose_type],
+        1029.0f, 209.0f
+    );
+
+    // Middle shadow
+    draw_text(
+        title_font, CP_Color_Create(255, 255, 255, 45),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_titles[lose_type],
+        1026.0f, 206.0f
+    );
+
+    // Inner shadow (darkest)
+    draw_text(
+        title_font, CP_Color_Create(255, 255, 255, 80),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_titles[lose_type],
+        1023.0f, 203.0f
+    );
+
+    // Original title (drawn last, on top)
+    CP_Settings_TextSize(126.0f);
+
     draw_text(
         title_font, title_col,
-        CP_TEXT_ALIGN_H_CENTER,
-        CP_TEXT_ALIGN_V_MIDDLE,
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
         lose_titles[lose_type],
         1020.0f, 200.0f
+    ); 
+    //=== End of Title ===
+
+    //=== Start of Subtitle ===
+    //Display the subtitle matching the lose condition (with drop shadow)
+    CP_Settings_TextSize(50.0f);
+
+    // Outer shadow (faintest)
+    draw_text(
+        body_font, CP_Color_Create(0, 0, 0, 25),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_subtitles[lose_type],
+        1106.0f, 371.0f
     );
 
-    CP_Settings_TextSize(43.0f);
+    // Middle shadow
+    draw_text(
+        body_font, CP_Color_Create(0, 0, 0, 45),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_subtitles[lose_type],
+        1104.0f, 369.0f
+    );
 
-    // Display the subtitle matching the lose condition
+    // Inner shadow (darkest)
+    draw_text(
+        body_font, CP_Color_Create(0, 0, 0, 80),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
+        lose_subtitles[lose_type],
+        1102.0f, 367.0f
+    );
+
+    // Original subtitle (drawn on top)
     draw_text(
         body_font, white_col,
-        CP_TEXT_ALIGN_H_CENTER,
-        CP_TEXT_ALIGN_V_MIDDLE,
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE,
         lose_subtitles[lose_type],
         1100.0f, 365.0f
-    );
+    ); 
+    //=== End of Subtitle ===
 
     // The interactive Retry and Main Menu buttons
     // are drawn and updated separately in game.c.
