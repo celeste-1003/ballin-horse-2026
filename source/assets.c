@@ -3,11 +3,18 @@
 
 CP_Color BG_Grey, Red, Green, Black, Blue, White, Brown;
 CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Slime_Wall, Slime_Wall_Outline;
+
 CP_Font body_font, title_font;
+
 CP_Image sch_logo = NULL, team_logo = NULL;
 CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
 CP_Image MM_title = NULL;
 CP_Image LVL_hint[AMT_HINTS] = { NULL };
+
+CP_Sound MM_bg = NULL, UI_click = NULL, UI_win = NULL, UI_lose = NULL, UI_youLose = NULL;
+CP_Sound horse_1 = NULL, horse_2 = NULL, horse_3 = NULL, horse_4 = NULL, horse_5 = NULL;
+CP_Sound GP_release = NULL, GP_slime = NULL, GP_wall = NULL, GP_sand = NULL;
+
 
 //CP_Image horse_mc = NULL;
 
@@ -54,6 +61,26 @@ void set_assets(void) {
 	LVL_hint[0] = CP_Image_Load("Assets/sprites/LVL1HINT.png");
 	LVL_hint[1] = CP_Image_Load("Assets/sprites/LVL2HINT.png");
 	//LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
+}
+
+void set_music_assets(void) {
+
+	MM_bg = CP_Sound_LoadMusic("Assets/music/mm_bgmusic.mp3");
+	UI_click = CP_Sound_Load("Assets/music/ui_click.wav");
+	UI_win = CP_Sound_LoadMusic("Assets/music/ui_win.wav");
+	UI_lose = CP_Sound_LoadMusic("Assets/music/ui_lose.wav");
+	UI_youLose = CP_Sound_Load("Assets/music/ui_youLose.wav");
+
+	horse_1 = CP_Sound_Load("Assets/music/ui_horse1.wav");
+	horse_2 = CP_Sound_Load("Assets/music/ui_horse2.wav");
+	horse_3 = CP_Sound_Load("Assets/music/ui_horse3.wav");
+	horse_4 = CP_Sound_Load("Assets/music/ui_horse4.wav");
+	horse_5 = CP_Sound_Load("Assets/music/ui_horse5.wav");
+
+	GP_release = CP_Sound_Load("Assets/music/gp_release.wav");
+	GP_slime = CP_Sound_Load("Assets/music/gp_slime.flac");
+	GP_wall = CP_Sound_Load("Assets/music/gp_wall.wav");
+	GP_sand = CP_Sound_Load("Assets/music/gp_sand.wav");
 }
 
 void set_splash_assets(void) {

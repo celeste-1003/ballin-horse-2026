@@ -27,7 +27,11 @@ Button btn_credits;
 /* MAIN FUNCTIONS */
 // Initialize stuff
 void main_menu_init(void){
+
 	set_assets();
+	set_music_assets();
+
+	CP_Sound_PlayAdvanced(MM_bg, 0.5f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 
 	// Setup PLAY button
 	btn_play.button_x = BUTTON_X - (MMBUTTON_WIDTH / 2); 
@@ -108,5 +112,5 @@ void main_menu_update(void){
 
 // Free up all stuff that was used
 void main_menu_exit(void){
-
+	//CP_Sound_Free(MM_bg);
 }

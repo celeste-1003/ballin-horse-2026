@@ -8,6 +8,7 @@
 #include "header/level.h"
 #include "header/mainmenu.h"
 #include "header/debug.h"
+#include "header/assets.h"
 
 // WALL COLLISION CHECK | Uses closest point on line segment to ball center to determine if collision has occurred
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -291,6 +292,7 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
     for (int i = 0; i < steps; i++) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
         TileType under = check_surface_collision(ball->position, lvl);
+
         if (under == tileWater) {
             debug_log("died on water");
             ball->velocity = CP_Vector_Set(0.0f, 0.0f);
@@ -321,15 +323,20 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
                     continue;
                 }   
 
+
                 CP_Vector normal = get_wall_normal(ball->position, col, row);
                 ball->position = correct_wall_position(ball->position, ball->radius, col, row);
                 debug_log("wall hit (%d,%d) normal (%.2f,%2f)", col, row, normal.x, normal.y);
 
                 if (Level_GetTile(lvl, col, row) == tileStickyWall) {
+                    CP_Sound_Play(GP_slime);
                     debug_log("stuck to sticky wall");
                     ball->velocity = CP_Vector_Set(0.0f, 0.0f);
                     ball->position = correct_wall_position(ball->position, ball->radius, col, row);
                     continue;
+                }
+                else {
+                    CP_Sound_Play(GP_wall);
                 }
 
                 

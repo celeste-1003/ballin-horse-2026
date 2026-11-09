@@ -16,4 +16,7 @@ void gameover_set_lose(int type);
 void draw_win_screen(void);
 void draw_lose_screen(void);
 
+int get_gameover_rank(void);
+void play_rank_sound(int rank);
+
 #endif

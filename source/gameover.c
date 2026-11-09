@@ -145,6 +145,18 @@ int get_gameover_rank(void) {
     return 6;
 }
 
+// play horse sound accordingly
+void play_rank_sound(int rank) {
+    switch (rank) {
+    case 0: CP_Sound_PlayAdvanced(horse_1, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
+    case 2: CP_Sound_PlayAdvanced(horse_4, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
+    case 3: CP_Sound_PlayAdvanced(horse_3, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
+    case 4: CP_Sound_PlayAdvanced(horse_5, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
+    case 5: CP_Sound_PlayAdvanced(horse_2, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
+    default: break;
+    }
+}
+
 
 // Reuses draw_text() while adding a rotation angle
 void draw_gameover_text(
