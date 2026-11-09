@@ -13,6 +13,7 @@ CP_BOOL UI_updatebutton(Button* b) {
 	CP_BOOL clicked = FALSE;
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
 		b->held = b->hovered;
+		CP_Sound_Play(UI_click);
 	}
 	if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT)) {
 		clicked = b->held && b->hovered;

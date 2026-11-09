@@ -90,6 +90,10 @@ static Level currentLevel;
 static Ball  ball;
 static int   strokes = 0;
 
+//static int gameoverSound = 0;
+static int horseSound = 0;
+static int sandSound = 0;
+
 // Victory overlay state and buttons
 bool isLevelWon = false;
 bool isLevelLost = false;
@@ -103,8 +107,14 @@ Button btn_main_menu;
 /* GAME STATES */
 
 void game_init(void) {
+
     set_assets();
+    set_music_assets();
+
     gameover_init(); // Load result images
+    //gameoverSound = 0;
+    horseSound = 0;
+
     strokes = 0;
     isLevelWon = false; // Reset win state
     isLevelLost = false; // Reset lose state
@@ -218,11 +228,21 @@ void game_update(void) {
     if (isLevelWon) {
         // Draw the new custom win overlay
         draw_win_screen();
+        if (!horseSound) {
+            play_rank_sound(get_gameover_rank());
+            CP_Sound_PlayAdvanced(UI_win, 0.4, 1, FALSE, CP_SOUND_GROUP_2);
+            horseSound = 1;
+            //gameoverSound = 1;
+        }
 
         // Option A: "Next Level" button button to go next stage (TO BE CHANGED)
         if (g_selectedLevel + 1 < AMT_LVL_BOXES) {
             UI_drawbutton(&btn_next_level);
             if (UI_updatebutton(&btn_next_level)) {
+                if (horseSound) {
+                    CP_Sound_StopGroup(CP_SOUND_GROUP_2);
+                    horseSound = 0;
+                }
                 g_selectedLevel++;
                 CP_Engine_SetNextGameStateForced(game_init, game_update, game_exit);
                 return;
@@ -232,6 +252,10 @@ void game_update(void) {
         //  "Level Select" button to go next stage (TO BE CHANGED)
         UI_drawbutton(&btn_lvl_select);
         if (UI_updatebutton(&btn_lvl_select)) {
+            if (horseSound) {
+                CP_Sound_StopGroup(CP_SOUND_GROUP_2);
+                horseSound = 0;
+            }
             CP_Engine_SetNextGameState(lvlselect_init, lvlselect_update, lvlselect_exit);
             return;
         }
@@ -242,9 +266,16 @@ void game_update(void) {
     if (isLevelLost) {
         // Draw the selected lose screen from gameover.c
         draw_lose_screen();
+        if (!horseSound) {
+            CP_Sound_PlayAdvanced(UI_youLose, 1.5, 1, FALSE, CP_SOUND_GROUP_2);
+            CP_Sound_PlayAdvanced(UI_lose, 1.5, 1, FALSE, CP_SOUND_GROUP_2);
+            horseSound = 1;
+        }
         // Retry button
         UI_drawbutton(&btn_retry);
         if (UI_updatebutton(&btn_retry)) {
+            CP_Sound_StopGroup(CP_SOUND_GROUP_2);
+            horseSound = 0;
             // Restart the current level
             CP_Engine_SetNextGameStateForced(
                 game_init, game_update, game_exit
@@ -254,6 +285,8 @@ void game_update(void) {
         // Main Menu button
         UI_drawbutton(&btn_main_menu);
         if (UI_updatebutton(&btn_main_menu)) {
+            CP_Sound_StopGroup(CP_SOUND_GROUP_2);
+            horseSound = 0;
             // Return to main menu
             CP_Engine_SetNextGameState(
                 main_menu_init, main_menu_update, main_menu_exit
@@ -281,6 +314,13 @@ void game_update(void) {
         Ball_OnPointerUp(&ball);
         if (wasAiming && Ball_IsMoving(&ball)) {
             strokes++;
+            CP_Sound_Play(GP_release);
+
+            //check sand sound plz work plsplsplspslpsls work omg
+            if (check_surface_collision(ball.position, &currentLevel) == tileSand) {
+                CP_Sound_PlayAdvanced(GP_sand, 1.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+            }
+
             debug_log("shot %d, speed %.1f", strokes, CP_Vector_Length(ball.velocity));
         }
     }
@@ -308,6 +348,7 @@ void game_update(void) {
     float hole_radius = (float)HOLE_DIAMETER / 2.0f;
 
     if (dist_sq <= (hole_radius * hole_radius)) {
+
         ball.velocity = CP_Vector_Set(0.0f, 0.0f);
         ball.position = currentLevel.hole.position;
 
