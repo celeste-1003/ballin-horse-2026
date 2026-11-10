@@ -8,6 +8,7 @@ float scrollY;
 
 void credits_init(void) {
 	credits = CP_Image_Load("Assets/logos/credits.png");
+	//start the scroll mid point down unda 
 	scrollY = (float)SCREEN_HEIGHT + SCREEN_HEIGHT / 2.0f;
 }
 
@@ -15,13 +16,16 @@ void credits_update(void) {
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
+	//goes up then speed times by dt
 	scrollY -= CREDITS_SCROLL_SPEED * CP_System_GetDt();
 
+	//then if finished, click esc or left click, the go back to main menu
 	if (scrollY + SCREEN_HEIGHT / 2.0f < 0.0f || CP_Input_KeyTriggered(KEY_ESCAPE) || CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)) {
 		CP_Engine_SetNextGameState(main_menu_init, main_menu_update, main_menu_exit);
 		return;
 	}
 	
+	//draw the credits pic haha
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_Draw(credits, SCREEN_WIDTH/2, scrollY, (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 255);
 }

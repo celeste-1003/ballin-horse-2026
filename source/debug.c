@@ -174,9 +174,9 @@ void debug_draw(const Ball* ball, const Level* lvl) {
 
 	//hole and radius where ball counts as in
 	CP_Settings_Stroke(CP_Color_Create(255, 215, 0, 255));
-	CP_Graphics_DrawCircle(lvl->hole.position.x, lvl->hole.position.y, (float)HOLE_DIAMETER);
+	CP_Graphics_DrawCircle(lvl->hole.x, lvl->hole.y, (float)HOLE_DIAMETER);
 	CP_Settings_Stroke(CP_Color_Create(255, 215, 0, 100));
-	CP_Graphics_DrawCircle(lvl->hole.position.x, lvl->hole.position.y, (r + HOLE_DIAMETER * 0.5f) * 2.0f);
+	CP_Graphics_DrawCircle(lvl->hole.x, lvl->hole.y, (r + HOLE_DIAMETER * 0.5f) * 2.0f);
 
 	CP_Settings_Restore();
 }

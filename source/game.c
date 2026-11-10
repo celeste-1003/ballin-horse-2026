@@ -239,7 +239,7 @@ void game_update(void) {
     float fw = 100.0f;
     float fh = fw * (sheet_H / frame_W);
 
-    CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.position.x, currentLevel.hole.position.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
+    CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.x, currentLevel.hole.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
     Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);
@@ -363,15 +363,15 @@ void game_update(void) {
 
 
     // Win condition check: Ball inside hole radius
-    float dx = ball.position.x - currentLevel.hole.position.x;
-    float dy = ball.position.y - currentLevel.hole.position.y;
+    float dx = ball.position.x - currentLevel.hole.x;
+    float dy = ball.position.y - currentLevel.hole.y;
     float dist_sq = (dx * dx) + (dy * dy);
     float hole_radius = (float)HOLE_DIAMETER / 2.0f;
 
     if (dist_sq <= (hole_radius * hole_radius)) {
 
         ball.velocity = CP_Vector_Set(0.0f, 0.0f);
-        ball.position = currentLevel.hole.position;
+        ball.position = currentLevel.hole;
 
         // Persist stage unlock progress
         GameData_OnStageCleared(g_selectedLevel + 1);
