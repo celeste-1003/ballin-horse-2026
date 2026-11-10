@@ -90,6 +90,8 @@ static Level currentLevel;
 static Ball  ball;
 static int   strokes = 0;
 
+static float flag_order_timer = 0.0f;
+
 //static int gameoverSound = 0;
 static int horseSound = 0;
 static int sandSound = 0;
@@ -110,6 +112,8 @@ void game_init(void) {
 
     set_assets();
     set_music_assets();
+
+    flag_order_timer = 0.0f;
 
     gameover_init(); // Load result images
     //gameoverSound = 0;
@@ -219,6 +223,23 @@ void game_update(void) {
     if (g_selectedLevel < AMT_HINTS && LVL_hint[g_selectedLevel]) {
         CP_Image_Draw(LVL_hint[g_selectedLevel], SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 255);
     }
+
+    // flag anims
+    static const int flag_order[] = { 0,1,2,1 };
+    flag_order_timer += CP_System_GetDt();
+    int flag_step = (int)(flag_order_timer / 0.15f) % 4;
+    int flag_frame = flag_order[flag_step];
+
+    float sheet_W = (float)CP_Image_GetWidth(flag_sheet); // grab width and height
+    float sheet_H = (float)CP_Image_GetHeight(flag_sheet);
+    float frame_W = sheet_W / AMT_FLAG_FRAMES;
+    float u0 = flag_frame * frame_W;
+    float u1 = u0 + frame_W;
+
+    float fw = 100.0f;
+    float fh = fw * (sheet_H / frame_W);
+
+    CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.position.x, currentLevel.hole.position.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
     Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);

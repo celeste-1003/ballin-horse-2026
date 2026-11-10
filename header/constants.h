@@ -53,7 +53,7 @@
 #define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
 
 // PAUSE MENU MACROS
-#define PAUSE_OVERLAY (150)
+#define PAUSE_OVERLAY (75)
 #define PAUSE_TITLE_Y (130.0f)
 #define PAUSE_TITLE_SIZE (80.0f)
 #define PAUSE_BUTTON_W (250.0f)     

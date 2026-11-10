@@ -9,7 +9,7 @@ CP_Font body_font, title_font;
 CP_Image sch_logo = NULL, team_logo = NULL;
 CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
 CP_Image MM_title = NULL;
-CP_Image LVL_hint[AMT_HINTS] = { NULL };
+CP_Image LVL_hint[AMT_HINTS] = { NULL }, flag_sheet = NULL;
 
 CP_Sound MM_bg = NULL, UI_click = NULL, UI_win = NULL, UI_lose = NULL, UI_youLose = NULL;
 CP_Sound horse_1 = NULL, horse_2 = NULL, horse_3 = NULL, horse_4 = NULL, horse_5 = NULL;
@@ -60,7 +60,10 @@ void set_assets(void) {
 	//hints
 	LVL_hint[0] = CP_Image_Load("Assets/sprites/LVL1HINT.png");
 	LVL_hint[1] = CP_Image_Load("Assets/sprites/LVL2HINT.png");
-	//LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
+	LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
+
+	//goal hole
+	flag_sheet = CP_Image_Load("Assets/sprites/FLAGSHEET1.png");
 }
 
 void set_music_assets(void) {
