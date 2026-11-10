@@ -239,7 +239,7 @@ void game_update(void) {
     float fw = 100.0f;
     float fh = fw * (sheet_H / frame_W);
 
-    CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.position.x, currentLevel.hole.position.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
+    CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.x, currentLevel.hole.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
     Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);
