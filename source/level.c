@@ -5,12 +5,17 @@
 #include "header/assets.h"
 #include "header/draw.h"
 
+//load the level in init first 
 void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
     lvl->par = par;
-
+    
+    //will scan each row, then colm based on each corresponding string
     for (int row = 0; row < GRID_ROW; row++) {
         for (int col = 0; col < GRID_COL; col++) {
+            //2d array, bc each row is also a corresponding array
             char c = layout[row][col];
+
+            //basically, all will be grass unless stated else in the switch case
             TileType type = tileGrass;
 
             switch (c) {
@@ -19,9 +24,10 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case 'w': type = tileWater;      break;
             case 'x': type = tileSpike;      break;
             case 'S': type = tileStickyWall; break;
+
             case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
                 break;
-            case 'H': lvl->hole.position = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+            case 'H': lvl->hole = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
                 break;
             default:  type = tileGrass;      break;
             }
@@ -32,20 +38,26 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
 }
 
 TileType Level_GetTile(const Level* lvl, int col, int row) {
+
+    //this one is to line around the whole game so ball doesnt escape
     if (col < 0 || col >= GRID_COL || row < 0 || row >= GRID_ROW) {
         return tileWall;
     }
     return lvl->tiles[row][col];
 }
 
+//draws the level that was loaded
 void Level_Draw(const Level* lvl) {
     CP_Settings_RectMode(CP_POSITION_CORNER);
     CP_Settings_NoStroke();
 
     for (int row = 0; row < GRID_ROW; row++) {
         for (int col = 0; col < GRID_COL; col++) {
+            
+            //every even is dark to make it like checkerboard size
             int isDark = ((row + col) % 2 == 0);
 
+            //draws corresponding to tile type
             switch (lvl->tiles[row][col]) {
             case tileWall:
                 draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, BG_Grey);
@@ -75,5 +87,5 @@ void Level_Draw(const Level* lvl) {
 
     /* Hole on top of the tiles */
     CP_Settings_Fill(CP_Color_Create(20, 20, 20, 255));
-    CP_Graphics_DrawCircle(lvl->hole.position.x, lvl->hole.position.y, (float)HOLE_DIAMETER);
+    CP_Graphics_DrawCircle(lvl->hole.x, lvl->hole.y, (float)HOLE_DIAMETER);
 }

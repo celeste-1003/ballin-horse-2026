@@ -363,15 +363,15 @@ void game_update(void) {
 
 
     // Win condition check: Ball inside hole radius
-    float dx = ball.position.x - currentLevel.hole.position.x;
-    float dy = ball.position.y - currentLevel.hole.position.y;
+    float dx = ball.position.x - currentLevel.hole.x;
+    float dy = ball.position.y - currentLevel.hole.y;
     float dist_sq = (dx * dx) + (dy * dy);
     float hole_radius = (float)HOLE_DIAMETER / 2.0f;
 
     if (dist_sq <= (hole_radius * hole_radius)) {
 
         ball.velocity = CP_Vector_Set(0.0f, 0.0f);
-        ball.position = currentLevel.hole.position;
+        ball.position = currentLevel.hole;
 
         // Persist stage unlock progress
         GameData_OnStageCleared(g_selectedLevel + 1);

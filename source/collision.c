@@ -245,51 +245,20 @@ int is_wall_tile(const Level* lvl, int col, int row) {
 
 int ballCollision(Ball* ball, const Level* lvl, float dt) {
 
-    //// get dt first 
-    //float dt = CP_System_GetDt();
-    //if (dt > MAX_DT) {
-    //    dt = MAX_DT;
-    //}
-
     float speed = CP_Vector_Length(ball->velocity);
 
-    //if (speed < MIN_SPEED) {
-    //    ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-    //    if (check_hole_collision(ball->position, ball->radius, lvl->hole.position, (float)HOLE_DIAMETER / 2.0)) {
-    //        debug_log("hole reached");
-    //        CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee 
-    //    }
-    //    return;
-    //}
     if (speed < MIN_SPEED) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
         return 0; // No hazard
     }
 
     //check surface, based on surface, give me multiplier, times by multiplier
-
     float travel = speed * dt;
-    float max_step = ball->radius * 0.5f;
 
-    //rounds up instead of down get it ceiling instead of floor hahrharharhr
-    int steps = (int)ceilf(travel / max_step);
-    if (steps < 1) {
-        steps = 1;
-    }
-    if (steps > MAX_STEPS) {
-        steps = MAX_STEPS;
-    }
+    float sub_dt = dt / (float)MAX_STEPS;
 
-    float sub_dt = dt / (float)steps;
-
-    //loops and checks everytime it moves per step. so it doesnt glitch out of bounds okok
-    //for (int i = 0; i < steps; ++i) {
-    //    ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
-    //    if (check_surface_collision(ball->position, lvl) == tileWater || check_surface_collision(ball->position, lvl) == tileSpike)
-    //        CP_Engine_SetNextGameStateForced(main_menu_init, main_menu_update, main_menu_exit); //placeholder first before results screen is doneeeee !
-    //}
-
-    for (int i = 0; i < steps; i++) {
+    //update in terms 
+    for (int i = 0; i < MAX_STEPS; i++) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
         TileType under = check_surface_collision(ball->position, lvl);
 
@@ -305,29 +274,36 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
         }
     }
 
+    //kept going thru the wall so now check more times trial and error lol
     for (int check = 0; check < CHECK_TIMES; ++check) {
+
         //bounding box of ball !! kim u can make these lines visible when u do debugger ok.
         int min_col = (int)floorf((ball->position.x - ball->radius) / TILE_SIZE);
         int max_col = (int)floorf((ball->position.x + ball->radius) / TILE_SIZE);
         int min_row = (int)floorf((ball->position.y - ball->radius) / TILE_SIZE);
         int max_row = (int)floorf((ball->position.y + ball->radius) / TILE_SIZE);
 
+        //check each row if within the min and max
         for (int row = min_row; row <= max_row; row++) {
+
+            //check each col if within the min and max
             for (int col = min_col; col <= max_col; col++) {
 
+                //check if not wall tile
                 if (!is_wall_tile(lvl, col, row)) {
                     continue;
                 }
 
+                //check if not wall collision using this
                 if (!check_wall_collision(ball->position, ball->radius, col, row)) {
                     continue;
                 }   
-
 
                 CP_Vector normal = get_wall_normal(ball->position, col, row);
                 ball->position = correct_wall_position(ball->position, ball->radius, col, row);
                 debug_log("wall hit (%d,%d) normal (%.2f,%2f)", col, row, normal.x, normal.y);
 
+                //check if it is a sticky wall so that i can play sound 
                 if (Level_GetTile(lvl, col, row) == tileStickyWall) {
                     CP_Sound_Play(GP_slime);
                     debug_log("stuck to sticky wall");
@@ -335,6 +311,8 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
                     ball->position = correct_wall_position(ball->position, ball->radius, col, row);
                     continue;
                 }
+
+                //otherwise it is a normal wall, so play wall thud sound
                 else {
                     CP_Sound_Play(GP_wall);
                 }
@@ -349,9 +327,11 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
 
 void ballFriction(Ball* ball, const Level* lvl, float dt) {
 
+    //powerf times by multiplier by the dt to get the friction itself then scales accordingly
     float friction = powf(get_friction_multiplier(ball->position, lvl), dt * 60.0f);
     ball->velocity = CP_Vector_Scale(ball->velocity, friction);
 
+    //then if shorter than min, clamp to 0
     if (CP_Vector_Length(ball->velocity) < MIN_SPEED) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
     }
