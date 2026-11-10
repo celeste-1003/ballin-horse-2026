@@ -3,11 +3,6 @@
 
 #include <stdbool.h>
 
-//typedef struct {
-//    float x;
-//    float y;
-//} Vector2D;
-
 typedef struct {
     CP_Vector position;
     CP_Vector velocity;

@@ -52,7 +52,7 @@ int GameData_Load(void) {
         return 0; // Corrupted or incomplete file
     }
 
-    // Sanity check: Ensure stage is at least 1
+    //Ensure stage is at least 1
     if (gGameData.highest_stage_unlocked < 1) {
         gGameData.highest_stage_unlocked = 1;
     }
