@@ -24,7 +24,8 @@ typedef struct Level {
     TileType  tiles[GRID_ROW][GRID_COL]; 
     CP_Vector ballStart;
     CP_Vector hole;
-    CP_Vector enemyStart;
+    CP_Vector enemyStarts[MAX_ENEMIES];
+    int       enemyCount;
     bool      hasEnemy;
     int       par;
 

@@ -7,6 +7,7 @@
 void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
     lvl->par = par;
     lvl->hasEnemy = false;
+    lvl->enemyCount = 0;
     //will scan each row, then colm based on each corresponding string
     for (int row = 0; row < GRID_ROW; row++) {
         for (int col = 0; col < GRID_COL; col++) {
@@ -25,8 +26,12 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case 't': type = tileBounceWall; break;
 
             case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);   break;
-            case 'E': lvl->enemyStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
-                      lvl->hasEnemy = true;                                                                 break;
+            case 'E': if (lvl->enemyCount < MAX_ENEMIES) { lvl->enemyStarts[lvl->enemyCount] = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+                lvl->enemyCount++;
+            }
+            break;
+            //case 'E': lvl->enemyStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+            //          lvl->hasEnemy = true;                                                                 break;
             case 'H': lvl->hole = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);        break;
             
             default:  type = tileGrass;      break;

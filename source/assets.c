@@ -62,8 +62,8 @@ void set_assets(void) {
 
 	//hints
 	LVL_hint[0] = CP_Image_Load("Assets/sprites/LVL1HINT.png");
-	LVL_hint[1] = CP_Image_Load("Assets/sprites/LVL2HINT.png");
-	LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
+	//LVL_hint[1] = CP_Image_Load("Assets/sprites/LVL2HINT.png");
+	//LVL_hint[2] = CP_Image_Load("Assets/sprites/LVL3HINT.png");
 
 	//goal hole
 	flag_sheet = CP_Image_Load("Assets/sprites/FLAGSHEET1.png");

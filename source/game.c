@@ -21,8 +21,8 @@
 #include "header/gameover.h"
 #include "header/enemy.h"
 
-const char* level1[GRID_ROW] = {
-    "################################",
+const char* level1[GRID_ROW] = { // fastest is 2 strokes
+    "################################", 
     "#..............................#",
     "#..............................#",
     "#..B...........................#",
@@ -42,54 +42,117 @@ const char* level1[GRID_ROW] = {
     "################################"
 };
 
-const char* level2[GRID_ROW] = {
-    "################################",
-    "#..............................#",
-    "#.............B................#",
-    "#..............................#",
-    "#.x..x..x..x...................#",
-    "#############............l.....#",
-    "#........................l.....#",
-    "#........................l.....#",
-    "#....................lllll.....#",
-    "#..............................#",
-    "#....H.........................#",
-    "#.xxxxx..............###########",
-    "##########...........##........#",
-    "#....................##........#",
-    "#....................##........#",
+const char* level2[GRID_ROW] = { // fastest is 4 strokes
+    "################################", 
+    "#ssss..........................#",
+    "#sss......................H....#",
+    "#ss............................#",
+    "#s................##############",
+    "#...........####################",
+    "#..........#####################",
+    "#.........########.............#",
+    "#.........######..........B....#",
+    "#.........xxxxxx...............#",
     "#..............................#",
     "#..............................#",
+    "#l.............................#",
+    "#ll............................#",
+    "#lll...........................#",
+    "######.................#########",
+    "########..............##########",
     "################################"
 };
 
 const char* level3[GRID_ROW] = {
     "################################",
-    "#.........swws.................#",
-    "#.........swws.................#",
-    "#..B......swws.................#",
-    "#.........swws....ssssssss.....#",
-    "#.........ssss....swwwwwws.....#",
-    "#.........ssss....swwwwwws.....#",
-    "#.........swws....swwwwwws.ssss#",
-    "#.........swws....swwwwwws.ssss#",
-    "#.........swws....swwwwwws.ssss#",
-    "#.........swws....ssssssss.....#",
-    "#.....................swws.....#",
-    "#....ssss.............swws.....#",
-    "#.....................ssss.....#",
-    "#.....................swws..H..#",
-    "#.....................swws.....#",
-    "#.....................swws.....#",
+    "#.........#...E...#............#",
+    "#.........#.......#............#",
+    "#.........#...H...#............#",
+    "#.........#.......#............#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#.........#########............#",
+    "#.........#########............#",
+    "#.............B................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "################################"
+};
+
+const char* level4[GRID_ROW] = {
+    "###########################t####",
+    "#t..........................t###",
+    "#t...........................t##",
+    "#t............................t#",
+    "#t.......###########..........t#",
+    "#t.......######sss##..........t#",
+    "#x..............ss##..........t#",
+    "#x...............s##......H...t#",
+    "#x................##############",
+    "#x................##############",
+    "#x.............................#",
+    "##ssssssss#....................#",
+    "##ssssssss#....................#",
+    "##ssssssss#....................#",
+    "#wwwwwwwww#ss...............B..#",
+    "#wwwwwwwww#sss.................#",
+    "#wwEwwwwww#ssss................#",
+    "###############tttttttttt#######"
+};
+
+const char* level5[GRID_ROW] = {
+    "################################",
+    "#............................E.#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..........###########.........#",
+    "#..........###########.........#",
+    "#...................##.........#",
+    "#...............B...##.........#",
+    "#...................##.........#",
+    "##..................##.........#",
+    "###ssssssssss#########.........#",
+    "###.................xx.........#",
+    "##..................xx.........#",
+    "#...................ss....H....#",
+    "#...................ss.........#",
+    "#wwwwwwwwww#........ss.........#",
+    "################################"
+};
+
+const char* level6[GRID_ROW] = {
+    "################################",
+    "#.........#wwwwwww#............#",
+    "#.........#wwwtwww#............#",
+    "#.........#wwtHtww#............#",
+    "#.......E.xxx...xxx.E..........#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#...E.........B............E...#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#..............................#",
+    "#.........E.......E............#",
+    "#..............................#",
+    "#..............................#",
     "################################"
 };
 
 int g_selectedLevel = 0;
-static const char** layouts[] = { level1, level2, level3 };
-static const int    pars[] = { 3, 4, 5 };
+static const char** layouts[] = { level1, level2, level3, level4, level5, level6 };
+static const int    pars[AMT_LVL_BOXES] = { 3, 4, 5, 5, 6, 7 };
 static Level currentLevel;
 static Ball  ball;
-static Enemy enemy;
+static Enemy enemies[MAX_ENEMIES];
 static int   strokes = 0;
 
 static float flag_order_timer = 0.0f;
@@ -108,9 +171,98 @@ Button btn_lvl_select;
 Button btn_retry;
 Button btn_main_menu;
 
+static const char* level_titles[AMT_LVL_BOXES] = {
+    "Level 1 - We're just getting started!",
+    "Level 2 - Getting around",
+    "Level 3 - Somebody's watching",
+    "Level 4 - Extra Stuffs",
+    "Level 5 - Which way, pardner?",
+    "Level 6 - THIS IS A ROBBERY!!!",
+};
+
+typedef enum {
+    INTRO_ENTER,
+    INTRO_WOBBLE,
+    INTRO_EXIT,
+    INTRO_DONE,
+}IntroPhase;
+
+static IntroPhase intro_phase = INTRO_DONE;
+static float      intro_timer = 0.0f;
+
+// start of title draw
+static void LevelTitle_Draw(void) {
+    if (intro_phase == INTRO_DONE) return;
+
+    float cx = SCREEN_WIDTH * 0.5f;
+    float cy = SCREEN_HEIGHT * 0.5f;
+    float x = cx;
+    float y = cy;
+
+    switch (intro_phase) {
+    case INTRO_ENTER: {
+        float p = intro_timer / INTRO_ENTER_TIME;
+        if (p > 1.0f) p = 1.0f;
+        float ease = 1.0f - powf(1.0f - p, 3.0f);   // fast start, slows into place
+        y = INTRO_START_Y + (cy - INTRO_START_Y) * ease;
+        break;
+    }
+    case INTRO_WOBBLE: {
+        float p = intro_timer / INTRO_WOBBLE_TIME;
+        float decay = 1.0f - 0.6f * p;              // wiggle dies down
+        x += sinf(intro_timer * INTRO_WOBBLE_SPEED) * INTRO_WOBBLE_AMPLITUDE * decay;
+        y += sinf(intro_timer * INTRO_WOBBLE_SPEED * 1.7f) * 6.0f * decay;
+        break;
+    }
+    case INTRO_EXIT: {
+        float p = intro_timer / INTRO_EXIT_TIME;
+        if (p > 1.0f) p = 1.0f;
+        float ease = p * p;  // slow start, fast drop
+        y = cy + (INTRO_END_Y - cy) * ease;
+        break;
+    }
+    default:
+        return;
+    }
+
+    const char* title = level_titles[g_selectedLevel];
+
+    CP_Settings_TextSize(INTRO_TITLE_SIZE);
+    draw_text(title_font, CP_Color_Create(0, 0, 0, 170),
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE, title, x + 4.0f, y + 4.0f);
+    draw_text(title_font, White,
+        CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE, title, x, y);
+}
+
+static void LevelTitle_Update(float dt) {
+    if (intro_phase == INTRO_DONE) return;
+
+    intro_timer += dt;
+
+    switch (intro_phase) {
+    case INTRO_ENTER:
+        if (intro_timer >= INTRO_ENTER_TIME) { intro_phase = INTRO_WOBBLE; intro_timer = 0.0f; }
+        break;
+    case INTRO_WOBBLE:
+        if (intro_timer >= INTRO_WOBBLE_TIME) { intro_phase = INTRO_EXIT; intro_timer = 0.0f; }
+        break;
+    case INTRO_EXIT:
+        if (intro_timer >= INTRO_EXIT_TIME) { intro_phase = INTRO_DONE; intro_timer = 0.0f; }
+        break;
+    default:
+        break;
+    }
+
+    LevelTitle_Draw();
+}
+// end of title draw
+
 /* GAME STATES */
 
 void game_init(void) {
+
+    intro_phase = INTRO_ENTER;
+    intro_timer = 0.0f;
 
     set_assets();
     set_music_assets();
@@ -127,7 +279,9 @@ void game_init(void) {
 
     Level_Load(&currentLevel, layouts[g_selectedLevel], pars[g_selectedLevel]);
     Ball_Init(&ball, currentLevel.ballStart, 50.0f);
-    if (currentLevel.hasEnemy == true) Enemy_Init(&enemy, currentLevel.enemyStart);
+    for (int i = 0; i < currentLevel.enemyCount; i++) {
+        Enemy_Init(&enemies[i], currentLevel.enemyStarts[i]);
+    }
     pause_init();
 
     float overlay_x = (SCREEN_WIDTH - 1100.0f) / 2.0f;
@@ -246,8 +400,14 @@ void game_update(void) {
 
     Ball_DrawAim(&ball);
     Draw_Player(horse_mc, ball.position, 100.0f, 100.0f);
-    if (currentLevel.hasEnemy == true) Draw_Enemy(horse_enemy, enemy.position, 100.0f, 100.0f);
+    for (int i = 0; i < currentLevel.enemyCount; i++) {
+        Draw_Enemy(horse_enemy, enemies[i].position, 100.0f, 100.0f);
+    }
     debug_draw(&ball, &currentLevel);
+
+    float title_dt = CP_System_GetDt();
+    if (title_dt > MAX_DT) title_dt = MAX_DT;
+    LevelTitle_Update(title_dt);
 
     // --- STAGE CLEARED OVERLAY ---
     if (isLevelWon) {
@@ -352,9 +512,11 @@ void game_update(void) {
 
 
     Ball_Update(&ball, dt);
-    if (currentLevel.hasEnemy == true) Enemy_Chase(&enemy, &ball, dt);
+    for (int i = 0; i < currentLevel.enemyCount; i++) {
+        Enemy_Chase(&enemies[i], &ball, dt);
+    }
     // ballCollision now returns the hazard type
-    int hazard = ballCollision(&ball, &enemy, &currentLevel, dt);
+    int hazard = ballCollision(&ball, enemies, &currentLevel, dt);
     // Show the corresponding lose screen if a hazard was hit
     if (hazard != 0) {
         // Water = 1 - 1 = 0
@@ -368,16 +530,18 @@ void game_update(void) {
     ballFriction(&ball, &currentLevel, dt);
 
     //check collision between ball and enemy
-    float mx = ball.position.x - enemy.position.x;
-    float my = ball.position.y - enemy.position.y;
-    float lose_check = (mx * mx) + (my * my);
+    for (int i = 0; i < currentLevel.enemyCount; i++) {
+        float mx = ball.position.x - enemies[i].position.x;
+        float my = ball.position.y - enemies[i].position.y;
+        float lose_check = (mx * mx) + (my * my);
 
-    if (lose_check <= (enemy.radius * enemy.radius)) {
-        debug_log("died by enemy");
-        ball.velocity = CP_Vector_Set(0.0f, 0.0f);
-        gameover_set_lose(2); // Enemy lose screen
-        isLevelLost = true;
-        return;
+        if (lose_check <= (enemies[i].radius * enemies[i].radius)) {
+            debug_log("died by enemy %d", i);
+            ball.velocity = CP_Vector_Set(0.0f, 0.0f);
+            gameover_set_lose(2); // Enemy lose screen
+            isLevelLost = true;
+            return;
+        }
     }
 
     // Win condition check: Ball inside hole radius
