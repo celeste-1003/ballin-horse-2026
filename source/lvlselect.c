@@ -32,7 +32,7 @@ void lvlselect_init(void) {
         lvl_buttons[i].height = LVL_HEIGHT;
         lvl_buttons[i].radius = 15.0f;
 
-        // Check if level (i + 1) is unlocked
+        // Check if level is unlocked
         int stage_num = i + 1;
         bool is_unlocked = GameData_IsStageUnlocked(stage_num);
 
