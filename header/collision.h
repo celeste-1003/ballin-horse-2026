@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "level.h"
 #include "header/ball.h"
+#include "header/enemy.h"
 
 // CHECK WALL COLLISION
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -32,6 +33,6 @@ float get_friction_multiplier(CP_Vector ball_pos,
 
 int is_wall_tile(const Level* lvl, int col, int row);
 
-int ballCollision(Ball* ball, const Level* lvl, float dt);
+int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt);
 
 void ballFriction(Ball* ball, const Level* lvl, float dt);

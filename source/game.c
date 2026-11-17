@@ -19,6 +19,7 @@
 #include "header/ui.h"
 #include "header/debug.h"
 #include "header/gameover.h"
+#include "header/enemy.h"
 
 const char* level1[GRID_ROW] = {
     "################################",
@@ -47,10 +48,10 @@ const char* level2[GRID_ROW] = {
     "#.............B................#",
     "#..............................#",
     "#.x..x..x..x...................#",
-    "#############............S.....#",
-    "#........................S.....#",
-    "#........................S.....#",
-    "#....................SSSSS.....#",
+    "#############............l.....#",
+    "#........................l.....#",
+    "#........................l.....#",
+    "#....................lllll.....#",
     "#..............................#",
     "#....H.........................#",
     "#.xxxxx..............###########",
@@ -88,6 +89,7 @@ static const char** layouts[] = { level1, level2, level3 };
 static const int    pars[] = { 3, 4, 5 };
 static Level currentLevel;
 static Ball  ball;
+static Enemy enemy;
 static int   strokes = 0;
 
 static float flag_order_timer = 0.0f;
@@ -125,6 +127,7 @@ void game_init(void) {
 
     Level_Load(&currentLevel, layouts[g_selectedLevel], pars[g_selectedLevel]);
     Ball_Init(&ball, currentLevel.ballStart, 50.0f);
+    if (currentLevel.hasEnemy == true) Enemy_Init(&enemy, currentLevel.enemyStart);
     pause_init();
 
     float overlay_x = (SCREEN_WIDTH - 1100.0f) / 2.0f;
@@ -242,7 +245,8 @@ void game_update(void) {
     CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.x, currentLevel.hole.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
-    Draw_Player(CP_Image_Load("Assets/sprites/horse_golf_ball.png"), ball.position, 100.0f, 100.0f);
+    Draw_Player(horse_mc, ball.position, 100.0f, 100.0f);
+    if (currentLevel.hasEnemy == true) Draw_Enemy(horse_enemy, enemy.position, 100.0f, 100.0f);
     debug_draw(&ball, &currentLevel);
 
     // --- STAGE CLEARED OVERLAY ---
@@ -346,9 +350,11 @@ void game_update(void) {
         }
     }
 
+
     Ball_Update(&ball, dt);
+    if (currentLevel.hasEnemy == true) Enemy_Chase(&enemy, &ball, dt);
     // ballCollision now returns the hazard type
-    int hazard = ballCollision(&ball, &currentLevel, dt);
+    int hazard = ballCollision(&ball, &enemy, &currentLevel, dt);
     // Show the corresponding lose screen if a hazard was hit
     if (hazard != 0) {
         // Water = 1 - 1 = 0
@@ -361,6 +367,18 @@ void game_update(void) {
     // Apply surface friction if the player is still alive
     ballFriction(&ball, &currentLevel, dt);
 
+    //check collision between ball and enemy
+    float mx = ball.position.x - enemy.position.x;
+    float my = ball.position.y - enemy.position.y;
+    float lose_check = (mx * mx) + (my * my);
+
+    if (lose_check <= (enemy.radius * enemy.radius)) {
+        debug_log("died by enemy");
+        ball.velocity = CP_Vector_Set(0.0f, 0.0f);
+        gameover_set_lose(2); // Enemy lose screen
+        isLevelLost = true;
+        return;
+    }
 
     // Win condition check: Ball inside hole radius
     float dx = ball.position.x - currentLevel.hole.x;

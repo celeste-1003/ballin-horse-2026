@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include "cprocessing.h"
 #include "header/constants.h"
 
@@ -12,7 +13,8 @@ typedef enum TileType {
     tileHole, //4
     tileSand, //5
     tileSpike, //6
-    tileStickyWall //7  
+    tileStickyWall, //7  
+    tileBounceWall //8
 } TileType;
 
 // struct of what compromises of a level
@@ -22,6 +24,8 @@ typedef struct Level {
     TileType  tiles[GRID_ROW][GRID_COL]; 
     CP_Vector ballStart;
     CP_Vector hole;
+    CP_Vector enemyStart;
+    bool      hasEnemy;
     int       par;
 
 } Level;

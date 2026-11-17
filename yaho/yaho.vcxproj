@@ -19,6 +19,7 @@
     <ClInclude Include="..\header\credits.h" />
     <ClInclude Include="..\header\debug.h" />
     <ClInclude Include="..\header\draw.h" />
+    <ClInclude Include="..\header\enemy.h" />
     <ClInclude Include="..\header\game.h" />
     <ClInclude Include="..\header\gamedata.h" />
     <ClInclude Include="..\header\gameover.h" />
@@ -39,6 +40,7 @@
     <ClCompile Include="..\source\credits.c" />
     <ClCompile Include="..\source\debug.c" />
     <ClCompile Include="..\source\draw.c" />
+    <ClCompile Include="..\source\enemy.c" />
     <ClCompile Include="..\source\game.c" />
     <ClCompile Include="..\source\gamedata.c" />
     <ClCompile Include="..\source\gameover.c" />

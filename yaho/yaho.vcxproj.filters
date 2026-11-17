@@ -72,6 +72,9 @@
     <ClInclude Include="..\header\credits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\ball.c">
@@ -129,6 +132,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\source\credits.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\enemy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

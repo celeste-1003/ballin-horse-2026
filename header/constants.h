@@ -40,7 +40,7 @@
 
 // DRAGGING/GAMEPLAY MACROS
 #define MAX_DT (1.0f / 30.0f)
-#define CHECK_TIMES (2)
+#define CHECK_TIMES (4)
 #define MAX_STEPS (16)
 #define MAX_DRAG_DISTANCE (150.0f)
 #define MIN_DRAG_DISTANCE (2.0f)
@@ -51,6 +51,7 @@
 #define SAND_FRICTION_MULTIPLIER (0.5f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
 #define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
+#define BOUNCE_MULT (1.0f)
 
 // PAUSE MENU MACROS
 #define PAUSE_OVERLAY (75)
@@ -75,3 +76,7 @@
 #define DEBUG_STATUS_TOP (14.0f)
 #define DEBUG_STATUS_SIZE (22.0f)
 #define DEBUG_STATUS_LINE_SPACE (26.0f)
+
+// ENEMY MACROS
+#define ENEMY_SPEED (150.0f)
+#define ENEMY_RADIUS (50.0f)

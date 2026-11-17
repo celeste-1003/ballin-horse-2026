@@ -2,7 +2,8 @@
 #include "header/assets.h"
 
 CP_Color BG_Grey, Red, Green, Black, Blue, White, Brown;
-CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass, Slime_Wall, Slime_Wall_Outline;
+CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass;
+CP_Color Slime_Wall, Slime_Wall_Outline, Bounce_Wall, Bounce_Wall_Outline;
 
 CP_Font body_font, title_font;
 
@@ -10,13 +11,11 @@ CP_Image sch_logo = NULL, team_logo = NULL;
 CP_Image MM_grass = NULL, MM_horse1 = NULL, MM_horse2 = NULL;
 CP_Image MM_title = NULL;
 CP_Image LVL_hint[AMT_HINTS] = { NULL }, flag_sheet = NULL;
+CP_Image horse_mc = NULL, horse_enemy = NULL;
 
 CP_Sound MM_bg = NULL, UI_click = NULL, UI_win = NULL, UI_lose = NULL, UI_youLose = NULL;
 CP_Sound horse_1 = NULL, horse_2 = NULL, horse_3 = NULL, horse_4 = NULL, horse_5 = NULL;
-CP_Sound GP_release = NULL, GP_slime = NULL, GP_wall = NULL, GP_sand = NULL;
-
-
-//CP_Image horse_mc = NULL;
+CP_Sound GP_release = NULL, GP_slime = NULL, GP_wall = NULL, GP_sand = NULL, GP_bounce = NULL;
 
 /**
  @brief this initialises colors and fonts used in other systems
@@ -44,12 +43,16 @@ void set_assets(void) {
 
 	Slime_Wall = CP_Color_Create(171, 240, 126, 255);
 	Slime_Wall_Outline = CP_Color_Create(150, 222, 101, 200);
+	Bounce_Wall = CP_Color_Create(126, 112, 217, 255);
+	Bounce_Wall_Outline = CP_Color_Create(41, 33, 94, 200);
 
 	//fonts
 	body_font = CP_Font_Load("Assets/fonts/ComicSans.ttf");
 	title_font = CP_Font_Load("Assets/fonts/Kbpaythelady-WAyV.ttf");
 
-	//horse_mc = CP_Image_Load("Assets/sprites/horse_golf_ball.png");
+	horse_mc = CP_Image_Load("Assets/sprites/horse_golf_ball.png");
+	horse_enemy = CP_Image_Load("Assets/sprites/gp_enemy.png");
+
 	MM_grass = CP_Image_Load("./Assets/sprites/homepage_bg.png");
 	MM_horse1 = CP_Image_Load("./Assets/sprites/homepage_horse1.png");
 	MM_horse2 = CP_Image_Load("./Assets/sprites/homepage_horse2.png");
@@ -84,6 +87,7 @@ void set_music_assets(void) {
 	GP_slime = CP_Sound_Load("Assets/music/gp_slime.flac");
 	GP_wall = CP_Sound_Load("Assets/music/gp_wall.wav");
 	GP_sand = CP_Sound_Load("Assets/music/gp_sand.wav");
+	GP_bounce = CP_Sound_Load("Assets/music/gp_bounce.wav");
 }
 
 void set_splash_assets(void) {
