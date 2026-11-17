@@ -19,12 +19,20 @@ void lvlselect_init(void) {
     set_assets();
     CP_Settings_RectMode(CP_POSITION_CENTER);
 
-    float total_grp_width = (AMT_LVL_BOXES * LVL_WIDTH) + ((AMT_LVL_BOXES - 1) * GAP_SPACE);
-    float start_x = (SCREEN_WIDTH / 2.0f) - (total_grp_width / 2.0f) + (LVL_WIDTH / 2.0f);
+    //float total_grp_width = (AMT_LVL_BOXES * LVL_WIDTH) + ((AMT_LVL_BOXES - 1) * GAP_SPACE);
+    //float start_x = (SCREEN_WIDTH / 2.0f) - (total_grp_width / 2.0f) + (LVL_WIDTH / 2.0f);
+    float total_w = (LVL_COLS * LVL_WIDTH) + ((LVL_COLS - 1) * GAP_SPACE);
+    float total_h = (LVL_ROWS * LVL_HEIGHT) + ((LVL_ROWS - 1) * GAP_SPACE);
+
+    float start_x = ((SCREEN_WIDTH - total_w) / 2.0f) + (LVL_WIDTH / 2.0f);
+    float start_y = ((SCREEN_HEIGHT - total_h) / 2.0f) + (LVL_HEIGHT / 2.0f);
 
     for (int i = 0; i < AMT_LVL_BOXES; i++) {
-        float center_x = start_x + (i * (LVL_WIDTH + GAP_SPACE));
-        float center_y = SCREEN_HEIGHT / 2.0f;
+        int col = i % LVL_COLS;
+        int row = i / LVL_COLS;
+
+        float center_x = start_x + (col * (LVL_WIDTH + GAP_SPACE));
+        float center_y = start_y + (row * (LVL_HEIGHT + GAP_SPACE));
 
         lvl_buttons[i].button_x = center_x - (LVL_WIDTH / 2.0f);
         lvl_buttons[i].button_y = center_y - (LVL_HEIGHT / 2.0f);

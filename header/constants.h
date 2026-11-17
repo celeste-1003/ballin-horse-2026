@@ -10,7 +10,9 @@
 #define CREDITS_SCROLL_SPEED 80.0f
 
 // LEVEL SELECT MACROS
-#define AMT_LVL_BOXES (3)
+#define LVL_COLS (3)
+#define LVL_ROWS (2)
+#define AMT_LVL_BOXES (LVL_COLS * LVL_ROWS) // 6
 #define LVL_WIDTH (250.0f)
 #define LVL_HEIGHT (100.0f)
 #define GAP_SPACE (50.0f)
@@ -40,17 +42,18 @@
 
 // DRAGGING/GAMEPLAY MACROS
 #define MAX_DT (1.0f / 30.0f)
-#define CHECK_TIMES (2)
+#define CHECK_TIMES (4)
 #define MAX_STEPS (16)
 #define MAX_DRAG_DISTANCE (150.0f)
 #define MIN_DRAG_DISTANCE (2.0f)
 #define MIN_SPEED (1.0f)
 #define MAX_SPEED (1500.0f)
-#define FRICTION_DECELERATION (250.0f)
+#define FRICTION_DECELERATION (150.0f)
 #define GRASS_FRICTION_MULTIPLIER (1.0f) // normal friction
 #define SAND_FRICTION_MULTIPLIER (0.5f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
 #define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
+#define BOUNCE_MULT (1.0f)
 
 // PAUSE MENU MACROS
 #define PAUSE_OVERLAY (75)
@@ -75,3 +78,18 @@
 #define DEBUG_STATUS_TOP (14.0f)
 #define DEBUG_STATUS_SIZE (22.0f)
 #define DEBUG_STATUS_LINE_SPACE (26.0f)
+
+// ENEMY MACROS
+#define ENEMY_SPEED (140.0f)
+#define ENEMY_RADIUS (50.0f)
+#define MAX_ENEMIES (9)
+
+// LEVEL TITLE INTRO
+#define INTRO_ENTER_TIME (0.45f) // fast slide down to the middle
+#define INTRO_WOBBLE_TIME (0.90f) // wiggle around the middle
+#define INTRO_EXIT_TIME (0.35f) // quick drop off the bottom
+#define INTRO_WOBBLE_AMPLITUDE (22.0f) // horizontal shake in pixels
+#define INTRO_WOBBLE_SPEED (20.0f) // radians per second
+#define INTRO_TITLE_SIZE (64.0f)
+#define INTRO_START_Y (-100.0f) // above the screen
+#define INTRO_END_Y (SCREEN_HEIGHT + 100.0f) // below the screen

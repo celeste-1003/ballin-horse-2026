@@ -1,6 +1,4 @@
 #include <math.h>
-#include "cprocessing.h"
-#include "header/constants.h"
 #include "header/level.h"
 #include "header/assets.h"
 #include "header/draw.h"
@@ -8,7 +6,8 @@
 //load the level in init first 
 void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
     lvl->par = par;
-    
+    lvl->hasEnemy = false;
+    lvl->enemyCount = 0;
     //will scan each row, then colm based on each corresponding string
     for (int row = 0; row < GRID_ROW; row++) {
         for (int col = 0; col < GRID_COL; col++) {
@@ -23,12 +22,18 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case 's': type = tileSand;       break;
             case 'w': type = tileWater;      break;
             case 'x': type = tileSpike;      break;
-            case 'S': type = tileStickyWall; break;
+            case 'l': type = tileStickyWall; break;
+            case 't': type = tileBounceWall; break;
 
-            case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
-                break;
-            case 'H': lvl->hole = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
-                break;
+            case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);   break;
+            case 'E': if (lvl->enemyCount < MAX_ENEMIES) { lvl->enemyStarts[lvl->enemyCount] = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+                lvl->enemyCount++;
+            }
+            break;
+            //case 'E': lvl->enemyStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+            //          lvl->hasEnemy = true;                                                                 break;
+            case 'H': lvl->hole = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);        break;
+            
             default:  type = tileGrass;      break;
             }
 
@@ -60,27 +65,23 @@ void Level_Draw(const Level* lvl) {
             //draws corresponding to tile type
             switch (lvl->tiles[row][col]) {
             case tileWall:
-                draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, BG_Grey);
-                break;
+                draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, BG_Grey);                                 break;
             case tileSand:
                 if (isDark) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Light_Sand);
-                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Sand);
-                break;
+                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Sand);                   break;
             case tileWater:
                 if (isDark) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Water);
-                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Water);
-                break;
+                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Water);                  break;
             case tileSpike:
                 if (isDark) draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
-                else        draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);
-                break;
+                else        draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);                break;
             case tileStickyWall:
-                draw_stickywall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE);
-                break;
+                draw_specialwall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Slime_Wall, Slime_Wall_Outline);   break;
+            case tileBounceWall:
+                draw_specialwall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Bounce_Wall, Bounce_Wall_Outline); break;
             default:
                 if (isDark) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
-                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);
-                break;
+                else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);                  break;
             }
         }
     }

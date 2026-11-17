@@ -9,7 +9,7 @@
 
 // Total number of possible win ranks and lose screens
 #define RANK_COUNT 7
-#define LOSE_COUNT 2
+#define LOSE_COUNT 3
 
 // Initialising variables
 int course_par = 3;
@@ -55,18 +55,21 @@ CP_Image rank_images[RANK_COUNT] = { 0 };
 // Different text for the two lose conditions
 const char* lose_titles[LOSE_COUNT] = {
     "You drowned.",
-    "You got spiked."
+    "You got spiked.",
+    "You got ghosted."
 };
 
 const char* lose_subtitles[LOSE_COUNT] = {
     "How dare you...",
-    "Ouch. That looks painful..."
+    "Ouch. That looks painful...",
+    "Ghost horse caught you!"
 };
 
 // Background image for each lose screen
 const char* lose_image_paths[LOSE_COUNT] = {
     "Assets/sprites/lose_water.png",
-    "Assets/sprites/lose_spike.png"
+    "Assets/sprites/lose_spike.png",
+    "Assets/sprites/lose_ghost.png"
 };
 
 // Stores the loaded lose images
@@ -104,7 +107,7 @@ void gameover_set_results(int par, int strokes) {
 }
 
 void gameover_set_lose(int type) {
-    // Ensure the index is within the two available lose screens
+    // Ensure the index is within the available lose screens
     if (type >= 0 && type < LOSE_COUNT) {
         lose_type = type;
     }
@@ -153,7 +156,6 @@ void play_rank_sound(int rank) {
     case 3: CP_Sound_PlayAdvanced(horse_3, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
     case 4: CP_Sound_PlayAdvanced(horse_5, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
     case 5: CP_Sound_PlayAdvanced(horse_2, 2.0f, 1.0f, FALSE, CP_SOUND_GROUP_2); break;
-    default: break;
     }
 }
 

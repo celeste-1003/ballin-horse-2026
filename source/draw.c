@@ -72,12 +72,12 @@ void draw_dotted_line(float x1, float y1, float x2, float y2, float spacing, flo
 	CP_Settings_Restore();
 }
 
-void draw_stickywall(float x, float y, float width, float height) {
+void draw_specialwall(float x, float y, float width, float height, CP_Color base, CP_Color outline) {
 
-	CP_Settings_Fill(Slime_Wall);
+	CP_Settings_Fill(base);
 	CP_Graphics_DrawRect(x, y, width, height);
 
-	CP_Settings_Stroke(Slime_Wall_Outline);
+	CP_Settings_Stroke(outline);
 	CP_Settings_NoFill();
 	CP_Graphics_DrawRect(x+5, y+5, width-10, height-10);
 

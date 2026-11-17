@@ -9,6 +9,7 @@
 #include "header/mainmenu.h"
 #include "header/debug.h"
 #include "header/assets.h"
+#include "header/enemy.h"
 
 // WALL COLLISION CHECK | Uses closest point on line segment to ball center to determine if collision has occurred
 int check_wall_collision(CP_Vector ball_pos, float ball_radius,
@@ -234,16 +235,15 @@ int is_wall_tile(const Level* lvl, int col, int row) {
     }
 
     TileType t = Level_GetTile(lvl, col, row);
-    return t == tileWall || t == tileStickyWall;
+    return t == tileWall || t == tileStickyWall || t == tileBounceWall;
 }
-
 
 ////keep ball frm glitching out of bounds by checking
 //static is_walltype(const Level* lvl, int col, int row) {
 // baby doesnt work :<
 //}
 
-int ballCollision(Ball* ball, const Level* lvl, float dt) {
+int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt) {
 
     float speed = CP_Vector_Length(ball->velocity);
 
@@ -254,7 +254,6 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
 
     //check surface, based on surface, give me multiplier, times by multiplier
     float travel = speed * dt;
-
     float sub_dt = dt / (float)MAX_STEPS;
 
     //update in terms 
@@ -312,12 +311,19 @@ int ballCollision(Ball* ball, const Level* lvl, float dt) {
                     continue;
                 }
 
+                //check if trampoline wall so i can double bounce
+                if (Level_GetTile(lvl, col, row) == tileBounceWall) {
+                    CP_Sound_Play(GP_bounce);
+                    debug_log("bounced on trampoline");
+                    ball->velocity = bounce_wall(CP_Vector_Scale(ball->velocity, BOUNCE_MULT), normal);
+                    ball->position = correct_wall_position(ball->position, ball->radius, col, row);
+                    continue;
+                }
                 //otherwise it is a normal wall, so play wall thud sound
                 else {
                     CP_Sound_Play(GP_wall);
                 }
 
-                
                 ball->velocity = bounce_wall(ball->velocity, normal);
             }
         }
