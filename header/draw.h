@@ -2,6 +2,14 @@
 
 // to be rewritten and redeclared in draw.h
 
+typedef enum {
+	SPIKE_UP,
+	SPIKE_DOWN,
+	SPIKE_LEFT,
+	SPIKE_RIGHT,
+	SPIKE_BALL,
+} spike_direction;
+
 void draw_rect(float x, float y, float width, float height, CP_Color col);
 
 void draw_text(CP_Font font, CP_Color col, CP_TEXT_ALIGN_HORIZONTAL h, CP_TEXT_ALIGN_VERTICAL v,
@@ -17,4 +25,5 @@ void draw_circ(float cx, float cy, float cd, CP_Color col);
 
 void draw_specialwall(float x, float y, float width, float height, CP_Color base, CP_Color outline);
 
-void draw_spikes(float x, float y, float width, float height, CP_Color col);
+//void draw_spikes(float x, float y, float width, float height, CP_Color col);
+void draw_spikes(float x, float y, float width, float height, CP_Color col, spike_direction dir);

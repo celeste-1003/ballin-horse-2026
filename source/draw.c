@@ -2,6 +2,7 @@
 #include "CProcessing.h"
 #include "header/draw.h"
 #include "header/assets.h"
+#include <math.h>
 
 /**
  @brief this draws a rectangle
@@ -86,24 +87,73 @@ void draw_specialwall(float x, float y, float width, float height, CP_Color base
 
 }
 
-void draw_spikes(float x, float y, float width, float height, CP_Color col)
-{
+void draw_spikes(float x, float y, float width, float height, CP_Color col, spike_direction dir) {
 	draw_rect(x, y, width, height, col);
-	
-	int   count = 3;                          
-	float w = width / count;
-	float base = y + height;         
-	float tip = y + height * 0.15f; 
+	int count = 3;
 
 	CP_Settings_Save();
 	CP_Settings_NoStroke();
 	CP_Settings_Fill(CP_Color_Create(200, 205, 215, 255));
 
-	for (int i = 0; i < count; i++) {
-		float left = x + i * w;
-		CP_Graphics_DrawTriangle(left, base,
-			left + w, base,
-			left + w / 2, tip);
+	if (dir == SPIKE_UP) {
+		float w = width / count;
+		float base = y + height;
+		float tip = y + height * 0.15f;
+		for (int i = 0; i < count; i++) {
+			float left = x + i * w;
+			CP_Graphics_DrawTriangle(left, base, left + w, base, left + w * 0.5f, tip);
+		}
+	}
+
+	else if (dir == SPIKE_DOWN) {
+		float w = width / count;
+		float base = y;
+		float tip = y + height * 0.85f;
+		for (int i = 0; i < count; i++) {
+			float left = x + i * w;
+			CP_Graphics_DrawTriangle(left, base, left + w, base, left + w * 0.5f, tip);
+		}
+	}
+
+	else if (dir == SPIKE_LEFT) {
+		float h = height / count;
+		float base = x + width;
+		float tip = x + width * 0.15f;
+		for (int i = 0; i < count; i++) {
+			float top = y + i * h;
+			CP_Graphics_DrawTriangle(base, top, base, top + h, tip, top +  h * 0.5f);
+		}
+	}
+
+	else if (dir == SPIKE_RIGHT) {
+		float h = height / count;
+		float base = x;
+		float tip = x + width * 0.85f;
+		for (int i = 0; i < count; i++) {
+			float top = y + i * h;
+			CP_Graphics_DrawTriangle(base, top, base, top + h, tip, top + h * 0.5f);
+		}
+	}
+
+	else { // SPIKE_BALL
+		float cx = x + width * 0.5f;
+		float cy = y + height * 0.5f;
+		float size = (width < height) ? width : height;
+		float coreRadius = size * 0.24f;
+		float outerRadius = size * 0.46f;
+		float halfBaseAngle = 0.28f;
+		for (int i = 0; i < 8; i++) {
+			float angle = i * (3.14159265f / 4.0f);
+			float tipX = cx + cosf(angle) * outerRadius;
+			float tipY = cy + sinf(angle) * outerRadius;
+			float b1X = cx + cosf(angle - halfBaseAngle) * (coreRadius * 0.85f);
+			float b1Y = cy + sinf(angle - halfBaseAngle) * (coreRadius * 0.85f);
+			float b2X = cx + cosf(angle + halfBaseAngle) * (coreRadius * 0.85f);
+			float b2Y = cy + sinf(angle + halfBaseAngle) * (coreRadius * 0.85f);
+			CP_Graphics_DrawTriangle(b1X, b1Y, b2X, b2Y, tipX, tipY);
+		}
+		CP_Settings_Fill(CP_Color_Create(100, 105, 115, 255));
+		CP_Graphics_DrawCircle(cx, cy, coreRadius * 2.0f);
 	}
 
 	CP_Settings_Restore();

@@ -2,6 +2,7 @@
 #include "header/level.h"
 #include "header/assets.h"
 #include "header/draw.h"
+#include "header/collision.h"
 
 //load the level in init first 
 void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
@@ -72,9 +73,16 @@ void Level_Draw(const Level* lvl) {
             case tileWater:
                 if (isDark) draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Water);
                 else        draw_rect((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Water);                  break;
-            case tileSpike:
-                if (isDark) draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass);
-                else        draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass);                break;
+            case tileSpike: {
+                spike_direction dir = SPIKE_BALL;
+                if (is_wall_tile(lvl, col, row + 1)) dir = SPIKE_UP;    // wall below -> point up
+                else if (is_wall_tile(lvl, col, row - 1)) dir = SPIKE_DOWN;  // wall above -> point down
+                else if (is_wall_tile(lvl, col - 1, row)) dir = SPIKE_RIGHT; // wall left  -> point right
+                else if (is_wall_tile(lvl, col + 1, row)) dir = SPIKE_LEFT;  // wall right -> point left
+                if (isDark) draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Grass, dir);
+                else        draw_spikes((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Dark_Grass, dir);
+                break;
+            }
             case tileStickyWall:
                 draw_specialwall((float)(col * TILE_SIZE), (float)(row * TILE_SIZE), TILE_SIZE, TILE_SIZE, Slime_Wall, Slime_Wall_Outline);   break;
             case tileBounceWall:
