@@ -320,7 +320,7 @@ void game_init(void) {
     btn_retry.button_y = 500.0f;
     btn_retry.radius = 5.0f;
     btn_retry.label = "Retry";
-    btn_retry.base = CP_Color_Create(255, 232, 153, 255);
+    btn_retry.base = CP_Color_Create(217, 144, 50, 255);
     btn_retry.font = title_font;
     btn_retry.text_size = 48.0f;
     btn_retry.enabled = TRUE;
@@ -333,7 +333,7 @@ void game_init(void) {
     btn_main_menu.button_y = 640.0f;
     btn_main_menu.radius = 5.0f;
     btn_main_menu.label = "Main Menu";
-    btn_main_menu.base = CP_Color_Create(85, 165, 195, 255);
+    btn_main_menu.base = CP_Color_Create(40, 75, 99, 255);
     btn_main_menu.font = body_font;
     btn_main_menu.text_size = 30.0f;
     btn_main_menu.enabled = TRUE;
@@ -399,7 +399,7 @@ void game_update(void) {
     CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.x, currentLevel.hole.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
-    Draw_Player(horse_mc, ball.position, 100.0f, 100.0f);
+    Draw_Player(horse_mc, ball.position, 140.0f, 140.0f);
     for (int i = 0; i < currentLevel.enemyCount; i++) {
         Draw_Enemy(horse_enemy, enemies[i].position, 100.0f, 100.0f);
     }
