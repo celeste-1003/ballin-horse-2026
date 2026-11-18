@@ -238,11 +238,6 @@ int is_wall_tile(const Level* lvl, int col, int row) {
     return t == tileWall || t == tileStickyWall || t == tileBounceWall;
 }
 
-////keep ball frm glitching out of bounds by checking
-//static is_walltype(const Level* lvl, int col, int row) {
-// baby doesnt work :<
-//}
-
 int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt) {
 
     float speed = CP_Vector_Length(ball->velocity);
@@ -252,92 +247,103 @@ int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt) {
         return 0; // No hazard
     }
 
-    //check surface, based on surface, give me multiplier, times by multiplier
-    float travel = speed * dt;
+    // Use the ball's actual radius (circular hitbox fitting inside the pink square)
+    float col_radius = ball->radius;
     float sub_dt = dt / (float)MAX_STEPS;
 
-    //update in terms 
+    // Update position in sub-steps and check circle collision against hazards and walls
     for (int i = 0; i < MAX_STEPS; i++) {
         ball->position = CP_Vector_Add(ball->position, CP_Vector_Scale(ball->velocity, sub_dt));
-        TileType under = check_surface_collision(ball->position, lvl);
 
-        if (under == tileWater) {
-            debug_log("died on water");
-            ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-            return 1; // Water lose screen
-        }
-        if (under == tileSpike) {
-            debug_log("died on spike");
-            ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-            return 2; // Spike lose screen
-        }
-    }
+        // Find grid tiles overlapping the circle's bounds
+        int min_col = (int)floorf((ball->position.x - col_radius) / TILE_SIZE);
+        int max_col = (int)floorf((ball->position.x + col_radius) / TILE_SIZE);
+        int min_row = (int)floorf((ball->position.y - col_radius) / TILE_SIZE);
+        int max_row = (int)floorf((ball->position.y + col_radius) / TILE_SIZE);
 
-    //kept going thru the wall so now check more times trial and error lol
-    for (int check = 0; check < CHECK_TIMES; ++check) {
-
-        //bounding box of ball !! kim u can make these lines visible when u do debugger ok.
-        int min_col = (int)floorf((ball->position.x - ball->radius) / TILE_SIZE);
-        int max_col = (int)floorf((ball->position.x + ball->radius) / TILE_SIZE);
-        int min_row = (int)floorf((ball->position.y - ball->radius) / TILE_SIZE);
-        int max_row = (int)floorf((ball->position.y + ball->radius) / TILE_SIZE);
-
-        //check each row if within the min and max
+        // 1. Check hazard collisions (Water & Spikes) using circle-vs-tile collision
         for (int row = min_row; row <= max_row; row++) {
-
-            //check each col if within the min and max
             for (int col = min_col; col <= max_col; col++) {
-
-                //check if not wall tile
-                if (!is_wall_tile(lvl, col, row)) {
+                if (col < 0 || row < 0 || col >= GRID_COL || row >= GRID_ROW) {
                     continue;
                 }
 
-                //check if not wall collision using this
-                if (!check_wall_collision(ball->position, ball->radius, col, row)) {
-                    continue;
-                }   
+                TileType tile = Level_GetTile(lvl, col, row);
 
-                CP_Vector normal = get_wall_normal(ball->position, col, row);
-                ball->position = correct_wall_position(ball->position, ball->radius, col, row);
-                debug_log("wall hit (%d,%d) normal (%.2f,%2f)", col, row, normal.x, normal.y);
-
-                //check if it is a sticky wall so that i can play sound 
-                if (Level_GetTile(lvl, col, row) == tileStickyWall) {
-                    CP_Sound_Play(GP_slime);
-                    debug_log("stuck to sticky wall");
-                    ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-                    ball->position = correct_wall_position(ball->position, ball->radius, col, row);
-                    continue;
+                if (tile == tileWater) {
+                    if (check_wall_collision(ball->position, col_radius, col, row)) {
+                        debug_log("died on water");
+                        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+                        return 1; // Water lose screen
+                    }
                 }
-
-                //check if trampoline wall so i can double bounce
-                if (Level_GetTile(lvl, col, row) == tileBounceWall) {
-                    CP_Sound_Play(GP_bounce);
-                    debug_log("bounced on trampoline");
-                    ball->velocity = bounce_wall(CP_Vector_Scale(ball->velocity, BOUNCE_MULT), normal);
-                    ball->position = correct_wall_position(ball->position, ball->radius, col, row);
-                    continue;
+                else if (tile == tileSpike) {
+                    if (check_wall_collision(ball->position, col_radius, col, row)) {
+                        debug_log("died on spike");
+                        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+                        return 2; // Spike lose screen
+                    }
                 }
-                //otherwise it is a normal wall, so play wall thud sound
-                else {
-                    CP_Sound_Play(GP_wall);
-                }
+            }
+        }
 
-                ball->velocity = bounce_wall(ball->velocity, normal);
+        // 2. Check wall collisions inside the sub-step using col_radius
+        for (int check = 0; check < CHECK_TIMES; ++check) {
+            min_col = (int)floorf((ball->position.x - col_radius) / TILE_SIZE);
+            max_col = (int)floorf((ball->position.x + col_radius) / TILE_SIZE);
+            min_row = (int)floorf((ball->position.y - col_radius) / TILE_SIZE);
+            max_row = (int)floorf((ball->position.y + col_radius) / TILE_SIZE);
+
+            for (int row = min_row; row <= max_row; row++) {
+                for (int col = min_col; col <= max_col; col++) {
+
+                    if (!is_wall_tile(lvl, col, row)) {
+                        continue;
+                    }
+
+                    if (!check_wall_collision(ball->position, col_radius, col, row)) {
+                        continue;
+                    }
+
+                    CP_Vector normal = get_wall_normal(ball->position, col, row);
+                    ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                    debug_log("wall hit (%d,%d) normal (%.2f,%.2f)", col, row, normal.x, normal.y);
+
+                    if (Level_GetTile(lvl, col, row) == tileStickyWall) {
+                        CP_Sound_Play(GP_slime);
+                        debug_log("stuck to sticky wall");
+                        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+                        ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                        continue;
+                    }
+
+                    if (Level_GetTile(lvl, col, row) == tileBounceWall) {
+                        CP_Sound_Play(GP_bounce);
+                        debug_log("bounced on trampoline");
+                        ball->velocity = bounce_wall(CP_Vector_Scale(ball->velocity, BOUNCE_MULT), normal);
+                        ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                        continue;
+                    }
+                    else {
+                        CP_Sound_Play(GP_wall);
+                    }
+
+                    ball->velocity = bounce_wall(ball->velocity, normal);
+                }
             }
         }
     }
+
     return 0; // No hazard collision occurred
 }
 
 void ballFriction(Ball* ball, const Level* lvl, float dt) {
 
-    //powerf times by multiplier by the dt to get the friction itself then scales accordingly
+    // powerf times by multiplier by the dt to get the friction itself then scales accordingly
     float friction = powf(get_friction_multiplier(ball->position, lvl), dt * 60.0f);
     ball->velocity = CP_Vector_Scale(ball->velocity, friction);
 
-    //then if shorter than min, clamp to 0
+    // then if shorter than min, clamp to 0
     if (CP_Vector_Length(ball->velocity) < MIN_SPEED) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
     }
