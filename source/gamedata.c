@@ -52,7 +52,7 @@ int GameData_Load(void) {
         return 0; // Corrupted or incomplete file
     }
 
-    //Ensure stage is at least 1
+    //Ensure stage is at least 1(failsafe)
     if (gGameData.highest_stage_unlocked < 1) {
         gGameData.highest_stage_unlocked = 1;
     }
@@ -61,7 +61,7 @@ int GameData_Load(void) {
 }
 
 int GameData_IsStageUnlocked(int stage_num) {
-    // Stage 1 is ALWAYS accessible, even if a save file is missing or broken
+    // Stage 1 is ALWAYS accessible, even if a save file is missing or broken (failsafe)
     if (stage_num <= 1) {
         return 1;
     }

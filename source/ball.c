@@ -100,7 +100,7 @@ void Ball_Update(Ball* ball, float delta_time) {
     // 2. Apply ground friction (exponential decay per second)
     float friction_factor = powf(ball->friction, delta_time * 60.0f);
     ball->velocity = CP_Vector_Scale(ball->velocity, friction_factor);
-
+    
     // 3. Complete stop threshold check
     if (CP_Vector_Length(ball->velocity) < ball->min_stop_speed) {
         ball->velocity = CP_Vector_Set(0.0f, 0.0f);
