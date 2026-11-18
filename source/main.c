@@ -25,6 +25,10 @@ int main(void){
 	GameData_Init();
 	CP_System_SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	CP_Engine_SetNextGameState(splash_init, splash_update, splash_exit);
+#ifdef _DEBUG
+	CP_Engine_Run(1);
+#else
 	CP_Engine_Run(0);
+#endif
 	return 0;
 }

@@ -1,4 +1,6 @@
 // debug.c
+
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -9,6 +11,7 @@
 #include "header/utils.h"
 #include "header/assets.h"
 
+#ifdef _DEBUG
 #define SCALE_COUNT (3)
 
 static CP_BOOL show_hitboxes = FALSE;
@@ -192,3 +195,5 @@ void debug_log(const char* fmt, ...) {
 	va_end(ap);
 	printf("\n");
 }
+
+#endif
