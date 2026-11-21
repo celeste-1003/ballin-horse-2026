@@ -284,52 +284,38 @@ int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt) {
                         return 2; // Spike lose screen
                     }
                 }
-            }
-        }
-
-        // 2. Check wall collisions inside the sub-step using col_radius
-        for (int check = 0; check < CHECK_TIMES; ++check) {
-            min_col = (int)floorf((ball->position.x - col_radius) / TILE_SIZE);
-            max_col = (int)floorf((ball->position.x + col_radius) / TILE_SIZE);
-            min_row = (int)floorf((ball->position.y - col_radius) / TILE_SIZE);
-            max_row = (int)floorf((ball->position.y + col_radius) / TILE_SIZE);
-
-            for (int row = min_row; row <= max_row; row++) {
-                for (int col = min_col; col <= max_col; col++) {
-
-                    if (!is_wall_tile(lvl, col, row)) {
-                        continue;
-                    }
-
-                    if (!check_wall_collision(ball->position, col_radius, col, row)) {
-                        continue;
-                    }
-
-                    CP_Vector normal = get_wall_normal(ball->position, col, row);
-                    ball->position = correct_wall_position(ball->position, col_radius, col, row);
-                    debug_log("wall hit (%d,%d) normal (%.2f,%.2f)", col, row, normal.x, normal.y);
-
-                    if (Level_GetTile(lvl, col, row) == tileStickyWall) {
-                        CP_Sound_Play(GP_slime);
-                        debug_log("stuck to sticky wall");
-                        ball->velocity = CP_Vector_Set(0.0f, 0.0f);
-                        ball->position = correct_wall_position(ball->position, col_radius, col, row);
-                        continue;
-                    }
-
-                    if (Level_GetTile(lvl, col, row) == tileBounceWall) {
-                        CP_Sound_Play(GP_bounce);
-                        debug_log("bounced on trampoline");
-                        ball->velocity = bounce_wall(CP_Vector_Scale(ball->velocity, BOUNCE_MULT), normal);
-                        ball->position = correct_wall_position(ball->position, col_radius, col, row);
-                        continue;
-                    }
-                    else {
-                        CP_Sound_Play(GP_wall);
-                    }
-
-                    ball->velocity = bounce_wall(ball->velocity, normal);
+                if (!is_wall_tile(lvl, col, row)) {
+                    continue;
                 }
+
+                if (!check_wall_collision(ball->position, col_radius, col, row)) {
+                    continue;
+                }
+
+                CP_Vector normal = get_wall_normal(ball->position, col, row);
+                ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                debug_log("wall hit (%d,%d) normal (%.2f,%.2f)", col, row, normal.x, normal.y);
+
+                if (Level_GetTile(lvl, col, row) == tileStickyWall) {
+                    CP_Sound_Play(GP_slime);
+                    debug_log("stuck to sticky wall");
+                    ball->velocity = CP_Vector_Set(0.0f, 0.0f);
+                    ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                    continue;
+                }
+
+                if (Level_GetTile(lvl, col, row) == tileBounceWall) {
+                    CP_Sound_Play(GP_bounce);
+                    debug_log("bounced on trampoline");
+                    ball->velocity = bounce_wall(CP_Vector_Scale(ball->velocity, BOUNCE_MULT), normal);
+                    ball->position = correct_wall_position(ball->position, col_radius, col, row);
+                    continue;
+                }
+                else {
+                    CP_Sound_Play(GP_wall);
+                }
+
+                ball->velocity = bounce_wall(ball->velocity, normal);
             }
         }
     }

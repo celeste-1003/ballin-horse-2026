@@ -25,7 +25,7 @@ void Ball_Init(Ball* ball, CP_Vector position, float radius);
 void Ball_Update(Ball* ball, float delta_time);
 
 // Drawing the ball + aim line
-void Draw_Player(CP_Image img, CP_Vector position, float img_width, float img_height);
+void Draw_Player(const Ball* ball, CP_Image img, CP_Vector position, float radius);
 void Ball_DrawAim(const Ball* ball);
 
 // Input Handling (Pull-back slingshot mechanic)

@@ -1,7 +1,7 @@
 #include "cprocessing.h"
 #include "header/assets.h"
 
-CP_Color BG_Grey, Red, Green, Black, Blue, White, Brown;
+CP_Color BG_Grey, Red, Black, Blue, White, Brown;
 CP_Color Light_Sand, Dark_Sand, Water, Dark_Water, Grass, Dark_Grass;
 CP_Color Slime_Wall, Slime_Wall_Outline, Bounce_Wall, Bounce_Wall_Outline;
 
@@ -15,7 +15,7 @@ CP_Image horse_mc = NULL, horse_enemy = NULL;
 
 CP_Sound MM_bg = NULL, UI_click = NULL, UI_win = NULL, UI_lose = NULL, UI_youLose = NULL;
 CP_Sound horse_1 = NULL, horse_2 = NULL, horse_3 = NULL, horse_4 = NULL, horse_5 = NULL;
-CP_Sound GP_release = NULL, GP_slime = NULL, GP_wall = NULL, GP_sand = NULL, GP_bounce = NULL;
+CP_Sound GP_release = NULL, GP_slime = NULL, GP_wall = NULL, GP_sand = NULL, GP_bounce = NULL, GP_ready = NULL;
 
 /**
  @brief this initialises colors and fonts used in other systems
@@ -88,6 +88,7 @@ void set_music_assets(void) {
 	GP_wall = CP_Sound_Load("Assets/music/gp_wall.wav");
 	GP_sand = CP_Sound_Load("Assets/music/gp_sand.wav");
 	GP_bounce = CP_Sound_Load("Assets/music/gp_bounce.wav");
+	GP_ready = CP_Sound_Load("Assets/music/gp_ready.wav");
 }
 
 void set_splash_assets(void) {

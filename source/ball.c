@@ -3,6 +3,7 @@
 #include "cprocessing.h"
 #include "header/ball.h"
 #include "header/draw.h"
+#include "header/assets.h"
 
 void Ball_Init(Ball* ball, CP_Vector position, float radius) {
     ball->position = position;
@@ -88,8 +89,24 @@ void Ball_DrawAim(const Ball* ball) {
 }
 
 // Draw the horse sprite as the player
-void Draw_Player(CP_Image img, CP_Vector position, float img_width, float img_height) {
-    draw_image(img, position.x, position.y, img_width, img_height, 255);
+void Draw_Player(const Ball* ball, CP_Image img, CP_Vector position, float radius) {
+
+        draw_image(img, position.x, position.y, radius*2, radius*2, 255);
+
+    if (ball->velocity.x == 0.0f && ball->velocity.y == 0.0f) {
+
+        CP_Settings_Save();
+
+        CP_Settings_NoFill();
+
+        CP_Settings_Stroke(CP_Color_Create(0, 255, 0, 255));
+        CP_Settings_StrokeWeight(5.0f);
+
+        CP_Settings_RectMode(CP_POSITION_CENTER);
+        CP_Graphics_DrawRect(position.x, position.y, radius*2, radius*2);
+
+        CP_Settings_Restore();
+    }
 }
 
 void Ball_Update(Ball* ball, float delta_time) {

@@ -26,14 +26,14 @@ void Level_Load(Level* lvl, const char* layout[GRID_ROW], int par) {
             case 'l': type = tileStickyWall; break;
             case 't': type = tileBounceWall; break;
 
-            case 'B': lvl->ballStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);   break;
-            case 'E': if (lvl->enemyCount < MAX_ENEMIES) { lvl->enemyStarts[lvl->enemyCount] = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
+            case 'B': lvl->ballStart = CP_Vector_Set(col * TILE_SIZE + TILE_SIZE/2, row * TILE_SIZE + TILE_SIZE / 2);   break;
+            case 'E': if (lvl->enemyCount < MAX_ENEMIES) { lvl->enemyStarts[lvl->enemyCount] = CP_Vector_Set(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2);
                 lvl->enemyCount++;
             }
             break;
             //case 'E': lvl->enemyStart = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);
             //          lvl->hasEnemy = true;                                                                 break;
-            case 'H': lvl->hole = CP_Vector_Set((col + 0.5f) * TILE_SIZE, (row + 0.5f) * TILE_SIZE);        break;
+            case 'H': lvl->hole = CP_Vector_Set(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2);        break;
             
             default:  type = tileGrass;      break;
             }

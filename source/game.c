@@ -75,12 +75,12 @@ const char* level3[GRID_ROW] = {
     "#..............................#",
     "#..............................#",
     "#.........#########............#",
-    "#.........#########............#",
+    "#..............................#",
     "#..............................#",
     "#.............B................#",
     "#..............................#",
     "#..............................#",
-    "#..............................#",
+    "#.........lllllllll............#",
     "################################"
 };
 
@@ -160,6 +160,7 @@ static float flag_order_timer = 0.0f;
 //static int gameoverSound = 0;
 static int horseSound = 0;
 static int sandSound = 0;
+static int readySound = 0;
 
 // Victory overlay state and buttons
 bool isLevelWon = false;
@@ -399,9 +400,10 @@ void game_update(void) {
     CP_Image_DrawSubImage(flag_sheet, currentLevel.hole.x, currentLevel.hole.y - fh / 2.0f, fw, fh, u0, 0.0f, u1, sheet_H, 255);
 
     Ball_DrawAim(&ball);
-    Draw_Player(horse_mc, ball.position, 140.0f, 140.0f);
+
+    Draw_Player(&ball, horse_mc, ball.position, 50.0f);
     for (int i = 0; i < currentLevel.enemyCount; i++) {
-        Draw_Enemy(horse_enemy, enemies[i].position, 100.0f, 100.0f);
+        Draw_Enemy(horse_enemy, enemies[i].position);
     }
     debug_draw(&ball, &currentLevel);
 
@@ -534,8 +536,10 @@ void game_update(void) {
         float mx = ball.position.x - enemies[i].position.x;
         float my = ball.position.y - enemies[i].position.y;
         float lose_check = (mx * mx) + (my * my);
+        float r = ball.radius + enemies[i].radius;
 
-        if (lose_check <= (enemies[i].radius * enemies[i].radius)) {
+
+        if (lose_check <= (r*r - 50.0f)) {
             debug_log("died by enemy %d", i);
             ball.velocity = CP_Vector_Set(0.0f, 0.0f);
             gameover_set_lose(2); // Enemy lose screen
@@ -547,10 +551,10 @@ void game_update(void) {
     // Win condition check: Ball inside hole radius
     float dx = ball.position.x - currentLevel.hole.x;
     float dy = ball.position.y - currentLevel.hole.y;
-    float dist_sq = (dx * dx) + (dy * dy);
-    float hole_radius = (float)HOLE_DIAMETER / 2.0f;
+    float lose_check2 = (dx * dx) + (dy * dy);
+    float r2 = (HOLE_DIAMETER / 2.0f) + ball.radius;
 
-    if (dist_sq <= (hole_radius * hole_radius)) {
+    if (lose_check2 <= (r2*r2 + 50.0f)) {
 
         ball.velocity = CP_Vector_Set(0.0f, 0.0f);
         ball.position = currentLevel.hole;

@@ -13,5 +13,5 @@ typedef struct {
 } Enemy;
 
 void Enemy_Init(Enemy* enemy, CP_Vector position);
-void Draw_Enemy(CP_Image img, CP_Vector position, float img_width, float img_height);
+void Draw_Enemy(CP_Image img, CP_Vector position);
 void Enemy_Chase(Enemy* enemy, Ball* ball, float dt);

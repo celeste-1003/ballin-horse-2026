@@ -133,7 +133,7 @@ void debug_draw(const Ball* ball, const Level* lvl) {
 	CP_Vector p = ball->position;
 	float r = ball->radius;
 
-	//same tile range ballCollision scans
+	////same tile range ballCollision scans
 	int min_col = GetCol(p.x - r);
 	int max_col = GetCol(p.x + r);
 	int min_row = GetRow(p.y - r);
@@ -144,14 +144,14 @@ void debug_draw(const Ball* ball, const Level* lvl) {
 	CP_Settings_NoFill();
 	CP_Settings_StrokeWeight(2.0f);
 
-	//tile scan box
+	////tile scan box
 	outline_rect((float)(min_col * TILE_SIZE),
 		(float)(min_row * TILE_SIZE),
 		(float)((max_col - min_col + 1) * TILE_SIZE),
 		(float)((max_row - min_row + 1) * TILE_SIZE),
 		CP_Color_Create(255, 255, 255, 60));
 
-	// solid tiles in scan box: red + touching the ball
+	//// solid tiles in scan box: red + touching the ball
 	for (int row = min_row; row <= max_row; row++) {
 		for (int col = min_col; col <= max_col; col++) {
 			if (!is_wall_tile(lvl, col, row)) continue;
@@ -165,13 +165,13 @@ void debug_draw(const Ball* ball, const Level* lvl) {
 		}
 	}
 
-	// tile under ball's centre
-	outline_rect((float)(GetCol(p.x) * TILE_SIZE), 
-		(float)(GetRow(p.y) * TILE_SIZE), 
-		TILE_SIZE, TILE_SIZE, 
-		CP_Color_Create(255, 0, 255, 255));
+	//// tile under ball's centre
+	//outline_rect((float)(GetCol(p.x) * TILE_SIZE), 
+	//	(float)(GetRow(p.y) * TILE_SIZE), 
+	//	TILE_SIZE, TILE_SIZE, 
+	//	CP_Color_Create(255, 0, 255, 255));
 
-	//ball
+	////ball
 	CP_Settings_Stroke(CP_Color_Create(0, 255, 255, 220));
 	CP_Graphics_DrawCircle(p.x, p.y, r * 2.0f);
 

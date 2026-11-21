@@ -4,8 +4,8 @@
 #include "header/enemy.h"
 #include "header/ball.h"
 
-void Draw_Enemy(CP_Image img, CP_Vector position, float img_width, float img_height) {
-	draw_image(img, position.x, position.y, img_width, img_height, 255);
+void Draw_Enemy(CP_Image img, CP_Vector position) {
+	draw_image(img, position.x, position.y, ENEMY_RADIUS*2, ENEMY_RADIUS*2, 200);
 }
 
 void Enemy_Init(Enemy* enemy, CP_Vector position) {

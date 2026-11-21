@@ -53,7 +53,7 @@
 #define SAND_FRICTION_MULTIPLIER (0.5f) // double friction
 #define ICE_FRICTION_MULTIPLIER (0.5f) //half friction
 #define WALL_BOUNCE_MULTIPLIER (0.9f) //Bounce off wall lose 10% speed
-#define BOUNCE_MULT (1.0f)
+#define BOUNCE_MULT (1.3f)
 
 // PAUSE MENU MACROS
 #define PAUSE_OVERLAY (75)
