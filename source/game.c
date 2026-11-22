@@ -149,7 +149,7 @@ const char* level6[GRID_ROW] = {
 
 int g_selectedLevel = 0;
 static const char** layouts[] = { level1, level2, level3, level4, level5, level6 };
-static const int    pars[AMT_LVL_BOXES] = { 3, 4, 5, 5, 6, 7 };
+static const int    pars[AMT_LVL_BOXES] = { 4, 6, 5, 7, 6, 7 };
 static Level currentLevel;
 static Ball  ball;
 static Enemy enemies[MAX_ENEMIES];
@@ -257,6 +257,33 @@ static void LevelTitle_Update(float dt) {
     LevelTitle_Draw();
 }
 // end of title draw
+
+static void draw_stroke_hud(int stroke_count, int par) {
+    char text[32];
+    sprintf_s(text, sizeof(text), "Strokes: %d | Par: %d", stroke_count, par);
+
+    const float pad_x = 20.0f;
+    const float pad_y = 20.0f;
+    const float box_w = 210.0f;
+    const float box_h = 54.0f;
+    const float box_x = pad_x;
+    const float box_y = (float)SCREEN_HEIGHT - box_h - pad_y;
+
+    CP_Settings_Save();
+
+    CP_Settings_RectMode(CP_POSITION_CORNER);
+    CP_Settings_Fill(CP_Color_Create(0, 0, 0, 160));
+    CP_Settings_Stroke(CP_Color_Create(255, 255, 255, 180));
+    CP_Settings_StrokeWeight(2.0f);
+    CP_Graphics_DrawRectAdvanced(box_x, box_y, box_w, box_h, 0.0f, 10.0f);
+
+    CP_Settings_NoStroke;
+    CP_Settings_TextSize(32.0f);
+    draw_text(body_font, White, CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE, text,
+        box_x + box_w * 0.5f, box_y + box_h * 0.5f);
+
+    CP_Settings_Restore();
+}
 
 /* GAME STATES */
 
@@ -410,6 +437,8 @@ void game_update(void) {
     float title_dt = CP_System_GetDt();
     if (title_dt > MAX_DT) title_dt = MAX_DT;
     LevelTitle_Update(title_dt);
+
+    draw_stroke_hud(strokes, currentLevel.par);
 
     // --- STAGE CLEARED OVERLAY ---
     if (isLevelWon) {
