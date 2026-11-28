@@ -93,7 +93,7 @@ void set_music_assets(void) {
 
 void set_splash_assets(void) {
 	sch_logo = CP_Image_Load("Assets/logos/DigiPen_BLACK.png");
-	team_logo = CP_Image_Load("Assets/logos/DigiPen_Singapore_WEB_RED.png");
+	team_logo = CP_Image_Load("Assets/logos/wancent_logo.png");
 }
 
 void FreeAsset() {
