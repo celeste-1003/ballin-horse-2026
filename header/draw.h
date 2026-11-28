@@ -1,6 +1,6 @@
 #pragma once
+// author: Biagtas Andrew Kim Capao
 
-// to be rewritten and redeclared in draw.h
 
 typedef enum {
 	SPIKE_UP,

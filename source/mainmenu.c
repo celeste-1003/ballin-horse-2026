@@ -1,3 +1,7 @@
+// author: Biagtas Andrew Kim Capao
+// co-author: Miasara Binte Mohamad Norfitri
+// co-author: Pha Zhe Jie
+
 /* MAIN MENU */
 
 // Libraries
@@ -59,7 +63,7 @@ void main_menu_init(void)
 	btn_exit.width = MMBUTTON_WIDTH;
 	btn_exit.height = MMBUTTON_HEIGHT;
 	btn_exit.radius = 15.0f;
-	btn_exit.label = "Exit";
+	btn_exit.label = "Quit";
 	btn_exit.base = Brown;
 	btn_exit.font = body_font;
 	btn_exit.text_size = 50.0f;

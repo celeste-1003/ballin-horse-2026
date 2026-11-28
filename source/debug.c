@@ -1,5 +1,4 @@
-// debug.c
-
+// author: Biagtas Andrew Kim Capao
 
 #include <stdio.h>
 #include <stdarg.h>

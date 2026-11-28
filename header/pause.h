@@ -1,5 +1,7 @@
-// pause.h
 #pragma once
+// author: Biagtas Andrew Kim Capao
+// co-author: Pha Zhe Jie
+
 #include "cprocessing.h"
 
 typedef enum {

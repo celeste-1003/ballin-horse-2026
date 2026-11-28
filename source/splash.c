@@ -1,4 +1,4 @@
-// splash.c
+// author: Biagtas Andrew Kim Capao
 
 #include "header/splash.h"
 #include "cprocessing.h"
@@ -7,6 +7,7 @@
 #include "header/mainmenu.h"
 
 static CP_Image logos[SPLASH_COUNT];
+static CP_Font splash_font = NULL;
 static int current;
 static float timer;
 
@@ -17,6 +18,7 @@ static CP_BOOL splash_skip_pressed(void) {
 void splash_init(void) {
 	CP_System_SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	set_splash_assets();
+	splash_font = CP_Font_Load("Assets/fonts/ComicSans.ttf");
 
 	logos[0] = sch_logo;
 	logos[1] = team_logo;
@@ -59,11 +61,29 @@ void splash_update(void) {
 	}
 
 	CP_Image_Draw(logos[current], SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, width * scale, height * scale, (int)(a * 255.0f));
+	if (current == 0 && splash_font != NULL) {
+		CP_Settings_Save();
+		CP_Font_Set(splash_font);
+		CP_Settings_TextSize(24.0f);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, (int)(a * 255.0f)));
+		CP_Font_DrawText(
+			"All content \xC2\xA9 2026 DigiPen Institute of Technology Singapore. All Rights Reserved",
+			SCREEN_WIDTH / 2.0f,
+			SCREEN_HEIGHT / 2.0f + (height * scale) * 0.5f + 50.0f
+		);
+		CP_Settings_Restore();
+	}
 }
 
 void splash_exit(void) {
 	for (int i = 0; i < SPLASH_COUNT; i++) {
 		CP_Image_Free(logos[i]);
+	}
+
+	if (splash_font != NULL) {
+		CP_Font_Free(splash_font);
+		splash_font = NULL;
 	}
 
 	sch_logo = NULL;

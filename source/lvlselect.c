@@ -1,5 +1,7 @@
-/* LEVEL SELECT */
+// author: Biagtas Andrew Kim Capao
+// co-author: Pha Zhe Jie
 
+/* LEVEL SELECT */
 // Libraries
 #include "cprocessing.h"
 #include "header/draw.h"

@@ -10,6 +10,10 @@
 //---------------------------------------------------------
 
 // libraries
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include "cprocessing.h"
 #include "header/game.h"
 #include "header/utils.h"
@@ -17,14 +21,12 @@
 #include "header/splash.h"
 #include "header/gamedata.h"
 
-
-// main() the starting point for the program
-// CP_Engine_SetNextGameState() tells CProcessing which functions to use for init, update and exit
-// CP_Engine_Run() is the core function that starts the simulation
 int main(void){
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	GameData_Init();
 	CP_System_SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	CP_Engine_SetNextGameState(splash_init, splash_update, splash_exit);
+
 #ifdef _DEBUG
 	CP_Engine_Run(1);
 #else

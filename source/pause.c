@@ -1,4 +1,5 @@
-// pause.c
+// author: Biagtas Andrew Kim Capao
+// co-author: Pha Zhe Jie
 #include "cprocessing.h"
 #include "header/pause.h"
 #include "header/ui.h"

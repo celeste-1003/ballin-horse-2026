@@ -1,3 +1,5 @@
+// author: Biagtas Andrew Kim Capao
+// co-author: Miasara Binte Mohamad Norfitri
 //Libraries
 #include "CProcessing.h"
 #include "header/draw.h"

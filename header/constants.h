@@ -1,4 +1,9 @@
 #pragma once
+// author: Biagtas Andrew Kim Capao
+// co-author: Miasara Binte Mohamad Norfitri
+// co-author: Ng Shu Xuan Sherval
+// co-author: Pha Zhe Jie
+
 #include "cprocessing.h"
 
 // SPLASH SCREEN MACROS

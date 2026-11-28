@@ -1,4 +1,5 @@
-// ui.c
+// author: Biagtas Andrew Kim Capao
+
 #include "cprocessing.h"
 #include "header/ui.h"
 #include "header/assets.h"

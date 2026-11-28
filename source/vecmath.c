@@ -8,7 +8,7 @@
 CP_Vector ClampVector(CP_Vector genVector, float maxLength, float minLength) {
 
 	float length = CP_Vector_Length(genVector);
-	float CP_Math_ClampFloat(length, minLength, maxLength);
+	length = CP_Math_ClampFloat(length, minLength, maxLength);
 
 	return CP_Vector_Scale(CP_Vector_Normalize(genVector), length);
 }

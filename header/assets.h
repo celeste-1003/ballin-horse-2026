@@ -1,4 +1,6 @@
 #pragma once
+// author: Biagtas Andrew Kim Capao
+// co-author: Miasara Binte Mohamad Norfitri
 
 #define AMT_HINTS (3)
 #define AMT_FLAG_FRAMES (3)

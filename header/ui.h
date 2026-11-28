@@ -1,4 +1,5 @@
-// ui.h
+// author: Biagtas Andrew Kim Capao
+
 #pragma once
 #include "cprocessing.h"
 

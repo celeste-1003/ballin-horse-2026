@@ -1,5 +1,5 @@
-// debug.h
 #pragma once
+// author: Biagtas Andrew Kim Capao
 
 #include "cprocessing.h"
 #include "header/ball.h"

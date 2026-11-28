@@ -239,7 +239,7 @@ int is_wall_tile(const Level* lvl, int col, int row) {
 }
 
 int ballCollision(Ball* ball, Enemy* enemy, const Level* lvl, float dt) {
-
+    (void)enemy;
     float speed = CP_Vector_Length(ball->velocity);
 
     if (speed < MIN_SPEED) {
