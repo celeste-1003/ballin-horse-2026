@@ -1,3 +1,6 @@
+// author: Miasara Binte Mohamad Norfitri
+// co-author: Biagtas Andrew Kim Capao
+
 #include <math.h>
 #include "header/level.h"
 #include "header/assets.h"

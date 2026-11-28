@@ -1,3 +1,5 @@
+// author: Miasara Binte Mohamad Norfitri
+
 // Libraries
 #include "cprocessing.h"
 #include "header/draw.h"

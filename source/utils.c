@@ -1,3 +1,6 @@
+// author: Miasara Binte Mohamad Norfitri
+// co-author: Ng Shu Xuan Sherval
+
 #include <math.h>
 #include "cprocessing.h"
 #include "header/vecmath.h"

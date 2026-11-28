@@ -1,3 +1,6 @@
+//author: Miasara Binte Mohamad Norfitri
+//co author: Biagtas Andrew Kim Capao, Ng Shu Xuan Sherval, Pha Zhe Jie
+
 // Libraries
 #include "cprocessing.h"
 #include <math.h>

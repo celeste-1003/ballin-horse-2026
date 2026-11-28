@@ -1,3 +1,6 @@
+// author: Miasara Binte Mohamad Norfitri
+// co-author: Biagtas Andrew Kim Capao
+
 #pragma once
 
 #include <stdbool.h>
