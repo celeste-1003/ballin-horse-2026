@@ -17,10 +17,10 @@ int GetRow(float y) {
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
 	// calculate rectangle
-	float left_edge = area_center_x - (area_width / 2.0);
-	float right_edge = area_center_x + (area_width / 2.0);
-	float top_edge = area_center_y - (area_height / 2.0);
-	float bottom_edge = area_center_y + (area_height / 2.0);
+	float left_edge = area_center_x - (area_width / 2.0f);
+	float right_edge = area_center_x + (area_width / 2.0f);
+	float top_edge = area_center_y - (area_height / 2.0f);
+	float bottom_edge = area_center_y + (area_height / 2.0f);
 
 	// calculate if click point is within the boundary
 	if (click_x >= left_edge && click_x <= right_edge &&

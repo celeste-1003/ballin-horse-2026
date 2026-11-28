@@ -277,7 +277,7 @@ static void draw_stroke_hud(int stroke_count, int par) {
     CP_Settings_StrokeWeight(2.0f);
     CP_Graphics_DrawRectAdvanced(box_x, box_y, box_w, box_h, 0.0f, 10.0f);
 
-    CP_Settings_NoStroke;
+    CP_Settings_NoStroke();
     CP_Settings_TextSize(32.0f);
     draw_text(body_font, White, CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE, text,
         box_x + box_w * 0.5f, box_y + box_h * 0.5f);
