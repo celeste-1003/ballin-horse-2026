@@ -1,3 +1,6 @@
+// author: Ng Shu Xuan Sherval
+// co-author: Miasara Binte Mohamad Norfitri, Biagtas Andrew Kim Capao, Pha Zhe Jie
+
 #include <math.h>
 #include "cprocessing.h"
 #include "header/collision.h"

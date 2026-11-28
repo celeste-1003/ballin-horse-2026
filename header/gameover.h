@@ -1,3 +1,6 @@
+// author: Ng Shu Xuan Sherval
+// co-author: Miasara Binte Mohamad Norfitri
+
 #pragma once
 
 #ifndef GAMEOVER_H

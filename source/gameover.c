@@ -1,3 +1,5 @@
+// author: Ng Shu Xuan Sherval
+// co-author: Miasara Binte Mohamad Norfitri
 
 #include "cprocessing.h"
 #include <stdio.h>
