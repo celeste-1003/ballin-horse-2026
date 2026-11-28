@@ -1,3 +1,6 @@
+// author: pha zhe jie
+// co-author: mia
+
 #include <math.h>
 #include <stdbool.h>
 #include "cprocessing.h"

@@ -1,3 +1,5 @@
+// author: pha zhe jie
+
 #include "header/gamedata.h"
 #include <stdio.h>
 

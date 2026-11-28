@@ -1,3 +1,5 @@
+// author: pha zhe jie
+
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 

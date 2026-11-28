@@ -1,3 +1,6 @@
+// author: pha zhe jie
+// co-author: mia
+
 #ifndef BALL_H
 #define BALL_H
 
